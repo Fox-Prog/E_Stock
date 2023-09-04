@@ -74,13 +74,14 @@
                 @click="check_catts"
               ></v-btn>
             </template>
-            <v-card
+
+            <!-- Panneau de modification du composant -->
+            <v-card                       
               class="Cp-modiForm"
               elevation="10"
             >
               <v-form
                 v-model="form"
-                @submit.prevent="onSubmit"
               >
 
                 <v-file-input
@@ -98,7 +99,6 @@
                 label= 'Name'
                 v-model="composant.name"
                 :rules= "[required]"
-                :readonly="loading"
                 variant="outlined"
                 prepend-icon="mdi-rename-box"
                 color="color_component"
@@ -119,7 +119,6 @@
                 label= 'Quantity'
                 v-model="composant.quantity"
                 :rules= "[required, nbrPositif]"
-                :readonly="loading"
                 variant="outlined"
                 prepend-icon="mdi-plus-minus-variant"
                 color="color_component"
@@ -147,8 +146,7 @@
                   type="submit"
                   prepend-icon="mdi-content-save-edit-outline"
                   :disabled="!form"
-                  :loading="loading"
-                  @click="dialog=false, asignNewCatt()"
+                  @click="dialog=false, setNewCatt()"
                 >Save</v-btn>
               </v-card-actions>
               
@@ -212,8 +210,13 @@
 
 <script setup>
 
-  import { computed, ref } from 'vue';
-  import store from '@/store';
+  import { computed, ref } from 'vue'
+  import store from '@/store'
+
+  import { setComponentLocal } from '@/components/ComponentFunctions/setComponentLocal.js'
+
+  import { addCategoryVuex } from "./CategoryFunctions/addCategoryVuex"
+  import { addCategoryLocal } from "./CategoryFunctions/addCategoryLocal"
 
   const props = defineProps(['composant'])
   const imgDefault = '/chip.png'
@@ -222,7 +225,6 @@
   const dialog = ref(false)
   let kat = ref(false)
   let form = ref(false)
-  let loading = ref(false)
   let showImg = computed(() => store.state.showImg)
 
   let cattName = ref(store.getters.getCattName(props.composant.category))
@@ -235,16 +237,13 @@
   function required(v) {
     return !!v || 'Field is required'
   }
-  function onSubmit(){
-    if(!this.form) return
-    loading = true
-    setTimeout(() => {loading=false}, 2000)
-  }
+
   function check_catts(){
     if(store.state.catts.length > 0){
-      kat = true
+      kat.value = true
     }
   }
+
   function deleteComposant (composantToDelete){
     const index = store.state.composants.findIndex(
       (composant) => composant === composantToDelete)
@@ -272,24 +271,38 @@
     reader.readAsDataURL(file)
   }
 
-  function asignNewCatt(){
+  function setNewCatt(){
     if(cattName.value !== null){
       let targetCatt = store.state.catts.find(catt => catt.name === cattName.value)
+
       props.composant.category = targetCatt.id
+      setComponentLocal(          // SET Local DB
+        props.composant,
+        props.composant.name,
+        props.composant.description,
+        props.composant.quantity,
+        targetCatt.id,
+        props.composant.img
+      )
     }
     else {
-      const noCatt = store.state.catts.find(catt => catt.id === '123454321')
+      const noCatt = store.state.catts.find(catt => catt.id === 123454321)
       if(noCatt){
         props.composant.category = noCatt.id
+        setComponentLocal(          // SET Local DB
+          props.composant,
+          props.composant.name,
+          props.composant.description,
+          props.composant.quantity,
+          noCatt.id,
+          props.composant.img
+        )
       }
       else {
-        let newCatt = {
-          id: '123454321',
-          name: 'No Category',
-          color: '#546E7A'
-          }
-          store.dispatch('addCatt', newCatt)
-          props.composant.category = newCatt.id
+        addCategoryVuex(store, 123454321, 'No Category', '#546E7A')    // CREATE Vuex
+        addCategoryLocal(123454321, 'No Category', '#546E7A')   // CREATE Local DB
+
+        props.composant.category = newCatt.id
       }
     }
   }

@@ -20,6 +20,11 @@ export async function getComponentLocal(store){
 
                 const requestAllData = componentDB.getAll()
 
+                requestAllData.onerror = (err) => {
+                    console.error("Error with IndexedDB: ", err)
+                    reject(err)
+                }
+
                 requestAllData.onsuccess = (() => {
                     const data = requestAllData.result
                     for(let r in data){

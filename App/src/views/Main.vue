@@ -197,7 +197,7 @@
   let selectedCatt = computed(() => store.state.selectedCatt)
   let showComposant = computed(() => store.state.showComposant)
   let showCategory = computed(() => store.state.showCategory)
-  const noCatt = computed(() => catts.value.filter(catt => catt.id === '123454321'))
+  const noCatt = computed(() => catts.value.filter(catt => catt.id === 123454321))
   let noCattContent = computed(() => {
     if(noCatt.value.length > 0){
       return true
@@ -242,7 +242,7 @@
       return catts.value.filter(catt => catt.name.startsWith(research.value))
     }
     else{
-      return catts.value.filter(catt => catt.id !== '123454321')
+      return catts.value.filter(catt => catt.id !== 123454321)
     }
   })
 

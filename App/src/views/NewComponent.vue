@@ -142,16 +142,16 @@
       store.dispatch('setPreCatt', null)
     }
     else if(category.value === null){
-      const noCatt = store.state.catts.find(catt => catt.id === '123454321')
+      const noCatt = store.state.catts.find(catt => catt.id === 123454321)
       if(noCatt){
         category = noCatt.id
       }
       else {
         
-          addCategoryVuex(store, '123454321', 'No Category', '#546E7A')
-          addCategoryLocal('123454321', 'No Category', '#546E7A')
+          addCategoryVuex(store, 123454321, 'No Category', '#546E7A')
+          addCategoryLocal(123454321, 'No Category', '#546E7A')
 
-          category = '123454321'
+          category = 123454321
       }
     }
       const id = Date.now()

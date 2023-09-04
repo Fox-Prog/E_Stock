@@ -20,6 +20,11 @@ export async function getCategoryLocal(store){
 
                 const requestAllData = categoryDB.getAll()
 
+                requestAllData.onerror = (err) => {
+                    console.error("Error with IndexedDB: ", err)
+                    reject(err)
+                }
+
                 requestAllData.onsuccess = (() => {
                     const data = requestAllData.result
                     for(let r in data){

@@ -142,7 +142,14 @@
                                     type="submit"
                                     prepend-icon="mdi-content-save-edit-outline"
                                     :disabled="!form"
-                                    @click="dialog=false, expand=false"
+                                    @click="
+                                        dialog=false, 
+                                        expand=false, 
+                                        setCategoryLocal(
+                                            catt,
+                                            catt.name,
+                                            catt.color
+                                        )"
                                     >Save</v-btn>
                             </v-card-actions>
                         </v-card> 
@@ -204,8 +211,18 @@
 
 <script setup>
 
-    import store from "@/store"
+    import { useStore } from "vuex"
+    const store = useStore()
+
     import { ref } from "vue"
+
+    import { deleteCategoryLocal } from '@/components/CategoryFunctions/deleteCategoryLocal.js'
+
+    import { setComponentLocal } from '@/components/ComponentFunctions/setComponentLocal.js'
+    import { setCategoryLocal } from "./CategoryFunctions/setCategoryLocal";
+    
+    import { addCategoryVuex } from "./CategoryFunctions/addCategoryVuex"
+    import { addCategoryLocal } from "./CategoryFunctions/addCategoryLocal"
 
     const props = defineProps(['catt'])
 
@@ -227,40 +244,45 @@
         const index = store.state.catts.findIndex(
             (catt) => catt === cattToDelete)
 
-        if(cattToDelete.id !== '123454321'){
+        if(cattToDelete.id !== 123454321){
             if (nbrComposant > 0){
                 const composantToDelete = store.state.composants.filter(
                     composant => composant.category === props.catt.id)
                 
                 for (let c in composantToDelete){
-                        composantToDelete[c].category = '123454321'
+                        composantToDelete[c].category = 123454321            // SET Vuex
+                        setComponentLocal(                               // SET Local DB
+                            composantToDelete[c],
+                            composantToDelete[c].name,
+                            composantToDelete[c].description,
+                            composantToDelete[c].quantity,
+                            123454321,
+                            composantToDelete[c].img
+                        )
                 }
-                if(store.state.catts.find((catt) => catt.id === '123454321') === undefined){
-                    let newCatt = {
-                        id: '123454321',
-                        name: 'No Category',
-                        color: '#546E7A'
-                    }
-                    store.dispatch('addCatt', newCatt)
+
+                if(store.state.catts.find((catt) => catt.id === 123454321) === undefined){
+                    addCategoryVuex(store, 123454321, 'No Category', '#546E7A')    // CREATE Vuex
+                    addCategoryLocal(123454321, 'No Category', '#546E7A')   // CREATE Local DB
                 }
-                
             }
 
             if (index !== -1){
                 store.dispatch('deleteCatt', index)
+                deleteCategoryLocal(cattToDelete)
             }
         }
         else {
             if(nbrComposant === 0){       
                 if (index !== -1){
-                    store.dispatch('deleteCatt', index)
+                    store.dispatch('deleteCatt', index) // DELETE Vuex
+                    deleteCategoryLocal(cattToDelete)   // DELETE Local DB
                 }
             }
             else {
                 ckeckDelete.value = false
             }
         }
-
     }
 
     function required(v) {
