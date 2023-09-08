@@ -82,10 +82,6 @@ export default createStore({
       commit('setPreCatt', name)
     },
 
-    async ctrlNameCatt({ state }, cattName){
-      return state.catts.some(catt => catt.name === cattName)
-    },
-
     setShowImg({commit}, bool){
       commit('setShowImg', bool)
     },

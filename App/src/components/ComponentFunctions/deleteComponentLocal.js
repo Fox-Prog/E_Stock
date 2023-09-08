@@ -1,6 +1,6 @@
-// Insert into IndexedDB
+// Delete into IndexedBD
 
-export function addCategoryLocal(id, name, color){
+export function deleteComponentLocal(componentToDelete){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
@@ -12,14 +12,10 @@ export function addCategoryLocal(id, name, color){
 
         request.onsuccess = (() => {
             const db = request.result
-            const transaction = db.transaction("category", "readwrite")
-            const categoryDB = transaction.objectStore("category")
+            const transaction = db.transaction("component", "readwrite")
+            const componentDB = transaction.objectStore("component")
 
-            categoryDB.put({
-                id: id, 
-                name: name, 
-                color: color
-            })
+            componentDB.delete(componentToDelete.id)
 
             transaction.oncomplete = (() => {
                 db.close()

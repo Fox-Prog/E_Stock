@@ -170,6 +170,14 @@
             rounded="sm"
             elevation="3"
             @click="composant.quantity > 0 ? composant.quantity -- : composant.quantity"
+            @mouseleave="setComponentLocal(
+              composant,
+              composant.name,
+              composant.description,
+              composant.quantity,
+              composant.category,
+              composant.img
+            )"
           ></v-btn>
           <v-btn
             class="CP-ico-btn"
@@ -179,6 +187,14 @@
             rounded="sm"
             elevation="3"
             @click="composant.quantity ++"
+            @mouseleave="setComponentLocal(
+              composant,
+              composant.name,
+              composant.description,
+              composant.quantity,
+              composant.category,
+              composant.img
+            )"
           ></v-btn>
         </div>
       </div>
@@ -214,6 +230,7 @@
   import store from '@/store'
 
   import { setComponentLocal } from '@/components/ComponentFunctions/setComponentLocal.js'
+  import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponentLocal.js'
 
   import { addCategoryVuex } from "./CategoryFunctions/addCategoryVuex"
   import { addCategoryLocal } from "./CategoryFunctions/addCategoryLocal"
@@ -233,6 +250,7 @@
     if (v <= 0){
       return 'No negative numbers'
     }
+    return true
   }
   function required(v) {
     return !!v || 'Field is required'
@@ -250,6 +268,7 @@
 
     if (index !== -1) {
       store.dispatch('deleteComposant', index)
+      deleteComponentLocal(composantToDelete)
     }
   }
 
@@ -288,13 +307,13 @@
     else {
       const noCatt = store.state.catts.find(catt => catt.id === 123454321)
       if(noCatt){
-        props.composant.category = noCatt.id
+        props.composant.category = 123454321
         setComponentLocal(          // SET Local DB
           props.composant,
           props.composant.name,
           props.composant.description,
           props.composant.quantity,
-          noCatt.id,
+          123454321,
           props.composant.img
         )
       }
@@ -302,7 +321,7 @@
         addCategoryVuex(store, 123454321, 'No Category', '#546E7A')    // CREATE Vuex
         addCategoryLocal(123454321, 'No Category', '#546E7A')   // CREATE Local DB
 
-        props.composant.category = newCatt.id
+        props.composant.category = 123454321
       }
     }
   }

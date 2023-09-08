@@ -1,3 +1,6 @@
+
+// Get since IndexedDB and insert into Vuex
+
 import { addComponentVuex } from '@/components/ComponentFunctions/addComponentVuex.js'
 
 

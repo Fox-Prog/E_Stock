@@ -1,4 +1,4 @@
-
+// Delete into IndexedBD
 
 export function deleteCategoryLocal(cattToDelete){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB

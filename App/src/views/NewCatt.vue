@@ -76,13 +76,15 @@
 
   import Btn_check from "../components/BTN_check.vue";
   import Btn_cancel from "../components/BTN_cancel.vue";
-  import { useStore } from "vuex";
-  import { ref } from "vue";
+  import { useStore } from "vuex"
+  const store = useStore()
+
+  import { ref, computed } from "vue"
 
   import { addCategoryLocal } from '@/components/CategoryFunctions/addCategoryLocal.js'
   import { addCategoryVuex } from '@/components/CategoryFunctions/addCategoryVuex.js'
 
-  const store = useStore()
+ 
 
   const form = ref(false)
   const name = ref(null)
@@ -94,17 +96,19 @@
       return !!v || 'Field is required'
   }
 
-  async function unicName(v) {
-    const cattExist = await store.dispatch('ctrlNameCatt', v)
+  function unicName(v) {
+    const cattExist = store.state.catts.some(catt => catt.name === v)
     if (cattExist) {
       return 'This name already exists'
     }
+    return true
   }
 
   function longName(v){
     if(v.length > 15){
       return 'Max 15 caracters'
     }
+    return true
   }
 
 

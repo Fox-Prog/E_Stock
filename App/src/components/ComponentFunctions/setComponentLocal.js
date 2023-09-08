@@ -1,4 +1,4 @@
-
+// Set into IndexedDB
 
 export function setComponentLocal(component, newName, newDescription, newQuantity, newCategory, newImg){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB

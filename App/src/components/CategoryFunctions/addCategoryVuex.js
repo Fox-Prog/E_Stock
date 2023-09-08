@@ -1,4 +1,4 @@
-
+// Insert into Vuex
 
 
 export function addCategoryVuex(store, id, name, color){

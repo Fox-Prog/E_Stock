@@ -1,3 +1,5 @@
+// Get since IndexedDB and insert into Vuex
+
 import { addCategoryVuex } from '@/components/CategoryFunctions/addCategoryVuex.js'
 
 

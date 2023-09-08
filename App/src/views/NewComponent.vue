@@ -166,6 +166,7 @@
     if (v <= 0){
       return 'No negative numbers'
     }
+    return true
   }
 
   function imgFile(event){

@@ -119,7 +119,7 @@
                                     clearable
                                     label= 'Name'
                                     v-model="catt.name"
-                                    :rules= "[required, longName]"
+                                    :rules= "[required, unicName, longName]"
                                     variant="outlined"
                                     prepend-icon="mdi-rename-box"
                                     color="color_catt"
@@ -214,7 +214,7 @@
     import { useStore } from "vuex"
     const store = useStore()
 
-    import { ref } from "vue"
+    import { ref, computed } from "vue"
 
     import { deleteCategoryLocal } from '@/components/CategoryFunctions/deleteCategoryLocal.js'
 
@@ -235,9 +235,9 @@
 
     let emptyCatt = ref(false)
 
-    const nbrComposant = store.state.composants.filter(
-            composant => composant.category === props.catt.id
-            ).length
+    const nbrComposant = computed(() => store.state.composants.filter(
+        composant => composant.category === props.catt.id
+        ).length)
 
     function deleteCatt(cattToDelete){
         
@@ -245,7 +245,7 @@
             (catt) => catt === cattToDelete)
 
         if(cattToDelete.id !== 123454321){
-            if (nbrComposant > 0){
+            if (nbrComposant.value > 0){
                 const composantToDelete = store.state.composants.filter(
                     composant => composant.category === props.catt.id)
                 
@@ -273,7 +273,7 @@
             }
         }
         else {
-            if(nbrComposant === 0){       
+            if(nbrComposant.value === 0){       
                 if (index !== -1){
                     store.dispatch('deleteCatt', index) // DELETE Vuex
                     deleteCategoryLocal(cattToDelete)   // DELETE Local DB
@@ -285,18 +285,31 @@
         }
     }
 
+
     function required(v) {
         return !!v || 'Field is required'
     }
 
+    function unicName(v) {
+        const cattExisting = store.state.catts.map(catt => catt.name)
+        console.log(cattExisting.includes(v))
+        if (cattExisting.includes(v)) {
+            return 'This name already exists'
+        }
+        return true
+    }
+
     function longName(v){
         if(v.length > 15){
-        return 'Max 15 caracters'
+            return 'Max 15 caracters'
         }
+        return true
     }
     
+
+
     function displayCforC(v_catt){
-        if (nbrComposant > 0){
+        if (nbrComposant.value > 0){
             store.dispatch('setSelectedCategory', v_catt)
             store.dispatch('setShowComposant', true)
             store.dispatch('setShowCategory', false)

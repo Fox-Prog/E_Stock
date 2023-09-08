@@ -1,4 +1,4 @@
-
+// Insert into Vuex
 
 
 export function addComponentVuex(store, id, name, description, quantity, category, img){

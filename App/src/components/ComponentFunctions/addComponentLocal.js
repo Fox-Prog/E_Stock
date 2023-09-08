@@ -1,4 +1,4 @@
-
+// Insert into IndexedDB
 
 export function addComponentLocal(id, name, description, quantity, category, img){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
