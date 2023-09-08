@@ -79,10 +79,10 @@
   import { useStore } from "vuex"
   const store = useStore()
 
-  import { ref, computed } from "vue"
+  import { ref } from "vue"
 
-  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategoryLocal.js'
-  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategoryVuex.js'
+  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
+  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
 
  
 

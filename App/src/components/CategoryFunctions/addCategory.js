@@ -1,6 +1,21 @@
-// Delete into IndexedBD
+// Insert into Vuex
 
-export function deleteCategoryLocal(cattToDelete){
+
+export function addCategoryVuex(store, id, name, color){
+    let newCatt = {
+        id: id,
+        name: name,
+        color: color
+    }
+    store.dispatch("addCatt", newCatt)
+}
+
+
+
+
+// Insert into IndexedDB
+
+export function addCategoryLocal(id, name, color){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
@@ -15,7 +30,11 @@ export function deleteCategoryLocal(cattToDelete){
             const transaction = db.transaction("category", "readwrite")
             const categoryDB = transaction.objectStore("category")
 
-            categoryDB.delete(cattToDelete.id)
+            categoryDB.put({
+                id: id, 
+                name: name, 
+                color: color
+            })
 
             transaction.oncomplete = (() => {
                 db.close()
@@ -25,3 +44,8 @@ export function deleteCategoryLocal(cattToDelete){
         console.error("Error with IndexedDB: ", err)
     }
 }
+
+
+
+
+// Insert into MySQL DB

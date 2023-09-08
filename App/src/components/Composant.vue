@@ -229,11 +229,11 @@
   import { computed, ref } from 'vue'
   import store from '@/store'
 
-  import { setComponentLocal } from '@/components/ComponentFunctions/setComponentLocal.js'
-  import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponentLocal.js'
+  import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
+  import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
 
-  import { addCategoryVuex } from "./CategoryFunctions/addCategoryVuex"
-  import { addCategoryLocal } from "./CategoryFunctions/addCategoryLocal"
+  import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
+  import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
 
   const props = defineProps(['composant'])
   const imgDefault = '/chip.png'

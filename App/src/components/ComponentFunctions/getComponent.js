@@ -1,7 +1,7 @@
 
 // Get since IndexedDB and insert into Vuex
 
-import { addComponentVuex } from '@/components/ComponentFunctions/addComponentVuex.js'
+import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
 
 
 export async function getComponentLocal(store){

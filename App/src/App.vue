@@ -17,8 +17,8 @@
 
   import { onMounted } from 'vue'
 
-  import { getCategoryLocal } from '@/components/CategoryFunctions/getCategoryLocal.js'
-  import { getComponentLocal } from '@/components/ComponentFunctions/getComponentLocal.js'
+  import { getCategoryLocal } from '@/components/CategoryFunctions/getCategory.js'
+  import { getComponentLocal } from '@/components/ComponentFunctions/getComponent.js'
  
   let touchStartX= 0
   let touchStartY= 0

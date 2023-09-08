@@ -216,13 +216,13 @@
 
     import { ref, computed } from "vue"
 
-    import { deleteCategoryLocal } from '@/components/CategoryFunctions/deleteCategoryLocal.js'
+    import { deleteCategoryLocal } from '@/components/CategoryFunctions/deleteCategory.js'
 
-    import { setComponentLocal } from '@/components/ComponentFunctions/setComponentLocal.js'
-    import { setCategoryLocal } from "./CategoryFunctions/setCategoryLocal";
+    import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
+    import { setCategoryLocal } from "./CategoryFunctions/setCategory.js"
     
-    import { addCategoryVuex } from "./CategoryFunctions/addCategoryVuex"
-    import { addCategoryLocal } from "./CategoryFunctions/addCategoryLocal"
+    import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
+    import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
 
     const props = defineProps(['catt'])
 

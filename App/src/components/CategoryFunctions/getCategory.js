@@ -1,6 +1,6 @@
 // Get since IndexedDB and insert into Vuex
 
-import { addCategoryVuex } from '@/components/CategoryFunctions/addCategoryVuex.js'
+import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
 
 
 export async function getCategoryLocal(store){

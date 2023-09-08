@@ -45,3 +45,7 @@ export function setCategoryLocal(category, newName, newColor){
         console.error("Error with IndexedDB: ", err)
     }
 }
+
+
+
+// Set into MySQL DB

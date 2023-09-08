@@ -104,11 +104,11 @@
   import Btn_check from "@/components/BTN_check.vue"
   import Btn_cancel from "@/components/BTN_cancel.vue"
 
-  import { addComponentVuex } from '@/components/ComponentFunctions/addComponentVuex.js'
-  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategoryVuex.js'
+  import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
+  import { addComponentLocal } from '@/components/ComponentFunctions/addComponent.js'
 
-  import { addComponentLocal } from '@/components/ComponentFunctions/addComponentLocal.js'
-  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategoryLocal.js'
+  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
+  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
 
   const form = ref(false)
 

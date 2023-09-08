@@ -48,3 +48,8 @@ export function setComponentLocal(component, newName, newDescription, newQuantit
         console.error("Error with IndexedDB: ", err)
     }
 }
+
+
+
+
+// Set into MySQL DB

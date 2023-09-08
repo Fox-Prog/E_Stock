@@ -1,6 +1,6 @@
 // Delete into IndexedBD
 
-export function deleteComponentLocal(componentToDelete){
+export function deleteCategoryLocal(cattToDelete){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
@@ -12,10 +12,10 @@ export function deleteComponentLocal(componentToDelete){
 
         request.onsuccess = (() => {
             const db = request.result
-            const transaction = db.transaction("component", "readwrite")
-            const componentDB = transaction.objectStore("component")
+            const transaction = db.transaction("category", "readwrite")
+            const categoryDB = transaction.objectStore("category")
 
-            componentDB.delete(componentToDelete.id)
+            categoryDB.delete(cattToDelete.id)
 
             transaction.oncomplete = (() => {
                 db.close()
@@ -25,3 +25,6 @@ export function deleteComponentLocal(componentToDelete){
         console.error("Error with IndexedDB: ", err)
     }
 }
+
+
+// Delete into MySQL DB
