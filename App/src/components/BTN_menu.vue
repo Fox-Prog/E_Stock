@@ -1,6 +1,7 @@
 <template>
     <v-app-bar-nav-icon 
         variant="flat" 
+        title="menu"
         style="
             background: linear-gradient(to top right, #CFD8DC, #ECEFF1); 
             font-size: 20px;"

@@ -11,6 +11,7 @@
             <v-btn
                 id="Cat-main-btn"
                 variant="flat"
+                title="openCategory"
                 elevation="10"
                 rounded="lg"
                 @click="displayCforC(catt)"
@@ -40,6 +41,7 @@
                                 class="Cat-ico-btn"
                                 v-bind="props"
                                 variant="tonal"
+                                title="delete"
                                 icon="mdi-delete"
                                 size="x-small"
                                 rounded="sm"
@@ -79,6 +81,7 @@
                         <v-btn
                             class="Cat-ico-btn"
                             variant="tonal"
+                            title="addComponent"
                             icon="mdi-memory"
                             color="color_component"
                             elevation="3"
@@ -97,6 +100,7 @@
                                 class="Cat-ico-btn"
                                 v-bind="props"
                                 variant="tonal"
+                                title="set"
                                 icon="mdi-pen"
                                 color="black"
                                 style="font-size: 30px;"
@@ -163,6 +167,7 @@
         <v-btn 
             id="Cat-btn-expand"
             variant="text"
+            :title="expand ? 'hideDetails' : 'showDetails'"
             block
             :icon="expand ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             density="compact"

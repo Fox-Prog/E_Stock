@@ -19,22 +19,26 @@
 
       <v-list
         density="comfortable"
+        role="group"
         nav
       > 
         <h3 >Display</h3>
         <v-btn class="ma-5 btn_catt btn_drawer" 
           icon="mdi mdi-shape" 
           variant="flat" 
+          title="showCategory"
           @click="displayCatts"></v-btn>
         <v-btn class="ma-5 btn_component btn_drawer" 
           icon="mdi mdi-all-inclusive" 
           variant="flat" 
+          title="showComponent"
           @click="displayComposants"></v-btn>
 
         <h3>Show</h3>
         <v-btn class="ma-5 btn_showImg btn_drawer" 
           :icon="showImg ? 'mdi-image' : 'mdi-image-off'" 
           variant="flat" 
+          :title="showImg ? 'hideImage' : 'showImage'"
           @click="setShowImg"
           >
           <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C' }"></v-icon>
@@ -44,14 +48,17 @@
         <v-btn class="ma-5 btn_alphaSort btn_drawer" 
           :icon="sortToAlpha ? 'mdi-order-alphabetical-descending' : 'mdi-order-alphabetical-ascending'" 
           variant="flat" 
+          :title="sortToAlpha ? 'Z-A' : 'A-Z'"
           @click="alphaSort"></v-btn>
         <v-btn class="ma-5 btn_recentlySort btn_drawer" 
           :icon="sortToRecently ? 'mdi-sort-calendar-ascending' : 'mdi-sort-calendar-descending'" 
           variant="flat" 
+          :title="sortToRecently ? 'lessRecent' : 'mostRecent'"
           @click="recentSort"></v-btn>
         <v-btn class="ma-5 btn_recentlySort btn_drawer" 
           :icon="sortToNumber ? 'mdi-sort-numeric-ascending' : 'mdi-sort-numeric-descending'" 
           variant="flat" 
+          :title="sortToNumber ? 'little' : 'many'"
           @click="numberSort"></v-btn>
           
       </v-list>
@@ -61,6 +68,7 @@
       <v-btn class="ma-1"
         style="font-size: 20px;"
         variant="tonal"
+        :title="showCategory ? 'showComponents' : 'showCategory'"
         :icon= "showCategory ? 'mdi-chevron-right' : 'mdi-chevron-left'"
         @click="showCategory ? store.dispatch('setSwipe', 'S_left') : store.dispatch('setSwipe', 'S_right')"
       ></v-btn>
@@ -239,7 +247,8 @@
 
   let filteredCatts = computed(() => {
     if(research.value !== null){
-      return catts.value.filter(catt => catt.name.startsWith(research.value))
+      const category = catts.value.filter(catt => catt.id !== 123454321)
+      return category.filter(catt => catt.name.startsWith(research.value))
     }
     else{
       return catts.value.filter(catt => catt.id !== 123454321)

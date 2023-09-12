@@ -18,6 +18,7 @@
           <template v-slot:activator="{ props }">
             <v-btn
               variant="text"
+              title="showDescription"
               v-bind="props"
             >
             <h2>{{ composant.name }}</h2>
@@ -49,6 +50,7 @@
           <v-btn
             class="Cp-ico-btn"
             variant="tonal"
+            title="delete"
             icon="mdi-delete"
             size="x-small"
             rounded="sm"
@@ -66,6 +68,7 @@
                 class="Cp-ico-btn"
                 v-bind="props"
                 variant="tonal"
+                title="set"
                 icon='mdi-pen'
                 color="black"
                 size="x-small"
@@ -165,6 +168,7 @@
           <v-btn
             class="CP-ico-btn"
             variant="tonal"
+            title="less"
             icon="mdi-minus"
             size="x-small"
             rounded="sm"
@@ -182,6 +186,7 @@
           <v-btn
             class="CP-ico-btn"
             variant="tonal"
+            title="more"
             icon="mdi-plus"
             size="x-small"
             rounded="sm"
@@ -203,8 +208,9 @@
     <v-divider></v-divider>
 
     <v-btn 
-        variant="text"
         block
+        variant="text"
+        :title="expand ? 'hideDetails' : 'showDetails'"
         :icon="expand ? 'mdi-chevron-up' : 'mdi-chevron-down'"
         density="compact"
         rounded="sm"

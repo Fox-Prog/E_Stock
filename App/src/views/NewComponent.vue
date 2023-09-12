@@ -74,12 +74,13 @@
           <v-combobox
             v-if="kat"
             v-model="category"
+            :rules="[cattExist]"
             clearable
             variant="outlined"
             prepend-icon="mdi-shape"
             color="color_component"
             label="Category"
-            :items="store.state.catts.map(catt => catt.name)"
+            :items="listCattName"
           ></v-combobox>
 
         </v-form>
@@ -129,11 +130,7 @@
 
   onMounted(() => {check_catts()})
 
-  function required(v) {
-    return !!v || 'Field is required'
-  }
-
-
+  
   function addComponent() {
 
     if(kat.value && category.value !== null){
@@ -160,7 +157,9 @@
   
     }
   
-
+  function required(v){
+    return !!v || 'Field is required'
+  }
 
   function nbrPositif(v){
     if (v <= 0){
@@ -168,6 +167,17 @@
     }
     return true
   }
+
+
+  const listCattName = store.state.catts.map(catt => catt.name)
+  function cattExist(v){
+    if(listCattName.includes(v) || v === null){
+      return true
+    } else {
+      return 'Unknown category'
+    }
+  }
+
 
   function imgFile(event){
     const file = event.target.files[0]
