@@ -14,13 +14,7 @@ const cache_files = [
     'http://localhost:8080/js/chunk-vendors.js',
     'http://localhost:8080/js/app.js',
     'http://localhost:8080/js/webfontloader.js',
-    'http://localhost:8080/fonts/materialdesignicons-webfont.68358e87.woff2',
-    'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap',
-    'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2',
-    'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2',
-    'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1MmgVxIIzI.woff2',
-    'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5fBBc4.woff2',
-    'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fBBc4.woff2'
+    'http://localhost:8080/fonts/materialdesignicons-webfont.68358e87.woff2'
 ]
 
 
@@ -79,7 +73,6 @@ self.addEventListener('fetch', (event) => {
     // console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
 
     if(event.request.mode === 'navigate'){      // Intercepte la requête pour ajouter des comportements
-        console.log("NAVIGATE")
         event.respondWith((async () => {
             try {   
                 // Online
@@ -95,12 +88,14 @@ self.addEventListener('fetch', (event) => {
                 return await cache.match('/index.html')   
             }
         })())   // Auto appel de la fonction ()
+        
     } else if(cache_files.includes(event.request.url)){     // Si le fichiers requeté est déjà dans le cache
         console.log("FIND")
         event.respondWith(caches.match(event.request))
     } else {
         console.log("NOT FIND")
         console.log(event.request.url)
+        return
     }
 })
 

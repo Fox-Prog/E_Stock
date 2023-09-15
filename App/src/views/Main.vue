@@ -365,13 +365,13 @@
     display: flex;
     width: 100%;
     background: linear-gradient(to left, #37474f, #212121);
-    justify-content: end;
+    justify-content: flex-end;
   }
   .backSpaceComponent {
     display: flex;
     width: 100%;
     background: linear-gradient(to left, #212121, #37474f);
-    justify-content: start;
+    justify-content: flex-start;
   }
 
   h3 {
