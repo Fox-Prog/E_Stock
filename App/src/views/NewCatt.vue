@@ -13,11 +13,11 @@
         
         <template v-slot:append>
           <router-link to="/" style="text-decoration: none;">
-            <Btn_check
+            <Btn_done
             v-if="form"
             type="submit"
             @click="addCatt"
-            ></Btn_check>
+            ></Btn_done>
           </router-link>
           </template>
         </v-app-bar>
@@ -74,8 +74,8 @@
 
 <script setup>
 
-  import Btn_check from "../components/BTN_check.vue";
-  import Btn_cancel from "../components/BTN_cancel.vue";
+  import Btn_done from "@/components/bigBTN/done.vue";
+  import Btn_cancel from "@/components/bigBTN/cancel.vue";
   import { useStore } from "vuex"
   const store = useStore()
 
@@ -88,7 +88,7 @@
 
   const form = ref(false)
   const name = ref(null)
-  const imgPath = "/F2.jpg"
+  const imgPath = '/bgNew.jpg'
   let colorToPick = ref(null)
 
   

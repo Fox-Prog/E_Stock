@@ -8,8 +8,6 @@
     ></v-app-bar-nav-icon>
 </template>
 
-<script>
-export default {
-    
-}
+<script setup>
+
 </script>

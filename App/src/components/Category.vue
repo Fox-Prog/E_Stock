@@ -37,17 +37,9 @@
                     >
                         <template v-slot:activator="{ props }">
                             <!-- Bouton supprimer -->
-                            <v-btn
-                                class="Cat-ico-btn"
+                            <btn_delete
                                 v-bind="props"
-                                variant="tonal"
-                                title="delete"
-                                icon="mdi-delete"
-                                size="x-small"
-                                rounded="sm"
-                                elevation="3"
-                                color="red"
-                            ></v-btn>
+                            ></btn_delete>
                         </template>
 
                         <!-- Fenêtre de vérification pour la suppression -->
@@ -65,7 +57,7 @@
                                 <v-btn
                                     variant="tonal"
                                     style="width: 49%;"
-                                    @click="deleteCatt(catt)"
+                                    @click="deleteCategory(store, catt), ckeckDelete = false"
                                 >Yes</v-btn>
                                 <v-btn
                                     variant="tonal"
@@ -89,25 +81,17 @@
                         ></v-btn>
                     </router-link>
 
-                    <!-- Bouton modifier -->
+                    
                     <v-dialog
                         v-model="dialog"
                         width="1024"
                         persistent
                     >
                         <template v-slot:activator="{ props }">
-                            <v-btn
-                                class="Cat-ico-btn"
+                            <!-- Bouton modifier -->
+                            <btn_set
                                 v-bind="props"
-                                variant="tonal"
-                                title="set"
-                                icon="mdi-pen"
-                                color="black"
-                                style="font-size: 30px;"
-                                size="x-small"
-                                rounded="sm"
-                                elevation="3"
-                            ></v-btn>
+                            ></btn_set>
                         </template>
 
                         <!-- Formulaire modification -->
@@ -221,13 +205,14 @@
 
     import { ref, computed } from "vue"
 
-    import { deleteCategoryLocal } from '@/components/CategoryFunctions/deleteCategory.js'
-
+    import { deleteCategory } from '@/components/CategoryFunctions/deleteCategory.js'
     import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
     import { setCategoryLocal } from "./CategoryFunctions/setCategory.js"
-    
     import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
     import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
+
+    import btn_set from '@/components/littleBTN/set.vue'
+    import btn_delete from '@/components/littleBTN/delete.vue'
 
     const props = defineProps(['catt'])
 
@@ -244,61 +229,14 @@
         composant => composant.category === props.catt.id
         ).length)
 
-    function deleteCatt(cattToDelete){
-        
-        const index = store.state.catts.findIndex(
-            (catt) => catt === cattToDelete)
-
-        if(cattToDelete.id !== 123454321){
-            if (nbrComposant.value > 0){
-                const composantToDelete = store.state.composants.filter(
-                    composant => composant.category === props.catt.id)
-                
-                for (let c in composantToDelete){
-                        composantToDelete[c].category = 123454321            // SET Vuex
-                        setComponentLocal(                               // SET Local DB
-                            composantToDelete[c],
-                            composantToDelete[c].name,
-                            composantToDelete[c].description,
-                            composantToDelete[c].quantity,
-                            123454321,
-                            composantToDelete[c].img
-                        )
-                }
-
-                if(store.state.catts.find((catt) => catt.id === 123454321) === undefined){
-                    addCategoryVuex(store, 123454321, 'No Category', '#546E7A')    // CREATE Vuex
-                    addCategoryLocal(123454321, 'No Category', '#546E7A')   // CREATE Local DB
-                }
-            }
-
-            if (index !== -1){
-                store.dispatch('deleteCatt', index)
-                deleteCategoryLocal(cattToDelete)
-            }
-        }
-        else {
-            if(nbrComposant.value === 0){       
-                if (index !== -1){
-                    store.dispatch('deleteCatt', index) // DELETE Vuex
-                    deleteCategoryLocal(cattToDelete)   // DELETE Local DB
-                }
-            }
-            else {
-                ckeckDelete.value = false
-            }
-        }
-    }
-
-
     function required(v) {
         return !!v || 'Field is required'
     }
 
     function unicName(v) {
         const cattExisting = store.state.catts.map(catt => catt.name)
-        console.log(cattExisting.includes(v))
-        if (cattExisting.includes(v)) {
+        const filterdNames = cattExisting.filter(name => name === v)
+        if (filterdNames.length > 1) {
             return 'This name already exists'
         }
         return true
@@ -311,8 +249,6 @@
         return true
     }
     
-
-
     function displayCforC(v_catt){
         if (nbrComposant.value > 0){
             store.dispatch('setSelectedCategory', v_catt)
@@ -410,10 +346,6 @@
 
     #Cat-btn-expand {
         max-height: 4vh;
-    }
-
-    .Cat-ico-btn .v-icon{
-    font-size: 25px;
     }
 
     .Cat-btn_check_delete {

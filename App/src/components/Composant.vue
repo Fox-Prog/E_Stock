@@ -47,35 +47,21 @@
         v-if="expand"
       >
         <div class="Cp-btn">
-          <v-btn
-            class="Cp-ico-btn"
-            variant="tonal"
-            title="delete"
-            icon="mdi-delete"
-            size="x-small"
-            rounded="sm"
-            elevation="3"
-            color="red"
+          <btn_delete
             @click="deleteComposant(composant)"
-          ></v-btn>
+          ></btn_delete>
+          
           <v-dialog
               v-model="dialog"
               width="1024"
               persistent
           >
             <template v-slot:activator="{ props }">
-              <v-btn
-                class="Cp-ico-btn"
+              <!-- Bouton modifier -->
+              <btn_set
                 v-bind="props"
-                variant="tonal"
-                title="set"
-                icon='mdi-pen'
-                color="black"
-                size="x-small"
-                rounded="sm"
-                elevation="3"
                 @click="check_catts"
-              ></v-btn>
+              ></btn_set>
             </template>
 
             <!-- Panneau de modification du composant -->
@@ -237,9 +223,11 @@
 
   import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
   import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
-
   import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
   import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
+
+  import btn_set from '@/components/littleBTN/set.vue'
+  import btn_delete from '@/components/littleBTN/delete.vue'
 
   const props = defineProps(['composant'])
   const imgDefault = '/chip.png'

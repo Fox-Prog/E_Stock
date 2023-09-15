@@ -190,8 +190,8 @@
   import { ref, computed, watch, createApp } from 'vue'
   import { useStore } from 'vuex';
 
-  import Btn_new from '@/components/BTN_new.vue'
-  import Btn_menu from '@/components/BTN_menu.vue'
+  import Btn_new from '@/components/bigBTN/new.vue'
+  import Btn_menu from '@/components/bigBTN/menu.vue'
   import Composant from '@/components/Composant.vue'
   import Category from '@/components/Category.vue'
 

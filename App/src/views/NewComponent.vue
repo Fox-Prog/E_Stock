@@ -13,11 +13,11 @@
       
       <template v-slot:append>
         <router-link to="/" style="text-decoration: none;">
-          <Btn_check
+          <Btn_done
           v-if="form"
           type="submit"
           @click="addComponent"
-          ></Btn_check>
+          ></Btn_done>
         </router-link>
         </template>
       </v-app-bar>
@@ -102,8 +102,8 @@
   import { ref, onMounted, computed } from 'vue'
   import store from '@/store';
 
-  import Btn_check from "@/components/BTN_check.vue"
-  import Btn_cancel from "@/components/BTN_cancel.vue"
+  import Btn_done from "@/components/bigBTN/done.vue"
+  import Btn_cancel from "@/components/bigBTN/cancel.vue"
 
   import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
   import { addComponentLocal } from '@/components/ComponentFunctions/addComponent.js'
@@ -120,7 +120,7 @@
   let kat = ref(false)
   let img = ref(null)
 
-  const imgPath = '/F2.jpg'
+  const imgPath = '/bgNew.jpg'
 
   function check_catts() {
     if (store.state.catts.length > 0){
