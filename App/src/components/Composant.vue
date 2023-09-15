@@ -230,7 +230,7 @@
   import btn_delete from '@/components/littleBTN/delete.vue'
 
   const props = defineProps(['composant'])
-  const imgDefault = '/chip.png'
+  const imgDefault = '/images/chip.png'
   const expand = ref(false)
   const showDescription = ref(false)
   const dialog = ref(false)

@@ -120,7 +120,7 @@
   let kat = ref(false)
   let img = ref(null)
 
-  const imgPath = '/bgNew.jpg'
+  const imgPath = '/images/bgNew.jpg'
 
   function check_catts() {
     if (store.state.catts.length > 0){

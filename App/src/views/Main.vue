@@ -79,7 +79,7 @@
     >
       <img 
         :src="img_empty" 
-        alt="img_emplty"
+        alt="img_empty"
       >
       <h2 v-if="showCategory" style="color:rgb(177, 199, 226)">No category</h2>
       <h2 v-if="showComposant" style="color:rgb(177, 199, 226)">No components</h2>
@@ -195,7 +195,7 @@
   import Composant from '@/components/Composant.vue'
   import Category from '@/components/Category.vue'
 
-  const img_empty = '/empty.png'
+  const img_empty = '/images/empty.png'
 
   const drawer = ref(false)
   const store = useStore()

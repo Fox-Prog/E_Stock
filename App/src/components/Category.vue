@@ -206,10 +206,7 @@
     import { ref, computed } from "vue"
 
     import { deleteCategory } from '@/components/CategoryFunctions/deleteCategory.js'
-    import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
     import { setCategoryLocal } from "./CategoryFunctions/setCategory.js"
-    import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
-    import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
 
     import btn_set from '@/components/littleBTN/set.vue'
     import btn_delete from '@/components/littleBTN/delete.vue'

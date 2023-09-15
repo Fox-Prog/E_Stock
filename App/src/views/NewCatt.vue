@@ -88,7 +88,7 @@
 
   const form = ref(false)
   const name = ref(null)
-  const imgPath = '/bgNew.jpg'
+  const imgPath = '/images/bgNew.jpg'
   let colorToPick = ref(null)
 
   
