@@ -187,13 +187,14 @@
 
 <script setup>
 
-  import { ref, computed, watch, createApp } from 'vue'
+  import { ref, computed, watch } from 'vue'
   import { useStore } from 'vuex';
 
   import Btn_new from '@/components/bigBTN/new.vue'
   import Btn_menu from '@/components/bigBTN/menu.vue'
   import Composant from '@/components/Composant.vue'
   import Category from '@/components/Category.vue'
+import NewComponent from './NewComponent.vue';
 
   const img_empty = '/images/empty.png'
 
@@ -216,6 +217,9 @@
   })
 
   let showImg = computed(() => store.state.showImg) 
+  function setShowImg(){
+    store.dispatch('setShowImg', !showImg.value)
+  }
 
   let research = ref(null)
   let sortToAlpha = ref(false)
@@ -227,6 +231,8 @@
 
   let swipeV = computed(() => store.state.swipe)
 
+
+  // Component.filter
   let filteredComposants = computed(()=> {
     if (selectedCatt.value){
       if(research.value){
@@ -245,6 +251,9 @@
     }
   })
 
+
+
+  // Category.filter
   let filteredCatts = computed(() => {
     if(research.value !== null){
       const category = catts.value.filter(catt => catt.id !== 123454321)
@@ -255,6 +264,9 @@
     }
   })
 
+
+
+  // Show component or category
   function displayComposants(){
     resetSearch()
     store.dispatch('setSelectedCategory', null)
@@ -269,10 +281,9 @@
     store.dispatch('setShowCategory', true)
   }
 
-  function setShowImg(){
-    store.dispatch('setShowImg', !showImg.value)
-  }
+  
 
+  // Sort
   function alphaSort(){
     if(sortToAlpha.value){
       composants.value.sort((a, b) => {
@@ -334,7 +345,8 @@
 
 
 
-
+ 
+  // Navigation
   function swipe(){
     if(swipeV.value === 'S_left'){
       if(showCategory.value === true){
@@ -350,6 +362,26 @@
   }
 
   watch(swipeV, swipe)
+
+
+
+   // Keyboard shortcut
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
+
+  function shortcut(event){
+    switch (event.key) {
+      case 'ArrowRight':
+        store.dispatch('setSwipe', 'S_left')
+        break
+      
+      case 'ArrowLeft':
+        store.dispatch('setSwipe', 'S_right')
+        break
+    }
+  }
+  window.addEventListener('keydown', shortcut)
+
 
 </script>
 

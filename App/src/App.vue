@@ -56,9 +56,7 @@
       }
     }
   }
-  // ------------------------- //
-
-
+ 
 
 
   // Gestion bases de données //
@@ -103,4 +101,15 @@
     background-color: rgb(33, 33, 33);
   }
 
+  ::-webkit-scrollbar {
+    width: 6px; /* Largeur de la barre de défilement */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(82, 80, 80); /* Couleur de la poignée (le curseur de défilement) */
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgb(33, 33, 33); /* Couleur de la piste de défilement */
+  }
 </style>

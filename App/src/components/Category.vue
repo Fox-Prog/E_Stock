@@ -156,7 +156,7 @@
             :icon="expand ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             density="compact"
             rounded="sm"
-            @click="openExpand()"
+            @click="expand = !expand"
         ></v-btn>
     </div>
 
@@ -226,6 +226,8 @@
         composant => composant.category === props.catt.id
         ).length)
 
+
+    // Check input fields
     function required(v) {
         return !!v || 'Field is required'
     }
@@ -246,6 +248,8 @@
         return true
     }
     
+
+    // Open category
     function displayCforC(v_catt){
         if (nbrComposant.value > 0){
             store.dispatch('setSelectedCategory', v_catt)
@@ -257,15 +261,8 @@
         }
     }
 
-    function openExpand(){
-        if(expand.value === true){
-            expand.value = false
-        }
-        else {
-            expand.value = true
-        }
-    }
 
+    // Set touch screen
     function longClic(){
         timeClic = setTimeout(() => {
             expand.value = true

@@ -119,12 +119,13 @@
                   v-if="kat"
                   class="ma-5"
                   v-model="cattName"
+                  :rules="[cattExist]"
                   clearable
                   variant="outlined"
                   prepend-icon="mdi-shape"
                   color="color_component"
                   label="Category"
-                  :items="store.state.catts.map(catt => catt.name)"
+                  :items="listCattName"
                 ></v-combobox>
                 
               </v-form>
@@ -135,7 +136,7 @@
                   type="submit"
                   prepend-icon="mdi-content-save-edit-outline"
                   :disabled="!form"
-                  @click="dialog=false, setNewCatt()"
+                  @click="dialog=false, setComponent()"
                 >Save</v-btn>
               </v-card-actions>
               
@@ -219,12 +220,9 @@
 <script setup>
 
   import { computed, ref } from 'vue'
-  import store from '@/store'
 
-  import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
-  import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
-  import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
-  import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
+  import { useStore } from "vuex"
+  const store = useStore()
 
   import btn_set from '@/components/littleBTN/set.vue'
   import btn_delete from '@/components/littleBTN/delete.vue'
@@ -240,6 +238,9 @@
 
   let cattName = ref(store.getters.getCattName(props.composant.category))
   
+
+
+  // Check input fields
   function nbrPositif(v){
     if (v <= 0){
       return 'No negative numbers'
@@ -256,6 +257,17 @@
     }
   }
 
+  const listCattName = store.state.catts.map(catt => catt.name)
+  function cattExist(v){
+    if(listCattName.includes(v) || v === null){
+      return true
+    } else {
+      return 'Unknown category'
+    }
+  }
+
+
+  // Delete
   function deleteComposant (composantToDelete){
     const index = store.state.composants.findIndex(
       (composant) => composant === composantToDelete)
@@ -268,6 +280,8 @@
 
 
 
+
+  // Set image
   function changeImgFile(event){
     const file = event.target.files[0]
     if (file){
@@ -284,7 +298,15 @@
     reader.readAsDataURL(file)
   }
 
-  function setNewCatt(){
+
+
+  // Set component
+  import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
+  import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
+  import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
+  import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
+
+  function setComponent(){
     if(cattName.value !== null){
       let targetCatt = store.state.catts.find(catt => catt.name === cattName.value)
 

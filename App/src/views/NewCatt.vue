@@ -74,24 +74,25 @@
 
 <script setup>
 
-  import Btn_done from "@/components/bigBTN/done.vue";
-  import Btn_cancel from "@/components/bigBTN/cancel.vue";
+  import { ref } from "vue"
+
+  import Btn_done from "@/components/bigBTN/done.vue"
+  import Btn_cancel from "@/components/bigBTN/cancel.vue"
+
   import { useStore } from "vuex"
   const store = useStore()
-
-  import { ref } from "vue"
 
   import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
   import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
 
- 
-
   const form = ref(false)
   const name = ref(null)
   const imgPath = '/images/bgNew.jpg'
-  let colorToPick = ref(null)
+  let colorToPick = ref('#2E7D32')
 
   
+
+  // Check input fields
   function required(v) {
       return !!v || 'Field is required'
   }
@@ -112,17 +113,40 @@
   }
 
 
-  function addCatt() {
 
-    if(colorToPick.value === '#FFFFFF'){
-      colorToPick.value = '#2E7D32'
-    }
+  // ADD new category
+  function addCatt() {
 
     const id = Date.now()
     addCategoryVuex(store, Date.now(), name.value, colorToPick.value)
     addCategoryLocal(id, name.value, colorToPick.value)
   }
 
+
+
+
+  // Keyboard shortcut
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
+
+  function shortcut(event){
+    switch(event.key){
+      case 'Escape':
+        window.removeEventListener('keydown', shortcut)
+        router.push('/')
+        break
+
+      case 'Enter':
+        if(form.value === true){
+          addCatt()
+          window.removeEventListener('keydown', shortcut)
+          router.push('/')
+          break
+        }
+    }
+  }
+
+  window.addEventListener('keydown', shortcut)
   
 </script>
 

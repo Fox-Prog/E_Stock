@@ -99,23 +99,20 @@
 
 <script setup>
 
-  import { ref, onMounted, computed } from 'vue'
-  import store from '@/store';
+  import { ref, onMounted } from 'vue'
+
+  import { useStore } from "vuex"
+  const store = useStore()
 
   import Btn_done from "@/components/bigBTN/done.vue"
   import Btn_cancel from "@/components/bigBTN/cancel.vue"
-
-  import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
-  import { addComponentLocal } from '@/components/ComponentFunctions/addComponent.js'
-
-  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
-  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
 
   const form = ref(false)
 
   const name = ref(null)
   const description = ref(null)
   const quantity = ref(null)
+
   let category = ref(store.state.preCatt)
   let kat = ref(false)
   let img = ref(null)
@@ -130,7 +127,15 @@
 
   onMounted(() => {check_catts()})
 
-  
+
+
+  // ADD new component
+  import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
+  import { addComponentLocal } from '@/components/ComponentFunctions/addComponent.js'
+
+  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
+  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
+
   function addComponent() {
 
     if(kat.value && category.value !== null){
@@ -157,6 +162,9 @@
   
     }
   
+
+
+  // Check input fields
   function required(v){
     return !!v || 'Field is required'
   }
@@ -195,6 +203,32 @@
     reader.readAsDataURL(file)
   }
 
+
+
+  // Keyboard shortcut
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
+
+  function shortcut(event){
+    switch(event.key){
+      case 'Escape':
+        window.removeEventListener('keydown', shortcut)
+        router.push('/')
+        break
+
+      case 'Enter':
+        if(form.value === true){
+          addComponent()
+          window.removeEventListener('keydown', shortcut)
+          router.push('/')
+          break
+        }
+    }
+  }
+
+  window.addEventListener('keydown', shortcut)
+ 
+  
 
 </script>
 
