@@ -187,7 +187,7 @@
 
 <script setup>
 
-  import { ref, computed, watch } from 'vue'
+  import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
   import { useStore } from 'vuex';
 
   import Btn_new from '@/components/bigBTN/new.vue'
@@ -365,7 +365,7 @@ import NewComponent from './NewComponent.vue';
 
 
 
-   // Keyboard shortcut
+  // Keyboard shortcut
   import { useRouter } from 'vue-router'
   const router = useRouter()
 
@@ -380,7 +380,14 @@ import NewComponent from './NewComponent.vue';
         break
     }
   }
-  window.addEventListener('keydown', shortcut)
+  
+  onMounted(() => {
+    window.addEventListener('keydown', shortcut)
+  })
+
+  onBeforeUnmount(() => {
+    window.removeEventListener('keydown', shortcut)
+  })
 
 
 </script>

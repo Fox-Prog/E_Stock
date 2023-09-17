@@ -74,7 +74,7 @@
 
 <script setup>
 
-  import { ref } from "vue"
+  import { ref, onMounted, onBeforeUnmount } from "vue"
 
   import Btn_done from "@/components/bigBTN/done.vue"
   import Btn_cancel from "@/components/bigBTN/cancel.vue"
@@ -146,7 +146,13 @@
     }
   }
 
-  window.addEventListener('keydown', shortcut)
+  onMounted(() => {
+    window.addEventListener('keydown', shortcut)
+  })
+
+  onBeforeUnmount(() => {
+    window.removeEventListener('keydown', shortcut)
+  })
   
 </script>
 

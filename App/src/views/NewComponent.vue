@@ -99,7 +99,7 @@
 
 <script setup>
 
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, onBeforeUnmount } from 'vue'
 
   import { useStore } from "vuex"
   const store = useStore()
@@ -125,9 +125,7 @@
     }
   }
 
-  onMounted(() => {check_catts()})
-
-
+ 
 
   // ADD new component
   import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
@@ -226,9 +224,18 @@
     }
   }
 
-  window.addEventListener('keydown', shortcut)
- 
   
+ 
+
+
+  onMounted(() => {
+    window.addEventListener('keydown', shortcut),
+    check_catts()
+  })
+
+  onBeforeUnmount(() => {
+    window.removeEventListener('keydown', shortcut)
+  })
 
 </script>
 

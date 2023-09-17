@@ -1,4 +1,4 @@
-const prefix = 'V4'
+const prefix = 'V1'
 const cache_files = [
     'http://localhost:8080/index.html',
     'http://localhost:8080/manifest.json',
@@ -34,7 +34,6 @@ self.addEventListener('install', (event) => {
 
     console.log(`${prefix} Install`)
 })
-
 
 
 
