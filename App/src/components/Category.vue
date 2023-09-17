@@ -252,6 +252,7 @@
     // Open category
     function displayCforC(v_catt){
         if (nbrComposant.value > 0){
+            resetSearchValue()
             store.dispatch('setSelectedCategory', v_catt)
             store.dispatch('setShowComposant', true)
             store.dispatch('setShowCategory', false)
@@ -260,6 +261,10 @@
             emptyCatt.value = true
         }
     }
+    function resetSearchValue(){
+        store.dispatch('setSearchValue', null)
+    }
+
 
 
     // Set touch screen

@@ -303,8 +303,7 @@
   // Set component
   import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
   import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
-  import { addCategoryVuex } from "./CategoryFunctions/addCategory.js"
-  import { addCategoryLocal } from "./CategoryFunctions/addCategory.js"
+  import { addCategory } from "./CategoryFunctions/addCategory.js"
 
   function setComponent(){
     if(cattName.value !== null){
@@ -334,8 +333,7 @@
         )
       }
       else {
-        addCategoryVuex(store, 123454321, 'No Category', '#546E7A')    // CREATE Vuex
-        addCategoryLocal(123454321, 'No Category', '#546E7A')   // CREATE Local DB
+        addCategoryVuex(store, 123454321, 'No Category', '#546E7A', true)    // CREATE Vuex + local
 
         props.composant.category = 123454321
       }
@@ -435,6 +433,10 @@
   }
   .Cp-modiForm{
     background: linear-gradient(to bottom left, #616161, #BDBDBD, #616161);
+  }
+
+  h2 {
+    text-transform: none;
   }
 </style>
   

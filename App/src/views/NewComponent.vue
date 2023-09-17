@@ -16,7 +16,7 @@
           <Btn_done
           v-if="form"
           type="submit"
-          @click="addComponent"
+          @click="pushComponent"
           ></Btn_done>
         </router-link>
         </template>
@@ -128,13 +128,11 @@
  
 
   // ADD new component
-  import { addComponentVuex } from '@/components/ComponentFunctions/addComponent.js'
-  import { addComponentLocal } from '@/components/ComponentFunctions/addComponent.js'
+  import { addComponent } from '@/components/ComponentFunctions/addComponent.js'
 
-  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
-  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
+  import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
 
-  function addComponent() {
+  function pushComponent() {
 
     if(kat.value && category.value !== null){
       let targetCatt = store.state.catts.find(catt => catt.name === category.value)
@@ -148,16 +146,13 @@
       }
       else {
         
-          addCategoryVuex(store, 123454321, 'No Category', '#546E7A')
-          addCategoryLocal(123454321, 'No Category', '#546E7A')
+          addCategory(store, 123454321, 'No Category', '#546E7A', true)
 
           category = 123454321
       }
     }
       const id = Date.now()
-      addComponentVuex(store, id, name.value, description.value, quantity.value, category, img)
-      addComponentLocal(id, name.value, description.value, quantity.value, category, img)
-  
+      addComponent(store, id, name.value, description.value, quantity.value, category, img, true)
     }
   
 
@@ -216,7 +211,7 @@
 
       case 'Enter':
         if(form.value === true){
-          addComponent()
+          pushComponent()
           window.removeEventListener('keydown', shortcut)
           router.push('/')
           break

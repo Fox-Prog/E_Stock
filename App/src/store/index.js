@@ -10,6 +10,7 @@ export default createStore({
     showComposant: false,
     showCategory: true,
     selectedCatt: null,
+    searchValue: null,
 
     swipe: ''
   },
@@ -59,6 +60,10 @@ export default createStore({
 
     setSwipe(state, value){
       state.swipe = value
+    },
+
+    setSearchValue(state, value){
+      state.searchValue = value
     }
 
   },
@@ -97,6 +102,10 @@ export default createStore({
 
     setSwipe({commit}, value){
       commit('setSwipe', value)
+    },
+
+    setSearchValue({commit}, value){
+      commit('setSearchValue', value)
     }
 
 

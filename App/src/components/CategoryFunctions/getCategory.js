@@ -1,6 +1,6 @@
 // Get since IndexedDB and insert into Vuex
 
-import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
+import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
 
 
 export async function getCategoryLocal(store){
@@ -30,7 +30,7 @@ export async function getCategoryLocal(store){
                 requestAllData.onsuccess = (() => {
                     const data = requestAllData.result
                     for(let r in data){
-                        addCategoryVuex(store, data[r].id, data[r].name, data[r].color)
+                        addCategory(store, data[r].id, data[r].name, data[r].color, false) // CREATE Vuex only
                         resolve()   
                     }
                 })

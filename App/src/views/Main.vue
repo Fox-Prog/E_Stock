@@ -8,11 +8,12 @@
     >
 
       <v-text-field
-        v-model="research"
-        @focus="resetSearch"
+        v-model="inputSearch"
+        @input="updateSearchValue"
+        @focus="resetSearchValue"
         clearable
         class="ma-5 ic_search"
-        label="Research"
+        label="Search"
         prepend-icon="mdi mdi-magnify"
         variant="outlined"
       ></v-text-field>
@@ -194,7 +195,6 @@
   import Btn_menu from '@/components/bigBTN/menu.vue'
   import Composant from '@/components/Composant.vue'
   import Category from '@/components/Category.vue'
-import NewComponent from './NewComponent.vue';
 
   const img_empty = '/images/empty.png'
 
@@ -202,6 +202,9 @@ import NewComponent from './NewComponent.vue';
   const store = useStore()
   const composants = computed(() => store.state.composants) 
   const catts = computed(() => store.state.catts)
+
+  let nbrCatt = computed(() => {return catts.value.length})
+  let nbrComposant = computed(() => {return composants.value.length})
 
   let selectedCatt = computed(() => store.state.selectedCatt)
   let showComposant = computed(() => store.state.showComposant)
@@ -216,35 +219,43 @@ import NewComponent from './NewComponent.vue';
     }
   })
 
+
+  // Show or Not image
   let showImg = computed(() => store.state.showImg) 
   function setShowImg(){
     store.dispatch('setShowImg', !showImg.value)
   }
 
-  let research = ref(null)
-  let sortToAlpha = ref(false)
-  let sortToRecently = ref(false)
-  let sortToNumber = ref(false)
 
-  let nbrCatt = computed(() => {return catts.value.length})
-  let nbrComposant = computed(() => {return composants.value.length})
+  // Search field
+  let inputSearch = ref(null)
+  let searchValue = computed(() => store.state.searchValue)
 
-  let swipeV = computed(() => store.state.swipe)
+  function updateSearchValue(){
+    store.dispatch('setSearchValue', inputSearch.value)
+  }
+  function resetSearchValue(){
+    store.dispatch('setSearchValue', null)
+    inputSearch.value = ''
+  }
+  
 
 
   // Component.filter
   let filteredComposants = computed(()=> {
     if (selectedCatt.value){
-      if(research.value){
+      if(searchValue.value){
+        const fSearch = searchValue.value.toLowerCase()
         const selectCatt = composants.value.filter(composant => composant.category === selectedCatt.value.id)
-        return selectCatt.filter(composant => composant.name.startsWith(research.value))
+        return selectCatt.filter(composant => composant.name.toLowerCase().startsWith(fSearch))
       }
       else {
         return composants.value.filter(composant => composant.category === selectedCatt.value.id)
       }
     }
-    else if(research.value !== null){
-      return composants.value.filter(composant => composant.name.startsWith(research.value))
+    else if(searchValue.value){
+      const fSearch = searchValue.value.toLowerCase()
+      return composants.value.filter(composant => composant.name.toLowerCase().startsWith(fSearch))
     }
     else {
         return composants.value
@@ -255,9 +266,10 @@ import NewComponent from './NewComponent.vue';
 
   // Category.filter
   let filteredCatts = computed(() => {
-    if(research.value !== null){
+    if(searchValue.value){
+      const fSearch = searchValue.value.toLowerCase()
       const category = catts.value.filter(catt => catt.id !== 123454321)
-      return category.filter(catt => catt.name.startsWith(research.value))
+      return category.filter(catt => catt.name.toLowerCase().startsWith(fSearch))
     }
     else{
       return catts.value.filter(catt => catt.id !== 123454321)
@@ -268,14 +280,14 @@ import NewComponent from './NewComponent.vue';
 
   // Show component or category
   function displayComposants(){
-    resetSearch()
+    resetSearchValue()
     store.dispatch('setSelectedCategory', null)
     store.dispatch('setShowComposant', true)
     store.dispatch('setShowCategory', false)
   }
 
   function displayCatts(){
-    resetSearch()
+    resetSearchValue()
     store.dispatch('setSelectedCategory', null)
     store.dispatch('setShowComposant', false)
     store.dispatch('setShowCategory', true)
@@ -284,6 +296,10 @@ import NewComponent from './NewComponent.vue';
   
 
   // Sort
+  let sortToAlpha = ref(false)
+  let sortToRecently = ref(false)
+  let sortToNumber = ref(false)
+
   function alphaSort(){
     if(sortToAlpha.value){
       composants.value.sort((a, b) => {
@@ -339,14 +355,14 @@ import NewComponent from './NewComponent.vue';
     sortToNumber.value = !sortToNumber.value
   }
 
-  function resetSearch(){
-    research.value = null
-  }
+  
 
 
 
  
   // Navigation
+  let swipeV = computed(() => store.state.swipe)
+
   function swipe(){
     if(swipeV.value === 'S_left'){
       if(showCategory.value === true){

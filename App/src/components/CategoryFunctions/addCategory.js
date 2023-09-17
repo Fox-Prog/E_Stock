@@ -1,13 +1,17 @@
 // Insert into Vuex
 
 
-export function addCategoryVuex(store, id, name, color){
+export function addCategory(store, id, name, color, localDB){
     let newCatt = {
         id: id,
         name: name,
         color: color
     }
     store.dispatch("addCatt", newCatt)
+
+    if(localDB){
+        addCategoryLocal(id, name, color)
+    }
 }
 
 
@@ -15,7 +19,7 @@ export function addCategoryVuex(store, id, name, color){
 
 // Insert into IndexedDB
 
-export function addCategoryLocal(id, name, color){
+function addCategoryLocal(id, name, color){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{

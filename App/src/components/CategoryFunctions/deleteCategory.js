@@ -1,8 +1,7 @@
 
 
 import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
-import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
-import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
+import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
 
     
 export function deleteCategory(store, cattToDelete){
@@ -32,8 +31,7 @@ export function deleteCategory(store, cattToDelete){
             }
 
             if(store.state.catts.find((catt) => catt.id === 123454321) === undefined){
-                addCategoryVuex(store, 123454321, 'No Category', '#546E7A')    // CREATE Vuex
-                addCategoryLocal(123454321, 'No Category', '#546E7A')   // CREATE Local DB
+                addCategory(store, 123454321, 'No Category', '#546E7A', true)    // CREATE Vuex + local
             }
         }
 

@@ -1,7 +1,7 @@
 // Insert into Vuex
 
 
-export function addComponentVuex(store, id, name, description, quantity, category, img){
+export function addComponent(store, id, name, description, quantity, category, img, localDB){
     let newComponent = {
         id: id,
         name: name,
@@ -11,13 +11,17 @@ export function addComponentVuex(store, id, name, description, quantity, categor
         img: img
     }
     store.dispatch("addComposant", newComponent)
+
+    if(localDB){
+        addComponentLocal(id, name, description, quantity, category, img)
+    }
 }
 
 
 
 // Insert into IndexedDB
 
-export function addComponentLocal(id, name, description, quantity, category, img){
+function addComponentLocal(id, name, description, quantity, category, img){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{

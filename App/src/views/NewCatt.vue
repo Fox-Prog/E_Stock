@@ -82,8 +82,7 @@
   import { useStore } from "vuex"
   const store = useStore()
 
-  import { addCategoryLocal } from '@/components/CategoryFunctions/addCategory.js'
-  import { addCategoryVuex } from '@/components/CategoryFunctions/addCategory.js'
+  import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
 
   const form = ref(false)
   const name = ref(null)
@@ -118,10 +117,8 @@
   function addCatt() {
 
     const id = Date.now()
-    addCategoryVuex(store, Date.now(), name.value, colorToPick.value)
-    addCategoryLocal(id, name.value, colorToPick.value)
+    addCategory(store, Date.now(), name.value, colorToPick.value, true)
   }
-
 
 
 
