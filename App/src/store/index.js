@@ -15,7 +15,12 @@ export default createStore({
     swipe: '',
 
     componentToSet: null,
-    categoryToSet: null
+    categoryToSet: null,
+
+    searchIcons: "",
+    colorIcons: "",
+    shapeIcons: "",
+    trigger: false
   },
   
   getters: {
@@ -86,6 +91,15 @@ export default createStore({
     },
     setCategoryToSet(state, value){
       state.categoryToSet = value
+    },
+
+    callIcons(state, values){
+      state.searchIcons = values.search
+      state.colorIcons = values.color
+      state.shapeIcons = values.shape
+    },
+    setTrigger(state, value){
+      state.trigger = value
     }
 
   },
@@ -141,7 +155,16 @@ export default createStore({
     },
     setCategoryToSet({commit}, value){
       commit('setCategoryToSet', value)
+    },
+
+    callIcons({commit}, values){
+      commit('callIcons', values)
+    },
+    setTrigger({commit}, value){
+      commit('setTrigger', value)
     }
+    
+    
         
 
   },

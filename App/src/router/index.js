@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Main from '../views/Main.vue'
-import NewComponent from '../views/NewComponent.vue'
-import NewCatt from '../views/NewCatt.vue'
+import CSComponent from '../views/CSComponent.vue'
+import CSCategory from '../views/CSCategory.vue'
+import Flaticon from '../views/Flaticon.vue'
 
 const routes = [
   {
@@ -10,14 +11,19 @@ const routes = [
     component: Main
   },
   {
-    path: '/NewComponent',
-    name: 'NewComponent',
-    component: NewComponent
+    path: '/CSComponent',
+    name: 'CSComponent',
+    component: CSComponent
   },
   {
-    path: '/NewCatt',
-    name: 'NewCatt',
-    component: NewCatt
+    path: '/CSCategory',
+    name: 'CSCategory',
+    component: CSCategory
+  },
+  {
+    path: '/Flaticon',
+    name: 'Flaticon',
+    component: Flaticon
   }
 
 ]
