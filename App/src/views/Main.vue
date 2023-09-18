@@ -14,7 +14,7 @@
         clearable
         class="ma-5 ic_search"
         label="Search"
-        prepend-icon="mdi mdi-magnify"
+        prepend-icon="mdi-magnify"
         variant="outlined"
       ></v-text-field>
 
@@ -25,12 +25,12 @@
       > 
         <h3 >Display</h3>
         <v-btn class="ma-5 btn_catt btn_drawer" 
-          icon="mdi mdi-shape" 
+          icon="mdi-shape" 
           variant="flat" 
           title="showCategory"
           @click="displayCatts"></v-btn>
         <v-btn class="ma-5 btn_component btn_drawer" 
-          icon="mdi mdi-all-inclusive" 
+          icon="mdi-all-inclusive" 
           variant="flat" 
           title="showComponent"
           @click="displayComposants"></v-btn>

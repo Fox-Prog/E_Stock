@@ -5,7 +5,7 @@
       <div class="Cp-imgBox">
         <div class="Cp-imgContainer" v-if="showImg">
           <img
-            :src="composant.img ? composant.img : imgDefault" 
+            :src="composant.imgBody" 
             alt="Component_image">
         </div>
       </div>
@@ -47,101 +47,15 @@
         v-if="expand"
       >
         <div class="Cp-btn">
+          <!-- DELETE -->
           <btn_delete
             @click="deleteComposant(composant)"
           ></btn_delete>
-          
-          <v-dialog
-              v-model="dialog"
-              width="1024"
-              persistent
-          >
-            <template v-slot:activator="{ props }">
-              <!-- Bouton modifier -->
-              <btn_set
-                v-bind="props"
-                @click="check_catts"
-              ></btn_set>
-            </template>
 
-            <!-- Panneau de modification du composant -->
-            <v-card                       
-              class="Cp-modiForm"
-              elevation="10"
-            >
-              <v-form
-                v-model="form"
-              >
-
-                <v-file-input
-                  class="ma-5"
-                  @change="changeImgFile"
-                  label="Pictures"
-                  variant="outlined"
-                  color="color_component"
-                  prepend-icon="mdi-image"
-                ></v-file-input>
-
-                <v-text-field
-                class="ma-5"
-                clearable
-                label= 'Name'
-                v-model="composant.name"
-                :rules= "[required]"
-                variant="outlined"
-                prepend-icon="mdi-rename-box"
-                color="color_component"
-                ></v-text-field>
-
-                <v-text-field
-                class="ma-5"
-                clearable
-                label= 'Description'
-                v-model="composant.description"
-                variant="outlined"
-                prepend-icon="mdi-text-box"
-                color="color_component"
-                ></v-text-field>
-
-                <v-text-field
-                class="ma-5"
-                label= 'Quantity'
-                v-model="composant.quantity"
-                :rules= "[required, nbrPositif]"
-                variant="outlined"
-                prepend-icon="mdi-plus-minus-variant"
-                color="color_component"
-                type="number"
-                min="1"
-                ></v-text-field>
-
-                <v-combobox
-                  v-if="kat"
-                  class="ma-5"
-                  v-model="cattName"
-                  :rules="[cattExist]"
-                  clearable
-                  variant="outlined"
-                  prepend-icon="mdi-shape"
-                  color="color_component"
-                  label="Category"
-                  :items="listCattName"
-                ></v-combobox>
-                
-              </v-form>
-
-              <v-card-actions>
-                <v-btn
-                  block
-                  type="submit"
-                  prepend-icon="mdi-content-save-edit-outline"
-                  :disabled="!form"
-                  @click="dialog=false, setComponent()"
-                >Save</v-btn>
-              </v-card-actions>
-              
-            </v-card> 
-          </v-dialog>
+          <!-- SET -->
+          <btn_set
+            @click="setComponent"
+          ></btn_set>
         </div>
 
         <div id="category"
@@ -162,12 +76,13 @@
             elevation="3"
             @click="composant.quantity > 0 ? composant.quantity -- : composant.quantity"
             @mouseleave="setComponentLocal(
-              composant,
+              composant.id,
               composant.name,
               composant.description,
               composant.quantity,
               composant.category,
-              composant.img
+              composant.imgName,
+              composant.imgBody
             )"
           ></v-btn>
           <v-btn
@@ -180,12 +95,13 @@
             elevation="3"
             @click="composant.quantity ++"
             @mouseleave="setComponentLocal(
-              composant,
+              composant.id,
               composant.name,
               composant.description,
               composant.quantity,
               composant.category,
-              composant.img
+              composant.imgName,
+              composant.imgBody
             )"
           ></v-btn>
         </div>
@@ -224,47 +140,16 @@
   import { useStore } from "vuex"
   const store = useStore()
 
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
+
   import btn_set from '@/components/littleBTN/set.vue'
   import btn_delete from '@/components/littleBTN/delete.vue'
 
   const props = defineProps(['composant'])
-  const imgDefault = '/images/chip.png'
   const expand = ref(false)
   const showDescription = ref(false)
-  const dialog = ref(false)
-  let kat = ref(false)
-  let form = ref(false)
   let showImg = computed(() => store.state.showImg)
-
-  let cattName = ref(store.getters.getCattName(props.composant.category))
-  
-
-
-  // Check input fields
-  function nbrPositif(v){
-    if (v <= 0){
-      return 'No negative numbers'
-    }
-    return true
-  }
-  function required(v) {
-    return !!v || 'Field is required'
-  }
-
-  function check_catts(){
-    if(store.state.catts.length > 0){
-      kat.value = true
-    }
-  }
-
-  const listCattName = store.state.catts.map(catt => catt.name)
-  function cattExist(v){
-    if(listCattName.includes(v) || v === null){
-      return true
-    } else {
-      return 'Unknown category'
-    }
-  }
 
 
   // Delete
@@ -279,67 +164,17 @@
   }
 
 
-
-
-  // Set image
-  function changeImgFile(event){
-    const file = event.target.files[0]
-    if (file){
-      readFile(file)
-    }
-  }
-
-  function readFile(file){
-    const reader = new FileReader()
-
-    reader.onload = (event) => {
-      props.composant.img = event.target.result
-    }
-    reader.readAsDataURL(file)
-  }
-
-
-
   // Set component
   import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
   import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
-  import { addCategory } from "./CategoryFunctions/addCategory.js"
 
   function setComponent(){
-    if(cattName.value !== null){
-      let targetCatt = store.state.catts.find(catt => catt.name === cattName.value)
-
-      props.composant.category = targetCatt.id
-      setComponentLocal(          // SET Local DB
-        props.composant,
-        props.composant.name,
-        props.composant.description,
-        props.composant.quantity,
-        targetCatt.id,
-        props.composant.img
-      )
-    }
-    else {
-      const noCatt = store.state.catts.find(catt => catt.id === 123454321)
-      if(noCatt){
-        props.composant.category = 123454321
-        setComponentLocal(          // SET Local DB
-          props.composant,
-          props.composant.name,
-          props.composant.description,
-          props.composant.quantity,
-          123454321,
-          props.composant.img
-        )
-      }
-      else {
-        addCategoryVuex(store, 123454321, 'No Category', '#546E7A', true)    // CREATE Vuex + local
-
-        props.composant.category = 123454321
-      }
-    }
+    store.dispatch('setComponentToSet', props.composant)
+    router.push('/NewComponent')
   }
-    
+
+
+      
 </script>
   
 

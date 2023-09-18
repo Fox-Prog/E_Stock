@@ -1,6 +1,17 @@
-// Set into IndexedDB
 
-export function setComponentLocal(component, newName, newDescription, newQuantity, newCategory, newImg){
+// Set into Vuex
+export function setComponent(store, id, name, description, quantity, category, imgName, imgBody){
+
+    const playload = {id, name, description, quantity, category, imgName, imgBody}
+    store.dispatch('setComponent', playload)
+
+    setComponentLocal(id, name, description, quantity, category, imgName, imgBody)
+}
+
+
+
+// Set into IndexedDB
+export function setComponentLocal(id, newName, newDescription, newQuantity, newCategory, newImgName, newImgBody){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
@@ -15,7 +26,7 @@ export function setComponentLocal(component, newName, newDescription, newQuantit
             const transaction = db.transaction("component", "readwrite")
             const componentDB = transaction.objectStore("component")
 
-            const requestComponentID = componentDB.get(component.id)
+            const requestComponentID = componentDB.get(id)
 
             requestComponentID.onerror = (err) => {
                 console.error("Error with IndexedDB: ", err)
@@ -29,7 +40,8 @@ export function setComponentLocal(component, newName, newDescription, newQuantit
                 component.description = newDescription
                 component.quantity = newQuantity
                 component.category = newCategory
-                component.img = newImg
+                component.imgName = newImgName
+                component.imgBody = newImgBody
 
                 const updateComponent = componentDB.put(component)
 

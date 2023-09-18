@@ -44,23 +44,33 @@
 
                         <!-- Fenêtre de vérification pour la suppression -->
                         <v-card
-                            style="background: linear-gradient(to bottom, #424242, #616161, #424242); border-radius: 10px; border: 1px solid #E65100;"
+                            style="
+                                background: linear-gradient(to bottom, #424242, #616161, #424242); 
+                                border-radius: 5px;
+                                max-width: 300px;
+                                margin-left: 50%;
+                                transform: translateX(-50%);
+                                "
                         >
                             <v-card-title
                                 style="text-align: center;"
                             >Delete this category ?</v-card-title>
-                            <v-card-subtitle
-                                style="text-align: center;"
-                            > <h2>"{{ catt.name }}"</h2> </v-card-subtitle>
 
-                            <div class="Cat-btn_check_delete">
+                            <div 
+                                style="
+                                    display: flex;
+                                    justify-content: center;
+                                    padding: 4px;
+                                    margin-top: 10px;
+                                "
+                            >
                                 <v-btn
-                                    variant="tonal"
+                                    variant="text"
                                     style="width: 49%;"
                                     @click="deleteCategory(store, catt), ckeckDelete = false"
                                 >Yes</v-btn>
                                 <v-btn
-                                    variant="tonal"
+                                    variant="text"
                                     style="width: 49%;"
                                     @click="ckeckDelete = false"
                                 >No</v-btn>
@@ -347,12 +357,6 @@
         max-height: 4vh;
     }
 
-    .Cat-btn_check_delete {
-        display: flex;
-        justify-content: space-between;
-        padding: 4px;
-        margin-top: 10px;
-    }
 
 
 </style>

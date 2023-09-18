@@ -1,19 +1,20 @@
 // Insert into Vuex
 
 
-export function addComponent(store, id, name, description, quantity, category, img, localDB){
+export function addComponent(store, id, name, description, quantity, category, imgName, imgBody, localDB){
     let newComponent = {
         id: id,
         name: name,
         description: description,
         quantity: quantity,
         category: category,
-        img: img
+        imgName: imgName,
+        imgBody: imgBody
     }
     store.dispatch("addComposant", newComponent)
 
     if(localDB){
-        addComponentLocal(id, name, description, quantity, category, img)
+        addComponentLocal(id, name, description, quantity, category, imgName, imgBody)
     }
 }
 
@@ -21,9 +22,8 @@ export function addComponent(store, id, name, description, quantity, category, i
 
 // Insert into IndexedDB
 
-function addComponentLocal(id, name, description, quantity, category, img){
+function addComponentLocal(id, name, description, quantity, category, imgName, imgBody){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
-
     try{
         const request = indexedDB.open("ESS", 1)
 
@@ -42,7 +42,8 @@ function addComponentLocal(id, name, description, quantity, category, img){
                 description: description,
                 quantity: quantity,
                 category: category,
-                img: img
+                imgName: imgName,
+                imgBody: imgBody
             })
 
             transaction.oncomplete = (() => {

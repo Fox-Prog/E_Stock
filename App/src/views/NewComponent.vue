@@ -12,16 +12,15 @@
       </template>
       
       <template v-slot:append>
-        <router-link to="/" style="text-decoration: none;">
-          <Btn_done
+        <Btn_done
           v-if="form"
           type="submit"
-          @click="pushComponent"
-          ></Btn_done>
-        </router-link>
-        </template>
+          @click="pushComponent()"
+        ></Btn_done>
+      </template>
+
       </v-app-bar>
-    
+
       <div class="img_font">
         <img :src="imgPath" alt="background_img">
       </div>
@@ -30,17 +29,33 @@
         <v-form
           v-model="form"
         >
+          <!-- Image choice -->
+          <div
+            style="
+              display: flex;
+              margin-bottom: 20px;
+              align-items: center;
+              "
+          >
+            <v-icon icon="mdi-image"></v-icon>
+            <v-btn 
+              class="btn_add_img"
+              variant="tonal"
+              append-icon="mdi-folder-image"
+              @click="openExFile"
+            >Add local</v-btn>
+            <v-btn 
+              class="btn_add_img"
+              variant="tonal"
+              append-icon="mdi-download"
+            >Add flaticon</v-btn>
 
-          <v-file-input
-            @change="imgFile"
-            label="Pictures"
-            variant="outlined"
-            color="color_component"
-            prepend-icon="mdi-image"
-          ></v-file-input>
+            <h5>{{ imgName }}</h5>
 
+          </div>
+
+          <!-- Name field -->
           <v-text-field
-          
           v-model="name"
           :rules= "[required]"
           clearable
@@ -50,8 +65,8 @@
           prepend-icon="mdi-rename-box"
           ></v-text-field>
           
+          <!-- Description field -->
           <v-text-field
-          
           v-model="description"
           clearable
           color="color_component"
@@ -60,6 +75,7 @@
           prepend-icon="mdi-text-box"
           ></v-text-field>
 
+          <!-- Quantity field -->
           <v-text-field
           v-model="quantity"
           :rules="[required, nbrPositif]"
@@ -71,6 +87,7 @@
           min="1"
           ></v-text-field>
 
+          <!-- Category field -->
           <v-combobox
             v-if="kat"
             v-model="category"
@@ -100,61 +117,51 @@
 <script setup>
 
   import { ref, onMounted, onBeforeUnmount } from 'vue'
-
   import { useStore } from "vuex"
   const store = useStore()
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
 
   import Btn_done from "@/components/bigBTN/done.vue"
   import Btn_cancel from "@/components/bigBTN/cancel.vue"
 
-  const form = ref(false)
+  // SELECT MODE
+  const create = ref(true)
+  function selectMode (){
+    create.value = store.state.componentToSet ? false : true
+    component.value = store.state.componentToSet
+    if(!create.value){
+      imgName.value = component.value.imgName
+      imgBody.value = component.value.imgBody
+      name.value = component.value.name
+      description.value = component.value.description
+      quantity.value = component.value.quantity
+      category.value = store.state.catts.find(catt => catt.id === component.value.category).name
+    }
+  }
 
-  const name = ref(null)
-  const description = ref(null)
-  const quantity = ref(null)
+  // VARIABLES
+  let form = ref(false)
 
+  const component = ref(null)
+
+  let imgName = ref('chip')
+  let imgBody = ref('/images/chip.png')
+  let name = ref(null)
+  let description = ref(null)
+  let quantity = ref(null)
   let category = ref(store.state.preCatt)
+
   let kat = ref(false)
-  let img = ref(null)
 
   const imgPath = '/images/bgNew.jpg'
 
-  function check_catts() {
+  function checkCatts() {
     if (store.state.catts.length > 0){
       kat.value = true
     }
   }
 
- 
-
-  // ADD new component
-  import { addComponent } from '@/components/ComponentFunctions/addComponent.js'
-
-  import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
-
-  function pushComponent() {
-
-    if(kat.value && category.value !== null){
-      let targetCatt = store.state.catts.find(catt => catt.name === category.value)
-      category = targetCatt.id
-      store.dispatch('setPreCatt', null)
-    }
-    else if(category.value === null){
-      const noCatt = store.state.catts.find(catt => catt.id === 123454321)
-      if(noCatt){
-        category = noCatt.id
-      }
-      else {
-        
-          addCategory(store, 123454321, 'No Category', '#546E7A', true)
-
-          category = 123454321
-      }
-    }
-      const id = Date.now()
-      addComponent(store, id, name.value, description.value, quantity.value, category, img, true)
-    }
-  
 
 
   // Check input fields
@@ -180,28 +187,84 @@
   }
 
 
-  function imgFile(event){
-    const file = event.target.files[0]
-    if (file){
-      readFile(file)
+  // Charge image local
+  function openExFile(){
+    const inputElement = document.createElement('input')
+    inputElement.type = 'file'
+    inputElement.accept = 'image/*'
+
+    inputElement.addEventListener('change', (event) => {
+      const file = event.target.files[0]
+      if(file){
+        if(file.type.includes('image/')){
+          readFile(file)
+        }
+      }
+    })
+
+    inputElement.click()
+
+    function readFile(file){
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        imgName.value = file.name
+        imgBody.value = event.target.result
+      }
+      reader.readAsDataURL(file)
     }
   }
 
-  function readFile(file){
-    const reader = new FileReader()
 
-    reader.onload = (event) => {
-      img = event.target.result
+
+
+
+
+
+
+  // ADD or SET new component
+  import { addComponent } from '@/components/ComponentFunctions/addComponent.js'
+  import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
+  import { setComponent } from '@/components/ComponentFunctions/setComponent.js'
+
+  function pushComponent() {
+    // Check categorie
+    if(kat.value && category.value !== null){
+      let targetCatt = store.state.catts.find(catt => catt.name === category.value)
+      category = targetCatt.id
+      store.dispatch('setPreCatt', null)
     }
-    reader.readAsDataURL(file)
-  }
+    else if(category.value === null){
+      const noCatt = store.state.catts.find(catt => catt.id === 123454321)
+      if(noCatt){
+        category = noCatt.id
+      }
+      else {
+          addCategory(store, 123454321, 'No Category', '#546E7A', true)
+          category = 123454321
+      }
+    }
+
+    if(create.value){   // Create mode
+      addComponent(store, Date.now(), name.value, description.value, quantity.value, category, imgName.value, imgBody.value, true)
+    } else {     // Set mode
+      setComponent(store, component.value.id, name.value, description.value, quantity.value, category, imgName.value, imgBody.value)
+    }
+    
+      router.push('/')
+    }
+
+
+
+
+
+
+
+
 
 
 
   // Keyboard shortcut
-  import { useRouter } from 'vue-router'
-  const router = useRouter()
-
   function shortcut(event){
     switch(event.key){
       case 'Escape':
@@ -219,17 +282,15 @@
     }
   }
 
-  
- 
-
-
   onMounted(() => {
-    window.addEventListener('keydown', shortcut),
-    check_catts()
+    window.addEventListener('keydown', shortcut)
+    selectMode()
+    checkCatts()
   })
 
   onBeforeUnmount(() => {
     window.removeEventListener('keydown', shortcut)
+    store.dispatch('setComponentToSet', null)
   })
 
 </script>
@@ -278,6 +339,14 @@
     background: linear-gradient(to bottom left, #616161, #BDBDBD, #616161);
     box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, .2);
     z-index: 2;
+  }
+
+  .btn_add_img{
+    margin-left: 15px;
+  }
+
+  h5 {
+    margin-left: 20px;
   }
   
 </style>

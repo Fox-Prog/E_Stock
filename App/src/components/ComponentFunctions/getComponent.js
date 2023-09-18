@@ -31,7 +31,7 @@ export async function getComponentLocal(store){
                 requestAllData.onsuccess = (() => {
                     const data = requestAllData.result
                     for(let r in data){
-                        addComponent(store, data[r].id, data[r].name, data[r].description, data[r].quantity, data[r].category, data[r].img, false)
+                        addComponent(store, data[r].id, data[r].name, data[r].description, data[r].quantity, data[r].category, data[r].imgName, data[r].imgBody, false)
                         resolve()   
                     }
                 })

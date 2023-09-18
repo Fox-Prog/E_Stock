@@ -12,7 +12,9 @@ export default createStore({
     selectedCatt: null,
     searchValue: null,
 
-    swipe: ''
+    swipe: '',
+
+    componentToSet: null
   },
   
   getters: {
@@ -29,6 +31,12 @@ export default createStore({
   mutations: {
     addComposant(state, composant){
       state.composants.push(composant)
+    },
+    setComponent(state, playload){
+      const index = state.composants.findIndex(c => c.id === playload.id)
+      if(index !== -1){
+        state.composants[index] = playload
+      }
     },
     deleteComposant(state, composant){
       state.composants.splice(composant, 1)
@@ -64,6 +72,10 @@ export default createStore({
 
     setSearchValue(state, value){
       state.searchValue = value
+    },
+
+    setComponentToSet(state, value){
+      state.componentToSet = value
     }
 
   },
@@ -71,6 +83,9 @@ export default createStore({
   actions: {
     addComposant({commit}, composant) {
       commit('addComposant', composant)
+    },
+    setComponent({commit}, playload){
+      commit('setComponent', playload)
     },
     deleteComposant({commit}, composant) {
       commit('deleteComposant', composant)
@@ -106,8 +121,12 @@ export default createStore({
 
     setSearchValue({commit}, value){
       commit('setSearchValue', value)
-    }
+    },
 
+    setComponentToSet({commit}, value){
+      commit('setComponentToSet', value)
+    }
+        
 
   },
 
