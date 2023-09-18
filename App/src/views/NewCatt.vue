@@ -1,59 +1,56 @@
 <template>
   <div>
-        <v-app-bar 
-        app
-        style="background: linear-gradient(to top right, #212121, #263238);"
-        location="bottom"
-        >
-        <template v-slot:prepend>
-          <router-link to="/" style="text-decoration: none;">
-            <Btn_cancel></Btn_cancel>
-          </router-link>
-        </template>
-        
-        <template v-slot:append>
-          <router-link to="/" style="text-decoration: none;">
-            <Btn_done
-            v-if="form"
-            type="submit"
-            @click="addCatt"
-            ></Btn_done>
-          </router-link>
-          </template>
-        </v-app-bar>
-              
-        <div class="img_font">
-          <img :src="imgPath" alt="background_img">
-        </div>
-  
-        <div class="Cat-formulaire">
-          <v-form
-            v-model="form"
-          >
-            <v-text-field
-              class="mb-3"
-              v-model="name"
-              :rules= "[required, unicName, longName]"
-              clearable
-              color="color_catt"
-              label="Name"
-              variant="outlined"
-              prepend-icon="mdi-rename-box"
-            ></v-text-field>
+    <v-app-bar 
+    app
+    style="background: linear-gradient(to top right, #212121, #263238);"
+    location="bottom"
+    >
+    <!-- Btn cancel -->
+    <template v-slot:prepend>
+      <router-link to="/" style="text-decoration: none;">
+        <Btn_cancel></Btn_cancel>
+      </router-link>
+    </template>
+    
+    <!-- Btn done -->
+    <template v-slot:append>
+      <Btn_done
+        v-if="form"
+        type="submit"
+        @click="pushCategory"
+      ></Btn_done>
+    </template>
 
-
-            <v-color-picker
-              v-model="colorToPick"
-              :immediate="true"
-              hide-inputs
-              color="grey-darken-3"
-              width="100%"
-              height="250px"
-              rounded="xl"
-            ></v-color-picker>
-
-          </v-form>
-        </div>
+    </v-app-bar>
+          
+    <div class="img_font">
+      <img :src="imgPath" alt="background_img">
+    </div>
+    <div class="Cat-formulaire">
+      <v-form
+        v-model="form"
+      >
+        <v-text-field
+          class="mb-3"
+          v-model="name"
+          :rules= "[required, unicName, longName]"
+          clearable
+          color="color_catt"
+          label="Name"
+          variant="outlined"
+          prepend-icon="mdi-rename-box"
+        ></v-text-field>
+        <v-color-picker
+          v-model="colorToPick"
+          :immediate="true"
+          hide-inputs
+          color="grey-darken-3"
+          width="100%"
+          height="250px"
+          rounded="xl"
+        ></v-color-picker>
+      </v-form>
+    </div>
   </div>
 </template>
   
@@ -82,14 +79,31 @@
   import { useStore } from "vuex"
   const store = useStore()
 
-  import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
+  import { useRouter } from "vue-router"
+  const router = useRouter()
 
+  // VARIABLES
   const form = ref(false)
-  const name = ref(null)
   const imgPath = '/images/bgNew.jpg'
+
+  const category = ref(null)
+  const name = ref(null)
   let colorToPick = ref('#2E7D32')
 
-  
+
+
+  // SELECT MODE
+  const create = ref(true)
+
+  function selectMode(){
+    create.value = !store.state.categoryToSet
+    category.value = store.state.categoryToSet
+    if(!create.value){                     // <<< Set mode
+      name.value = category.value.name
+      colorToPick.value = category.value.color
+    }
+  }
+
 
   // Check input fields
   function required(v) {
@@ -97,11 +111,21 @@
   }
 
   function unicName(v) {
-    const cattExist = store.state.catts.some(catt => catt.name === v)
-    if (cattExist) {
-      return 'This name already exists'
+    if(create.value){         // Create mode
+      const cattExist = store.state.catts.some(catt => catt.name === v)
+      if (cattExist) {
+        return 'This name already exists'
+      }
+      return true
+
+    } else {          // Set mode
+      const allCattNames = store.state.catts.map(catt => catt.name)
+      const filteredNames = allCattNames.filter(name => name === v)
+      if(filteredNames.length > 1){
+        return 'This name already exists'
+      }
+      return true
     }
-    return true
   }
 
   function longName(v){
@@ -113,19 +137,23 @@
 
 
 
-  // ADD new category
-  function addCatt() {
+  // ADD or SET category
+  import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
+  import { setCategory } from '@/components/CategoryFunctions/setCategory.js'
 
-    const id = Date.now()
-    addCategory(store, Date.now(), name.value, colorToPick.value, true)
+  function pushCategory() {
+    if(create.value){   // Create mode
+      addCategory(store, Date.now(), name.value, colorToPick.value, true)
+    } else {    // Set mode
+      setCategory(store, category.value.id, name.value, colorToPick.value)
+    }
+
+    router.push('/')
   }
 
 
 
   // Keyboard shortcut
-  import { useRouter } from 'vue-router'
-  const router = useRouter()
-
   function shortcut(event){
     switch(event.key){
       case 'Escape':
@@ -135,7 +163,7 @@
 
       case 'Enter':
         if(form.value === true){
-          addCatt()
+          pushCategory()
           window.removeEventListener('keydown', shortcut)
           router.push('/')
           break
@@ -145,10 +173,12 @@
 
   onMounted(() => {
     window.addEventListener('keydown', shortcut)
+    selectMode()
   })
 
   onBeforeUnmount(() => {
     window.removeEventListener('keydown', shortcut)
+    store.dispatch('setCategoryToSet', null)
   })
   
 </script>

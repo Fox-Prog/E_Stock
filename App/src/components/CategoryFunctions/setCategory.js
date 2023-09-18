@@ -1,6 +1,24 @@
+// Set into Vuex
+export function setCategory(store, id, newName, newColor){
+    const playload = {
+        id:id,
+        name:newName,
+        color:newColor
+    }
+    store.dispatch('setCategory', playload)
+
+    setCategoryLocal(id, newName, newColor)
+}
+
+
+
+
+
+
+
 // Set into IndexedDB
 
-export function setCategoryLocal(category, newName, newColor){
+export function setCategoryLocal(id, newName, newColor){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
@@ -15,7 +33,7 @@ export function setCategoryLocal(category, newName, newColor){
             const transaction = db.transaction("category", "readwrite")
             const categoryDB = transaction.objectStore("category")
 
-            const requestCategoryID = categoryDB.get(category.id)
+            const requestCategoryID = categoryDB.get(id)
 
             requestCategoryID.onerror = (err) => {
                 console.error("Error with IndexedDB: ", err)

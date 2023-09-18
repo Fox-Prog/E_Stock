@@ -5,12 +5,14 @@
       style="background: linear-gradient(to top right, #212121, #263238);"
       location="bottom"
       >
+      <!-- Btn cancel -->
       <template v-slot:prepend>
         <router-link to="/" style="text-decoration: none;">
           <Btn_cancel></Btn_cancel>
         </router-link>
       </template>
       
+      <!-- Btn done -->
       <template v-slot:append>
         <Btn_done
           v-if="form"
@@ -125,32 +127,17 @@
   import Btn_done from "@/components/bigBTN/done.vue"
   import Btn_cancel from "@/components/bigBTN/cancel.vue"
 
-  // SELECT MODE
-  const create = ref(true)
-  function selectMode (){
-    create.value = store.state.componentToSet ? false : true
-    component.value = store.state.componentToSet
-    if(!create.value){
-      imgName.value = component.value.imgName
-      imgBody.value = component.value.imgBody
-      name.value = component.value.name
-      description.value = component.value.description
-      quantity.value = component.value.quantity
-      category.value = store.state.catts.find(catt => catt.id === component.value.category).name
-    }
-  }
 
   // VARIABLES
   let form = ref(false)
 
   const component = ref(null)
-
-  let imgName = ref('chip')
-  let imgBody = ref('/images/chip.png')
   let name = ref(null)
   let description = ref(null)
   let quantity = ref(null)
   let category = ref(store.state.preCatt)
+  let imgName = ref('chip')
+  let imgBody = ref('/images/chip.png')
 
   let kat = ref(false)
 
@@ -162,6 +149,22 @@
     }
   }
 
+
+  // SELECT MODE
+  const create = ref(true)
+
+  function selectMode (){
+    create.value = !store.state.componentToSet
+    component.value = store.state.componentToSet
+    if(!create.value){                        // <<< Set mode
+      name.value = component.value.name
+      description.value = component.value.description
+      quantity.value = component.value.quantity
+      category.value = store.state.catts.find(catt => catt.id === component.value.category).name
+      imgName.value = component.value.imgName
+      imgBody.value = component.value.imgBody
+    }
+  }
 
 
   // Check input fields
@@ -222,7 +225,7 @@
 
 
 
-  // ADD or SET new component
+  // ADD or SET component
   import { addComponent } from '@/components/ComponentFunctions/addComponent.js'
   import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
   import { setComponent } from '@/components/ComponentFunctions/setComponent.js'
@@ -232,7 +235,6 @@
     if(kat.value && category.value !== null){
       let targetCatt = store.state.catts.find(catt => catt.name === category.value)
       category = targetCatt.id
-      store.dispatch('setPreCatt', null)
     }
     else if(category.value === null){
       const noCatt = store.state.catts.find(catt => catt.id === 123454321)
@@ -291,6 +293,7 @@
   onBeforeUnmount(() => {
     window.removeEventListener('keydown', shortcut)
     store.dispatch('setComponentToSet', null)
+    store.dispatch('setPreCatt', null)
   })
 
 </script>

@@ -1,9 +1,9 @@
 
 
-import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
+import { setComponent } from '@/components/ComponentFunctions/setComponent.js'
 import { addCategory } from '@/components/CategoryFunctions/addCategory.js'
 
-    
+// Delete into Vuex
 export function deleteCategory(store, cattToDelete){
 
     const nbrComposant = store.state.composants.filter(
@@ -11,22 +11,23 @@ export function deleteCategory(store, cattToDelete){
         ).length
 
     const index = store.state.catts.findIndex(
-        (catt) => catt === cattToDelete)
+        c => c === cattToDelete)
 
     if(cattToDelete.id !== 123454321){
         if (nbrComposant > 0){
-            const composantToDelete = store.state.composants.filter(
+            const composantToSet = store.state.composants.filter(
                 composant => composant.category === cattToDelete.id)
             
-            for (let c in composantToDelete){
-                    composantToDelete[c].category = 123454321            // SET Vuex
-                    setComponentLocal(                               // SET Local DB
-                        composantToDelete[c],
-                        composantToDelete[c].name,
-                        composantToDelete[c].description,
-                        composantToDelete[c].quantity,
+            for (let c in composantToSet){
+                    setComponent(  
+                        store,                             
+                        composantToSet[c].id,
+                        composantToSet[c].name,
+                        composantToSet[c].description,
+                        composantToSet[c].quantity,
                         123454321,
-                        composantToDelete[c].img
+                        composantToSet[c].imgName,
+                        composantToSet[c].imgBody,
                     )
             }
 
@@ -36,8 +37,8 @@ export function deleteCategory(store, cattToDelete){
         }
 
         if (index !== -1){
-            store.dispatch('deleteCatt', index)
-            deleteCategoryLocal(cattToDelete)
+            store.dispatch('deleteCatt', index) // DELETE Vuex
+            deleteCategoryLocal(cattToDelete)   // DELETE Local DB
         }
     }
     else {

@@ -1,3 +1,13 @@
+// Delete into Vuex
+export function deleteComponent(store, componentToDelete){
+    const index = store.state.composants.findIndex(
+        c => c === componentToDelete)
+    store.dispatch('deleteComposant', index)
+
+    deleteComponentLocal(componentToDelete)
+}
+
+
 // Delete into IndexedBD
 
 export function deleteComponentLocal(componentToDelete){

@@ -129,7 +129,13 @@
         <Btn_menu @click="drawer = !drawer"></Btn_menu>
       </template>
       
-
+      <router-link to="/NewComponent" style="text-decoration: none;">
+        <addCpBtn
+          v-if="selectedCatt"
+          @click="store.dispatch('setPreCatt', selectedCatt.name)"
+          style="font-size: 22px;"
+        ></addCpBtn>
+      </router-link>
 
       <template v-slot:append>
         <v-menu
@@ -152,6 +158,7 @@
                 <router-link to="/NewCatt" style="text-decoration: none;">
                     <v-btn 
                       class="btnChoice" 
+                      title="createCategory"
                       style="
                         color: black; 
                         background: linear-gradient(to top right, #1B5E20, #2E7D32);"
@@ -167,6 +174,7 @@
                 <router-link to="/NewComponent" style="text-decoration: none;">
                   <v-btn 
                     class="btnChoice" 
+                    title="createComponent"
                     style="
                     color: black; 
                     background: linear-gradient(to top right, #01579B, #039be5);"
@@ -195,6 +203,7 @@
   import Btn_menu from '@/components/bigBTN/menu.vue'
   import Composant from '@/components/Composant.vue'
   import Category from '@/components/Category.vue'
+  import addCpBtn from '@/components/littleBTN/addCpBtn.vue'
 
   const img_empty = '/images/empty.png'
 

@@ -14,7 +14,8 @@ export default createStore({
 
     swipe: '',
 
-    componentToSet: null
+    componentToSet: null,
+    categoryToSet: null
   },
   
   getters: {
@@ -44,6 +45,12 @@ export default createStore({
 
     addCatt(state, catt){
       state.catts.push(catt)
+    },
+    setCategory(state, playload){
+      const index = state.catts.findIndex(c => c.id === playload.id)
+      if(index !== -1){
+        state.catts[index] = playload
+      }
     },
     deleteCatt(state, catt){
       state.catts.splice(catt, 1)
@@ -76,6 +83,9 @@ export default createStore({
 
     setComponentToSet(state, value){
       state.componentToSet = value
+    },
+    setCategoryToSet(state, value){
+      state.categoryToSet = value
     }
 
   },
@@ -93,6 +103,9 @@ export default createStore({
 
     addCatt({commit}, catt) {
       commit('addCatt', catt)
+    },
+    setCategory({commit}, playload){
+      commit('setCategory', playload)
     },
     deleteCatt({commit}, catt){
       commit('deleteCatt', catt)
@@ -125,6 +138,9 @@ export default createStore({
 
     setComponentToSet({commit}, value){
       commit('setComponentToSet', value)
+    },
+    setCategoryToSet({commit}, value){
+      commit('setCategoryToSet', value)
     }
         
 

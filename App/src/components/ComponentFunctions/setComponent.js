@@ -1,11 +1,19 @@
 
 // Set into Vuex
-export function setComponent(store, id, name, description, quantity, category, imgName, imgBody){
+export function setComponent(store, id, newName, newDescription, newQuantity, newCategory, newImgName, newImgBody){
 
-    const playload = {id, name, description, quantity, category, imgName, imgBody}
+    let playload = {
+        id: id,
+        name: newName,
+        description: newDescription,
+        quantity: newQuantity,
+        category: newCategory,
+        imgName: newImgName,
+        imgBody: newImgBody
+    }
     store.dispatch('setComponent', playload)
 
-    setComponentLocal(id, name, description, quantity, category, imgName, imgBody)
+    setComponentLocal(id, newName, newDescription, newQuantity, newCategory, newImgName, newImgBody)
 }
 
 

@@ -49,7 +49,7 @@
         <div class="Cp-btn">
           <!-- DELETE -->
           <btn_delete
-            @click="deleteComposant(composant)"
+            @click="deleteComponent(store, composant)"
           ></btn_delete>
 
           <!-- SET -->
@@ -153,21 +153,11 @@
 
 
   // Delete
-  function deleteComposant (composantToDelete){
-    const index = store.state.composants.findIndex(
-      (composant) => composant === composantToDelete)
-
-    if (index !== -1) {
-      store.dispatch('deleteComposant', index)
-      deleteComponentLocal(composantToDelete)
-    }
-  }
-
+  import { deleteComponent } from '@/components/ComponentFunctions/deleteComponent.js'
 
   // Set component
   import { setComponentLocal } from '@/components/ComponentFunctions/setComponent.js'
-  import { deleteComponentLocal } from '@/components/ComponentFunctions/deleteComponent.js'
-
+  
   function setComponent(){
     store.dispatch('setComponentToSet', props.composant)
     router.push('/NewComponent')
