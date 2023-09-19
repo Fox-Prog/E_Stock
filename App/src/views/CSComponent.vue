@@ -25,25 +25,44 @@
     <div class="Cp-formulaire">
       <v-form v-model="form">
         <!-- Image choice -->
-        <div style="display: flex; margin-bottom: 20px; align-items: center">
+        <div 
+          style="
+            display: flex; 
+            margin-bottom: 20px; 
+            align-items: center"
+          >
           <v-icon icon="mdi-image"></v-icon>
-          <v-btn
+          <!-- Local -->
+          <v-btn                                  
             class="btn_add_img"
             variant="tonal"
             append-icon="mdi-folder-image"
             @click="openExFile"
             >Add local</v-btn
           >
-          <v-btn 
-            class="btn_add_img" 
-            variant="tonal" 
-            append-icon="mdi-download"
-            @click="router.push('/Flaticon')"
-            >Add flaticon</v-btn
-          >
+          <!-- Flaticon API -->
+          <v-dialog>
+            <template v-slot:activator="{ props }">
+              <v-btn 
+                v-bind="props"
+                class="btn_add_img" 
+                variant="tonal" 
+                append-icon="mdi-download"
+                @click="store.dispatch('setFlatForm', true)"
+                >Add flaticon</v-btn>
+            </template>
+            
+            
+            <Flaticon v-if="flatForm"></Flaticon>
+            
+            
+          </v-dialog>
+          
 
           <h5>{{ imgName }}</h5>
         </div>
+
+        
 
         <!-- Name field -->
         <v-text-field
@@ -106,7 +125,7 @@
 
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 import { useRouter } from "vue-router";
@@ -114,6 +133,8 @@ const router = useRouter();
 
 import Btn_done from "@/components/bigBTN/done.vue";
 import Btn_cancel from "@/components/bigBTN/cancel.vue";
+import Flaticon from '@/components/Flaticon/Flaticon.vue';
+let flatForm = computed(()=> store.state.flatForm);
 
 // VARIABLES
 let form = ref(false);
@@ -123,8 +144,8 @@ let name = ref(null);
 let description = ref(null);
 let quantity = ref(null);
 let category = ref(store.state.preCatt);
-let imgName = ref("chip");
-let imgBody = ref("/images/chip.png");
+let imgName = computed(()=> store.state.imgName);
+let imgBody = computed(()=> store.state.imgBody);
 
 let kat = ref(false);
 
@@ -150,8 +171,12 @@ function selectMode() {
     category.value = store.state.catts.find(
       (catt) => catt.id === component.value.category
     ).name;
-    imgName.value = component.value.imgName;
-    imgBody.value = component.value.imgBody;
+
+    let imgFile = {
+      name: component.value.imgName,
+      body: component.value.imgBody
+    }
+    store.dispatch('setImg', imgFile)
   }
 }
 
@@ -197,8 +222,11 @@ function openExFile() {
     const reader = new FileReader();
 
     reader.onload = (event) => {
-      imgName.value = file.name;
-      imgBody.value = event.target.result;
+      let imgFile = {
+        name: file.name,
+        body: event.target.result
+      }
+      store.dispatch('setImg', imgFile)
     };
     reader.readAsDataURL(file);
   }
@@ -260,12 +288,17 @@ function pushComponent() {
 function shortcut(event) {
   switch (event.key) {
     case "Escape":
-      window.removeEventListener("keydown", shortcut);
-      router.push("/");
-      break;
+      if(!flatForm.value){
+        window.removeEventListener("keydown", shortcut);
+        router.push("/");
+        break;
+      } else {
+        store.dispatch('setFlatForm', false);
+        break;
+      }
 
     case "Enter":
-      if (form.value === true) {
+      if (form.value === true && !flatForm.value) {
         pushComponent();
         window.removeEventListener("keydown", shortcut);
         router.push("/");
@@ -284,6 +317,11 @@ onBeforeUnmount(() => {
   window.removeEventListener("keydown", shortcut);
   store.dispatch("setComponentToSet", null);
   store.dispatch("setPreCatt", null);
+  let imgFile = {
+    name: "Chip",
+    body: "/images/chip.png"
+  }
+  store.dispatch("setImg", imgFile)
 });
 </script>
 

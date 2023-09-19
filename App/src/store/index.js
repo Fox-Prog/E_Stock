@@ -17,10 +17,18 @@ export default createStore({
     componentToSet: null,
     categoryToSet: null,
 
+    flatForm: false,
     searchIcons: "",
     colorIcons: "",
     shapeIcons: "",
-    trigger: false
+    page:1,
+    trigger: false,
+
+    currentPage: 0,
+    maxPage: 0,
+
+    imgName: "Chip",
+    imgBody: "/images/chip.png"
   },
   
   getters: {
@@ -93,13 +101,26 @@ export default createStore({
       state.categoryToSet = value
     },
 
+
+    setFlatForm(state, value){
+      state.flatForm = value
+    },
     callIcons(state, values){
       state.searchIcons = values.search
       state.colorIcons = values.color
       state.shapeIcons = values.shape
+      state.page = values.page
     },
     setTrigger(state, value){
       state.trigger = value
+    },
+    setPages(state, values){
+      state.currentPage = values.currentPage
+      state.maxPage = values.maxPage
+    },
+    setImg(state, imgFile){
+      state.imgName = imgFile.name
+      state.imgBody = imgFile.body
     }
 
   },
@@ -157,18 +178,23 @@ export default createStore({
       commit('setCategoryToSet', value)
     },
 
+
+    setFlatForm({commit}, value){
+      commit('setFlatForm', value)
+    },
     callIcons({commit}, values){
       commit('callIcons', values)
     },
     setTrigger({commit}, value){
       commit('setTrigger', value)
+    },
+    setPages({commit}, values){
+      commit('setPages', values)
+    },
+    setImg({commit}, imgFile){
+      commit('setImg', imgFile)
     }
-    
-    
-        
-
   },
-
   modules: {
   }
 })

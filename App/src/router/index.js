@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Main from '../views/Main.vue'
 import CSComponent from '../views/CSComponent.vue'
 import CSCategory from '../views/CSCategory.vue'
-import Flaticon from '../views/Flaticon.vue'
+
 
 const routes = [
   {
@@ -19,13 +19,7 @@ const routes = [
     path: '/CSCategory',
     name: 'CSCategory',
     component: CSCategory
-  },
-  {
-    path: '/Flaticon',
-    name: 'Flaticon',
-    component: Flaticon
   }
-
 ]
 
 const router = createRouter({
