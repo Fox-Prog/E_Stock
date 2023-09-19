@@ -207,7 +207,7 @@ onBeforeUnmount(() => {
   padding-top: 5vh;
   padding-bottom: 5vh;
 
-  border-radius: 15px;
+  border-radius: 20px;
 
   background: linear-gradient(to bottom left, #616161, #bdbdbd, #616161);
   box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.2);

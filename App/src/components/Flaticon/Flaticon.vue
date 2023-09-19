@@ -1,4 +1,11 @@
 <template>
+    <v-btn
+        id="btn-back"
+        icon="mdi-chevron-left"
+        elevation="10"
+        variant="flat"
+        @click="store.dispatch('setFlatForm', false)"
+    ></v-btn>
     <v-card style="background-color: #212121db; border-radius: 20px;" height="100vh">
         <div>
             <!-- Search form -->
@@ -7,7 +14,7 @@
                     <div class="entry">
                         <!-- Search -->
                         <v-text-field
-                            class="mx-10"
+                            class="mx-5"
                             clearable
                             @input="page=1, callIcons()"
                             v-model="search"
@@ -18,7 +25,7 @@
                         <!-- Selectors options -->
                         <div class="selectors">
                             <v-select
-                                class="mx-10 selector"
+                                class="ms-5 mr-1"
                                 menu-icon="mdi-format-color-fill"
                                 variant="outlined"
                                 v-model="color"
@@ -27,7 +34,7 @@
                                 label="Color"
                             ></v-select>
                             <v-select
-                                class="mx-10 selector"
+                                class="mr-5 ms-1"
                                 menu-icon="mdi-draw"
                                 variant="outlined"
                                 v-model="shape"
@@ -78,7 +85,7 @@
 
 
 <script setup>
-import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { computed, ref, onBeforeUnmount } from 'vue'
 
 import { useStore } from 'vuex'
 const store = useStore()
@@ -124,6 +131,15 @@ function callIcons() {
     }
 }
 
+
+onBeforeUnmount(() => {
+    let pageValues = {
+        currentPage: 0,
+        maxPage: 0
+    }
+    store.dispatch('setPages', pageValues)
+})
+
 </script>
 
 
@@ -132,6 +148,15 @@ function callIcons() {
 
 
 <style>
+
+#btn-back {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    z-index: 2;
+    background: linear-gradient(to bottom left, #bdbdbd, #616161);
+    font-size: 20px;
+}
 
 .search_form_icons {
   position: relative;

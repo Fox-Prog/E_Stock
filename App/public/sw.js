@@ -25,12 +25,12 @@ self.addEventListener('install', (event) => {
     // Active directement le sw
     self.skipWaiting()
 
-    // // Met en pause l'install du sw et attend la résolution de la promise
-    // event.waitUntil((async () => {
-    //     const cache = await caches.open(prefix) // Ouvre le cache avec la clé de cache = prefix
-    //     await cache.addAll(cache_files)
+    // Met en pause l'install du sw et attend la résolution de la promise
+    event.waitUntil((async () => {
+        const cache = await caches.open(prefix) // Ouvre le cache avec la clé de cache = prefix
+        await cache.addAll(cache_files)
 
-    // })())   // Auto appel de la fonction ()
+    })())   // Auto appel de la fonction ()
 
     console.log(`${prefix} Install`)
 })
@@ -66,51 +66,51 @@ self.addEventListener('activate', (event) => {
 
 
 
-// // Ecoute l'évenement fetch sur le sw
-// self.addEventListener('fetch', (event) => { 
+// Ecoute l'évenement fetch sur le sw
+self.addEventListener('fetch', (event) => { 
     
-//     // console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
+    // console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
 
-//     if(event.request.mode === 'navigate'){      // Intercepte la requête pour ajouter des comportements
-//         event.respondWith((async () => {
-//             try {   
-//                 // Online
-//                 const preloadResponse = await event.preloadResponse
-//                 if (preloadResponse){
-//                     return preloadResponse
-//                 }
+    if(event.request.mode === 'navigate'){      // Intercepte la requête pour ajouter des comportements
+        event.respondWith((async () => {
+            try {   
+                // Online
+                const preloadResponse = await event.preloadResponse
+                if (preloadResponse){
+                    return preloadResponse
+                }
 
-//                 return await fetch(event.request)      // Comportement habituel, charge l'app
-//             } catch(e) {
-//                 // Offline
-//                 const cache = await caches.open(prefix)     // Ouvre le cache avec la clé de cache = prefix
-//                 return await cache.match('/index.html')   
-//             }
-//         })())   // Auto appel de la fonction ()
-
-
+                return await fetch(event.request)      // Comportement habituel, charge l'app
+            } catch(e) {
+                // Offline
+                const cache = await caches.open(prefix)     // Ouvre le cache avec la clé de cache = prefix
+                return await cache.match('/index.html')   
+            }
+        })())   // Auto appel de la fonction ()
 
 
-        
-//     } else if(cache_files.includes(event.request.url) && !event.request.url.includes('.hot-update.')){     // Si le fichiers requeté est déjà dans le cache
-//         console.log("IN CACHE")
-//         try{
-//             event.respondWith(caches.match(event.request))
-//         } catch(error){
-//             console.log(error)
-//         }
 
 
         
+    } else if(cache_files.includes(event.request.url) && !event.request.url.includes('.hot-update.')){     // Si le fichiers requeté est déjà dans le cache
+        console.log("IN CACHE")
+        try{
+            event.respondWith(caches.match(event.request))
+        } catch(error){
+            console.log(error)
+        }
 
-//     } else if(!event.request.url.includes('.hot-update.')) {
-//         console.log("NOT IN CACHE")
-//         console.log(event.request.url)
-//         try{
-//             return fetch(event.request)
-//         } catch(error){
-//             console.log(error)
-//         }
-//     }
-// })
+
+        
+
+    } else if(!event.request.url.includes('.hot-update.')) {
+        console.log("NOT IN CACHE")
+        console.log(event.request.url)
+        try{
+            return fetch(event.request)
+        } catch(error){
+            console.log(error)
+        }
+    }
+})
 

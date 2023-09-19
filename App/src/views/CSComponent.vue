@@ -25,37 +25,33 @@
     <div class="Cp-formulaire">
       <v-form v-model="form">
         <!-- Image choice -->
-        <div 
-          style="
-            display: flex; 
-            margin-bottom: 20px; 
-            align-items: center"
+        <div class="btn-container"
           >
-          <v-icon icon="mdi-image"></v-icon>
+          <v-icon icon="mdi-image" color="#424242"></v-icon>
           <!-- Local -->
           <v-btn                                  
             class="btn_add_img"
+            title="addLocalIcon"
             variant="tonal"
-            append-icon="mdi-folder-image"
+            rounded="lg"
+            icon="mdi-folder-image"
             @click="openExFile"
-            >Add local</v-btn
+            ></v-btn
           >
           <!-- Flaticon API -->
-          <v-dialog>
+          <v-dialog v-model="flatForm">
             <template v-slot:activator="{ props }">
               <v-btn 
                 v-bind="props"
                 class="btn_add_img" 
+                title="addFlaticon"
                 variant="tonal" 
-                append-icon="mdi-download"
+                rounded="lg"
+                icon="mdi-download"
                 @click="store.dispatch('setFlatForm', true)"
-                >Add flaticon</v-btn>
+                ></v-btn>
             </template>
-            
-            
             <Flaticon v-if="flatForm"></Flaticon>
-            
-            
           </v-dialog>
           
 
@@ -363,14 +359,25 @@ onBeforeUnmount(() => {
   padding-right: 5vw;
   padding-top: 5vh;
   padding-bottom: 5vh;
-  border-radius: 2vw;
+  border-radius: 20px;
   background: linear-gradient(to bottom left, #616161, #bdbdbd, #616161);
   box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.2);
   z-index: 2;
 }
 
+.btn-container {
+  display: flex; 
+  margin-bottom: 20px; 
+  align-items: center;
+  overflow: hidden;
+}
+
+
 .btn_add_img {
   margin-left: 15px;
+}
+.btn_add_img .v-icon {
+  color: #424242;  
 }
 
 h5 {
