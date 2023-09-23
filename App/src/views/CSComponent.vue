@@ -38,7 +38,7 @@
             @click="openExFile"
             ></v-btn
           >
-          <!-- Flaticon API -->
+          <!-- Icons -->
           <v-dialog v-model="flatForm">
             <template v-slot:activator="{ props }">
               <v-btn 

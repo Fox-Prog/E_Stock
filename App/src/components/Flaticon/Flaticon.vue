@@ -118,17 +118,17 @@ function pageUp(){
     }
 }
 
+
 function callIcons() {
-    if(search.value !== ""){
-        let values = {
-            search: search.value,
-            color: color.value,
-            shape: shape.value,
-            page: page.value
-        }
-        store.dispatch('callIcons', values)
-        store.dispatch('setTrigger', !trigger.value)
+    
+    let values = {
+        search: search.value,
+        color: color.value,
+        shape: shape.value,
+        page: page.value
     }
+    store.dispatch('callIcons', values)
+    store.dispatch('setTrigger', !trigger.value)
 }
 
 

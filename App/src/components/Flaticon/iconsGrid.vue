@@ -6,17 +6,28 @@
          :key="icon.id"
          @click="addIcon"
       >
-        <img :src="icon.images[128]" alt="icon">
+        <img :src="icon.src" :alt="icon.name" :title="icon.name">
       </button>
    </div>
 
+   <!-- Empty -->
    <div 
-    class="no-result" 
+    class="error" 
     v-if="empty"
-  >
+    >
     <img :src="imgNoResult" alt="no_result_img">
     <h1>No result</h1>
    </div>
+
+   <!-- Offline -->
+   <div 
+    class="error" 
+    v-if="!online"
+    >
+    <img :src="imgOffline" alt="offline_img">
+    <h1>Offline</h1>
+   </div>
+
 </template>
 
 
@@ -28,16 +39,23 @@
 
 
 <script setup>
-import { computed, watch, ref } from 'vue'
+import { computed, watch, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
 
 // VARIABLES
 const imgNoResult = "/images/wind.png"
+const imgOffline = "/images/offline.png"
 
 let icons = ref([])
-let download = ref(false)
 let empty = ref(false)
+
+let online = ref(navigator.onLine)
+function updateOnlineStatus(){
+  resetIcons()
+  online.value = navigator.onLine
+  getIcons()
+}
 
 let params = computed(() => {
   return {
@@ -50,116 +68,56 @@ let params = computed(() => {
 
 let trigger = computed(()=> store.state.trigger)
 
-watch(trigger, getFlaticon)
+watch(trigger, getIcons)
 
+// Get icons from json
+import jsonData from '@/assets/colors_outline_icons.json'
+async function getIcons(){
 
+  const regex = /^\s*$/
+  let word = params.value.search
+  word = regex.test(word) ? null : word
 
-
-
-
-
-// API
-const Key = "VsGVik2wurGtyQ57M81GVhWf67AbgFcoAr0bW7yKkfAmOBAs"
-let token = ""
-let endTime = 0
-let remainingHour = 0
-
-// GET icons
-async function getFlaticon(){
-  remainingHour = (endTime - Date.now()/1000)/3600
-
-  if(remainingHour <= 0){
-    // Fetch request -- POST -- Authentication
-    try {
-      const req = await fetch(`https://api.flaticon.com/v3/app/authentication`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          apikey: Key  //      <<< Parameters send
-        })
-      })
+  if(online.value){
+    if(word !== null){
+      let result = await jsonData.filter(icon => icon.name.includes(word))
+      const nbrIcons = result.length
     
-      if(!req.ok){ throw new Error('Request failed')}
+      if(nbrIcons <= 0){
+        empty.value = true
+      } else {
+        empty.value = false
+      }
     
-      const res = await req.json()
-      // Data processing
-      token = res.data.token
-      endTime = res.data.expires
+      if(nbrIcons > 100){
+        let icMax = ((params.value.page)*100)
+        let icMin = icMax - 100
+    
+        icons.value = result.slice(icMin, icMax)
+      } else {
+        icons.value = result
+      }
+    
+      setPages(params.value.page, Math.round(nbrIcons/100))
       
-    } catch(err){
-        console.log("Request error: ")
-        console.error(err)
+    } else {  // Search value == "" or " "
+      resetIcons()
     }
-  }
-
-
-
-  const headers = new Headers({
-    'Accept':'application/json',
-    'Authorization': `Bearer ${token}`
-  })
-
-
-
-
-  let request = null
-  async function createRequest (){
-
-    if(params.value.color !== 'All' && params.value.shape !== 'All'){
-        request = `https://api.flaticon.com/v3/search/icons?q=${params.value.search.toLowerCase()}&styleColor=${params.value.color.toLowerCase()}&styleShape=${params.value.shape.toLowerCase()}&page=${params.value.page}`
-    } else if (params.value.color !== 'All'){
-        request = `https://api.flaticon.com/v3/search/icons?q=${params.value.search.toLowerCase()}&styleColor=${params.value.color.toLowerCase()}&page=${params.value.page}`
-        } else if(params.value.shape !== 'All'){
-            request = `https://api.flaticon.com/v3/search/icons?q=${params.value.search.toLowerCase()}&styleShape=${params.value.shape.toLowerCase()}&page=${params.value.page}`
-        } else {
-            request = `https://api.flaticon.com/v3/search/icons?q=${params.value.search.toLowerCase()}&page=${params.value.page}`
-        }
-  }
-    
-
-
-
-  await createRequest()
-
-  // Fetch request -- GET
-  try {
-    const req = await fetch(request, { //    <<< Request URL
-      method: 'GET',
-      headers: headers
-    })
-  
-    if(!req.ok){ throw new Error('Request failed')}
-  
-    const res = await req.json()
-    // Data processing
-    icons.value = res.data
-    if(icons.value.length === 0){
-         empty.value = true
-    } else {
-      empty.value = false
-    }
-    download.value = true
-
-    // Metadata processing
-    console.log(res.metadata);
-    const currentPage = res.metadata.page
-    const maxPage = Math.round((res.metadata.total)/100)
-
-    let pageValues = {
-      currentPage: currentPage,
-      maxPage: maxPage
-    }
-    store.dispatch('setPages', pageValues)
-     
-  
-  } catch(err){
-    console.log("Request error: ")
-    console.error(err)
   }
 }
 
+function resetIcons(){
+  icons.value = []
+  setPages(0, 0)
+}
+
+function setPages(current, max){
+  let pageValues = {
+    currentPage: current,
+    maxPage: max
+  }
+  store.dispatch('setPages', pageValues)
+}
 
 
 
@@ -203,7 +161,7 @@ function addIcon(event){
   imageTo64(event.target.src)
   .then((base64) => {
     let imgFile = {
-      name: params.value.search,
+      name: event.target.alt,
       body: base64
     }
     store.dispatch('setImg', imgFile)
@@ -213,6 +171,19 @@ function addIcon(event){
     console.log(error)
   })
 }
+
+
+
+
+onMounted(() => {
+  window.addEventListener('online', updateOnlineStatus)
+  window.addEventListener('offline', updateOnlineStatus)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('online', updateOnlineStatus)
+  window.removeEventListener('offline', updateOnlineStatus)
+})
 
 </script>
 
@@ -237,13 +208,13 @@ function addIcon(event){
 .icon-item {
   text-align: center;
   padding: 5px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.51);
   border-radius: 10px;
   overflow: hidden;
 }
 
 .icon-item:hover {
-  background-color: rgba(255, 255, 255, 0.485);
+  background-color: rgba(255, 255, 255, 0.715);
   box-shadow: 0px 0px 3px 0px rgb(251 250 250);
   transform: translateY(-5px);
 }
@@ -254,7 +225,7 @@ function addIcon(event){
 
 
 
-.no-result {
+.error {
   margin-left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -267,11 +238,12 @@ function addIcon(event){
   height: auto;
 }
 
-.no-result img {
+.error img {
   border-radius: 10px;
   width: 100%;
   height: auto;
   object-fit: cover;
 }
+
     
 </style>
