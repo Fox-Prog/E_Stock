@@ -122,7 +122,7 @@ function pageUp(){
 function callIcons() {
     
     let values = {
-        search: search.value,
+        search: search.value.toLowerCase(),
         color: color.value,
         shape: shape.value,
         page: page.value

@@ -23,14 +23,14 @@
         class="ma-5 btn_catt btn_drawer"
         icon="mdi-shape"
         variant="flat"
-        title="showCategory"
+        title="Show Category"
         @click="displayCatts"
       ></v-btn>
       <v-btn
         class="ma-5 btn_component btn_drawer"
         icon="mdi-all-inclusive"
         variant="flat"
-        title="showComponent"
+        title="Show Component"
         @click="displayComposants"
       ></v-btn>
 
@@ -39,7 +39,7 @@
         class="ma-5 btn_showImg btn_drawer"
         :icon="showImg ? 'mdi-image' : 'mdi-image-off'"
         variant="flat"
-        :title="showImg ? 'hideImage' : 'showImage'"
+        :title="showImg ? 'Hide Icon' : 'Show Icon'"
         @click="setShowImg"
       >
         <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C' }"></v-icon>
@@ -65,7 +65,7 @@
             : 'mdi-sort-calendar-descending'
         "
         variant="flat"
-        :title="sortToRecently ? 'lessRecent' : 'mostRecent'"
+        :title="sortToRecently ? 'Less Recent' : 'Most Recent'"
         @click="recentSort"
       ></v-btn>
       <v-btn
@@ -76,8 +76,31 @@
             : 'mdi-sort-numeric-descending'
         "
         variant="flat"
-        :title="sortToNumber ? 'little' : 'many'"
+        :title="sortToNumber ? 'Little' : 'Many'"
         @click="numberSort"
+      ></v-btn>
+
+      <v-divider class="my-5" thickness="5"></v-divider>
+
+      <div
+        style="
+          display: flex;
+          align-items: center;
+        "
+      >
+        <h3>Backup</h3>
+        <v-icon
+          class="mx-2"
+          icon="mdi-cog"
+          color="#212121"
+        ></v-icon>
+      </div>
+      <v-btn
+        class="ma-5 btn_bc btn_drawer"
+        icon="mdi-harddisk"
+        variant="flat"
+        title="Backup"
+        @click="router.push('/Backup')"
       ></v-btn>
     </v-list>
   </v-navigation-drawer>
@@ -87,7 +110,7 @@
       class="ma-1"
       style="font-size: 20px"
       variant="tonal"
-      :title="showCategory ? 'showComponents' : 'showCategory'"
+      :title="showCategory ? 'Show Components' : 'Show Category'"
       :icon="showCategory ? 'mdi-chevron-right' : 'mdi-chevron-left'"
       @click="
         showCategory
@@ -155,8 +178,8 @@
     <router-link to="/CSComponent" style="text-decoration: none">
       <addCpBtn
         v-if="selectedCatt"
-        @click="store.dispatch('setPreCatt', selectedCatt.name)"
         style="font-size: 22px"
+        @click="store.dispatch('setPreCatt', selectedCatt.name)"
       ></addCpBtn>
     </router-link>
 
@@ -184,7 +207,7 @@
               <router-link to="/CSCategory" style="text-decoration: none">
                 <v-btn
                   class="btnChoice"
-                  title="createCategory"
+                  title="Create Category"
                   style="
                     color: black;
                     background: linear-gradient(to top right, #1b5e20, #2e7d32);
@@ -203,7 +226,7 @@
               <router-link to="/CSComponent" style="text-decoration: none">
                 <v-btn
                   class="btnChoice"
-                  title="createComponent"
+                  title="Create Component"
                   style="
                     color: black;
                     background: linear-gradient(to top right, #01579b, #039be5);
@@ -493,6 +516,10 @@ h3 {
 }
 .btn_recentlySort .v-icon {
   color: rgb(123, 31, 162); /* #7B1FA2 purple-darken-2 */
+  font-size: 30px;
+}
+.btn_bc .v-icon {
+  color: rgb(33, 4, 45); /* #7B1FA2 purple-darken-2 */
   font-size: 30px;
 }
 

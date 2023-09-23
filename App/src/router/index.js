@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Main from '../views/Main.vue'
-import CSComponent from '../views/CSComponent.vue'
-import CSCategory from '../views/CSCategory.vue'
+import Main from '@/views/Main.vue'
+import CSComponent from '@/views/CSComponent.vue'
+import CSCategory from '@/views/CSCategory.vue'
+import Backup from '@/views/Backup.vue'
 
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: '/CSCategory',
     name: 'CSCategory',
     component: CSCategory
+  },
+  {
+    path: '/Backup',
+    name: 'Backup',
+    component: Backup
   }
 ]
 

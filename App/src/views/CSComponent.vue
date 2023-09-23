@@ -58,13 +58,24 @@
            <v-dialog v-model="recentForm">
             <template v-slot:activator="{ props }">
               <v-btn 
+                v-if="floatBtn"
+                v-bind="props"
+                class="btn_history" 
+                title="addFlaticon"
+                elevation="10"
+                color="#9f9f9f"
+                icon="mdi-history"
+                @click="store.dispatch('setRecentForm', true)"
+                ></v-btn>
+
+                <v-btn 
+                v-if="!floatBtn"
                 v-bind="props"
                 class="btn_add_img" 
                 title="addFlaticon"
                 variant="tonal" 
                 rounded="lg"
                 icon="mdi-history"
-                :disabled="!recent"
                 @click="store.dispatch('setRecentForm', true)"
                 ></v-btn>
             </template>
@@ -164,12 +175,11 @@ let imgBody = computed(()=> store.state.imgBody);
 
 let kat = ref(false);
 
-let recent = computed(() => {
-  if(store.state.composants.length > 0){
-    return true
-  }
-  return false
-})
+let floatBtn = ref(false)
+function updateFloatBtn(){
+  const screenWidth = window.innerWidth
+  floatBtn.value = screenWidth < 500 ? true : false
+}
 
 const imgPath = "/images/bgNew.jpg";
 
@@ -331,12 +341,15 @@ function shortcut(event) {
 
 onMounted(() => {
   window.addEventListener("keydown", shortcut);
+  window.addEventListener('resize', updateFloatBtn);
+  updateFloatBtn();
   selectMode();
   checkCatts();
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", shortcut);
+  window.removeEventListener('resize', updateFloatBtn)
   store.dispatch("setComponentToSet", null);
   store.dispatch("setPreCatt", null);
   let imgFile = {
@@ -403,6 +416,16 @@ onBeforeUnmount(() => {
   margin-left: 15px;
 }
 .btn_add_img .v-icon {
+  color: #424242;
+  font-size: 25px;
+}
+
+.btn_history {  
+  position: absolute;
+  top: -25px;
+  right: -25px;
+}
+.btn_history .v-icon {
   color: #424242;
   font-size: 25px;
 }

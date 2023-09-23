@@ -22,4 +22,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-/assets
+colors_outline_icons.json

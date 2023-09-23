@@ -48,7 +48,10 @@ async function loadIcons(){
     })
 
     icons.value = tab.filter(icon => {
-        if(!unicValue.has(icon.body)){
+        if(
+            !unicValue.has(icon.body) && 
+            !icon.body.includes("/images/chip.png")
+        ){
             unicValue.add(icon.body)
             return true
         }
