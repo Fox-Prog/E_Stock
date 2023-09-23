@@ -40,7 +40,7 @@
                   #424242
                 );
                 border-radius: 5px;
-                max-width: 300px;
+                width: 300px;
                 margin-left: 50%;
                 transform: translateX(-50%);
               "

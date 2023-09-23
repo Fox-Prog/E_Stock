@@ -28,7 +28,9 @@ export default createStore({
     maxPage: 0,
 
     imgName: "Chip",
-    imgBody: "/images/chip.png"
+    imgBody: "/images/chip.png",
+
+    recentForm: false
   },
   
   getters: {
@@ -121,6 +123,10 @@ export default createStore({
     setImg(state, imgFile){
       state.imgName = imgFile.name
       state.imgBody = imgFile.body
+    },
+
+    setRecentForm(state, value){
+      state.recentForm = value
     }
 
   },
@@ -193,6 +199,10 @@ export default createStore({
     },
     setImg({commit}, imgFile){
       commit('setImg', imgFile)
+    },
+
+    setRecentForm({commit}, value){
+      commit('setRecentForm', value)
     }
   },
   modules: {

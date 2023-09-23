@@ -89,16 +89,16 @@ async function getIcons(){
         empty.value = false
       }
     
-      if(nbrIcons > 100){
-        let icMax = ((params.value.page)*100)
-        let icMin = icMax - 100
+      if(nbrIcons > 200){
+        let icMax = ((params.value.page)*200)
+        let icMin = icMax - 200
     
         icons.value = result.slice(icMin, icMax)
       } else {
         icons.value = result
       }
     
-      setPages(params.value.page, Math.round(nbrIcons/100))
+      setPages(params.value.page, Math.round(nbrIcons/200))
       
     } else {  // Search value == "" or " "
       resetIcons()

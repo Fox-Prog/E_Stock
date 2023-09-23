@@ -54,6 +54,22 @@
             <Flaticon v-if="flatForm"></Flaticon>
           </v-dialog>
           
+           <!-- Recent -->
+           <v-dialog v-model="recentForm">
+            <template v-slot:activator="{ props }">
+              <v-btn 
+                v-bind="props"
+                class="btn_add_img" 
+                title="addFlaticon"
+                variant="tonal" 
+                rounded="lg"
+                icon="mdi-history"
+                :disabled="!recent"
+                @click="store.dispatch('setRecentForm', true)"
+                ></v-btn>
+            </template>
+            <recentIcons v-if="recentForm"></recentIcons >
+          </v-dialog>
 
           <h5>{{ imgName }}</h5>
         </div>
@@ -132,6 +148,9 @@ import Btn_cancel from "@/components/bigBTN/cancel.vue";
 import Flaticon from '@/components/Flaticon/Flaticon.vue';
 let flatForm = computed(()=> store.state.flatForm);
 
+import recentIcons from '@/components/Flaticon/recentIcons.vue';
+let recentForm = computed(() => store.state.recentForm);
+
 // VARIABLES
 let form = ref(false);
 
@@ -144,6 +163,13 @@ let imgName = computed(()=> store.state.imgName);
 let imgBody = computed(()=> store.state.imgBody);
 
 let kat = ref(false);
+
+let recent = computed(() => {
+  if(store.state.composants.length > 0){
+    return true
+  }
+  return false
+})
 
 const imgPath = "/images/bgNew.jpg";
 
@@ -377,7 +403,8 @@ onBeforeUnmount(() => {
   margin-left: 15px;
 }
 .btn_add_img .v-icon {
-  color: #424242;  
+  color: #424242;
+  font-size: 25px;
 }
 
 h5 {

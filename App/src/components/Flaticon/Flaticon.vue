@@ -179,15 +179,6 @@ onBeforeUnmount(() => {
 }
 
 
-#btnCall {
-    margin-left: 50%;
-    transform: translateX(-50%);
-    width: 400px;
-    height: 40px;
-    border-radius: 5px;
-    background: linear-gradient(to top right, #1b5e20, #2e7d32);
-}
-
 .navigation {
     display: flex;
     align-items: center;
