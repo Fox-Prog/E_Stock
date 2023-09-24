@@ -16,19 +16,40 @@
       <img :src="imgPath" alt="background_img" />
     </div>
 
-    <v-card class="bc_formulaire">
+    <v-card class="bc_form">
         <div class="btn">
-            <button class="btn_up_down" @click="openExFile">
+            <button class="btn_up_down" :disabled="errBackup" @click="createBackup">
                 <h3>Save</h3>
                 <img src="/images/save.png" alt="Do Backup" title="Do Backup">
             </button>
-            <button class="btn_up_down">
+            <button class="btn_up_down" :disabled="errBackup" @click="restoreBackup">
                 <h3>Restore</h3>
                 <img src="/images/restore.png" alt="Restored Backup" title="Restored Backup">
             </button>
         </div>
     </v-card>
 
+    <v-card class="error_form" v-if="errBackup">
+      <div id="error">
+        <v-icon
+          class="mr-2"
+          size="35"
+          icon="mdi-alert-circle-outline"
+        ></v-icon>
+        <h2>Backup error</h2>
+        <v-btn
+          class="ms-2"
+          variant="tonal"
+          rounded="lg"
+          title="Details error"
+          @click="showError = !showError"
+        >Details</v-btn>
+      </div>
+
+      <div id="details" v-if="showError">
+        <p>{{ detailsError }}</p>
+      </div>
+    </v-card>
 </template>
 
 
@@ -45,29 +66,106 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 import Btn_cancel from '@/components/bigBTN/cancel.vue'
-import { backup } from '@/components/backup/backup.js'
 
 const imgPath = "/images/bgBackup.png"
+let errBackup = ref(false)
+let showError = ref(false)
+let detailsError = ref("")
 
-function openExFile() {
-  const inputElement = document.createElement("input");
-  inputElement.type = "file";
-  inputElement.setAttribute("webkitdirectory", true);
-  inputElement.setAttribute("directory", true);
-  inputElement.multiple = false;
-
-  inputElement.addEventListener("change", (event) => {
-    const selectedFolder = event.target.files[0];
-
-    if(selectedFolder){
-      const folderPath = selectedFolder.path
-      console.log("Dossier sélectionné :", selectedFolder);
-      console.log("Chemin :", folderPath);
+// Create backup
+async function createBackup(){
+  try{
+    // Backup json
+    const JSONfile = {
+      components: store.state.composants,
+      category: store.state.catts
     }
-  });
+    const jsonStr = JSON.stringify(JSONfile);
 
-  inputElement.click();
+    // Get date for name
+    const now = new Date()
+    const day = now.getDate().toString().padStart(2, '0')
+    const month = (now.getMonth() + 1).toString().padStart(2, '0')
+    const year = now.getFullYear().toString()
+    const nameFile = `Backup_E-Stock_${day}/${month}/${year}`
+
+    // Downloading
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = nameFile;
+    a.click()
+  
+  } catch(error){
+    errBackup.value = true
+    detailsError.value = error
+    console.log(error)
+  }
 }
+
+
+
+
+// Restore backup
+import { deleteCategory } from "@/components/CategoryFunctions/deleteCategory.js"
+import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent.js"
+
+import { addCategory } from "@/components/CategoryFunctions/addCategory.js"
+import { addComponent } from "@/components/ComponentFunctions/addComponent.js"
+
+async function restoreBackup(){
+  try{
+    const inputElement = document.createElement("input");
+    inputElement.type = "file";
+    inputElement.accept = ".json";
+
+    inputElement.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        if (file.type.includes("application/json")) {
+          const reader = new FileReader()
+
+          reader.onload = (event) => {
+            const backup = JSON.parse(event.target.result);
+
+            // Reset store + indexedDB
+            const components = store.state.composants
+            for(let c=0; c<components.length; c++){
+              console.log(components[c]);
+              deleteComponent(store, components[c])
+            }
+
+            const catts = store.state.catts
+            for(let c=0; c<catts.length; c++){
+              console.log(catts[c]);
+              deleteCategory(store, catts[c])
+            }
+
+            // const catts = backup.category
+            // const components = backup.components
+            // for(let c in catts){
+            //   const category = catts[c]
+            //   addCategory(store, category.id, category.name, category.color, true)
+            // }
+
+            // for(let c in components){
+            //   const component = components[c]
+            //   addComponent(store, component.id, component.name, component.description, component.quantity, component.category, component.imgName, component.imgBody, true)
+            // }
+          }
+          reader.readAsText(file);
+        }
+      }
+    })
+    inputElement.click();
+  
+  } catch(error){
+    errBackup.value = true
+    detailsError.value = error
+    console.log(error)
+  }
+}
+
 
 </script>
 
@@ -96,7 +194,7 @@ function openExFile() {
   z-index: 1;
 }
 
-.bc_formulaire {
+.bc_form {
   position: relative;
   margin-left: 10vw;
   margin-right: 10vw;
@@ -112,6 +210,34 @@ function openExFile() {
   background-color: #212121db; 
 
   z-index: 2;
+}
+.error_form {
+  position: relative;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  border-radius: 20px;
+  align-items: center;
+
+  background: linear-gradient(to bottom right, #af0b05e2, #cf560ae7);
+
+  z-index: 2;
+}
+#error {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+
+}
+#details {
+  background-color: #07070727;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
 }
 
 
@@ -142,9 +268,11 @@ function openExFile() {
 }
 
 h3 {
-    color: black;
-    margin-bottom: 10px;
+  color: black;
+  margin-bottom: 10px;
 }
+
+
     
 
 </style>
