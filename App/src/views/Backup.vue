@@ -18,8 +18,7 @@
 
     <v-card class="bc_formulaire">
         <div class="btn">
-            <input type="file" ref="fileInput" style="display: none;" @change="saveInFolder">
-            <button class="btn_up_down" @click="inputF">
+            <button class="btn_up_down" @click="openExFile">
                 <h3>Save</h3>
                 <img src="/images/save.png" alt="Do Backup" title="Do Backup">
             </button>
@@ -50,9 +49,25 @@ import { backup } from '@/components/backup/backup.js'
 
 const imgPath = "/images/bgBackup.png"
 
-const inputF = (()=>{
-    ref.fileInput.click()
-})
+function openExFile() {
+  const inputElement = document.createElement("input");
+  inputElement.type = "file";
+  inputElement.setAttribute("webkitdirectory", true);
+  inputElement.setAttribute("directory", true);
+  inputElement.multiple = false;
+
+  inputElement.addEventListener("change", (event) => {
+    const selectedFolder = event.target.files[0];
+
+    if(selectedFolder){
+      const folderPath = selectedFolder.path
+      console.log("Dossier sélectionné :", selectedFolder);
+      console.log("Chemin :", folderPath);
+    }
+  });
+
+  inputElement.click();
+}
 
 </script>
 

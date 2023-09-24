@@ -6,7 +6,7 @@
          :key="icon.id"
          @click="addIcon"
       >
-        <img :src="icon.src" :alt="icon.name" :title="icon.name">
+        <img :src="icon.url" :alt="icon.name" :title="icon.name">
       </button>
    </div>
 
@@ -70,18 +70,30 @@ let trigger = computed(()=> store.state.trigger)
 
 watch(trigger, getIcons)
 
+
+
+
+
+
 // Get icons from json
-import jsonData from '@/assets/colors_outline_icons.json'
+import jsonData from 'C:/Users/Utilisateur/Documents/Programmation/ES_assets/icons.json'
 async function getIcons(){
 
+  // Check empty search
   const regex = /^\s*$/
   let word = params.value.search
   word = regex.test(word) ? null : word
 
   if(online.value){
     if(word !== null){
-      let result = await jsonData.filter(icon => icon.name.includes(word))
-      const nbrIcons = result.length
+
+      console.log(word, params.value.color, params.value.shape);
+
+      let wordMatch = await jsonData.filter(icon => icon.name.includes(word))
+      let result = getOptions(wordMatch)
+      let resultSort = sortBySimilarity(params.value.search, result)
+
+      const nbrIcons = resultSort.length
     
       if(nbrIcons <= 0){
         empty.value = true
@@ -93,9 +105,9 @@ async function getIcons(){
         let icMax = ((params.value.page)*200)
         let icMin = icMax - 200
     
-        icons.value = result.slice(icMin, icMax)
+        icons.value = resultSort.slice(icMin, icMax)
       } else {
-        icons.value = result
+        icons.value = resultSort
       }
     
       setPages(params.value.page, Math.round(nbrIcons/200))
@@ -105,6 +117,85 @@ async function getIcons(){
     }
   }
 }
+
+
+
+
+function getOptions(wordMatch){
+  let colorMatch = null
+  let shapeMatch = null
+  if(params.value.color !== 'All' && params.value.shape !== 'All'){ // IF color + shape
+    if(params.value.color === 'Color'){
+      const colors = ["color", "gray", "white", "red", "rose", "magenta", "orange", "yellow", "chartreuse", "green", "spring-green", "cyan", "azure", "blue", "violet"]
+      colorMatch = wordMatch.filter(icon => colors.includes(icon.color) )
+    } else {
+      colorMatch = wordMatch.filter(icon => icon.color === params.value.color.toLowerCase())
+    }
+    shapeMatch = colorMatch.filter(icon => icon.shape === params.value.shape.toLowerCase())
+    return shapeMatch
+
+  } else if(params.value.color !== 'All'){  // IF just color
+    if(params.value.color === 'Color'){
+      const colors = ["color", "gray", "white", "red", "rose", "magenta", "orange", "yellow", "chartreuse", "green", "spring-green", "cyan", "azure", "blue", "violet"]
+      colorMatch = wordMatch.filter(icon => colors.includes(icon.color) )
+    } else {
+      colorMatch = wordMatch.filter(icon => icon.color === params.value.color.toLowerCase())
+    }
+    return colorMatch
+
+  } else if(params.value.shape !== 'All'){  // IF just shape
+      shapeMatch = wordMatch.filter(icon => icon.shape === params.value.shape.toLowerCase())
+      return shapeMatch
+  }
+
+  return wordMatch
+}
+
+
+
+
+// Algorithme of Levenshtein
+function calculateSimilarity(search, word) {
+  const m = search.length;
+  const n = word.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+
+  for (let i = 0; i <= m; i++) {
+    for (let j = 0; j <= n; j++) {
+      if (i === 0) dp[i][j] = j;
+      else if (j === 0) dp[i][j] = i;
+      else if (search[i - 1] === word[j - 1]) dp[i][j] = dp[i - 1][j - 1];
+      else
+        dp[i][j] =
+          1 +
+          Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+    }
+  }
+
+  return dp[m][n];
+}
+
+function sortBySimilarity(search, icons) {
+  // Calculez les scores de correspondance pour chaque mot
+  const scoredIcon = icons.map(icon => ({
+    icon: icon,
+    similarity: calculateSimilarity(search, icon.name)
+  }));
+
+  // Triez les mots en fonction de leur score de correspondance
+  scoredIcon.sort((a, b) => a.similarity - b.similarity);
+
+  // Récupérez les mots triés
+  const sortedIcon = scoredIcon.map(item => item.icon);
+
+  return sortedIcon;
+}
+
+
+
+
+
+
 
 function resetIcons(){
   icons.value = []
