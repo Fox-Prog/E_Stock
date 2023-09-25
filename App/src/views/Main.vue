@@ -86,13 +86,15 @@
         style="
           display: flex;
           align-items: center;
+          justify-items: center;
         "
       >
-        <h3>Backup</h3>
+        <h3 style="margin: 0;">Backup</h3>
         <v-icon
           class="mx-2"
           icon="mdi-cog"
           color="#212121"
+          size="20"
         ></v-icon>
       </div>
       <v-btn
@@ -488,10 +490,6 @@ onBeforeUnmount(() => {
   width: 100%;
   background: linear-gradient(to left, #212121, #37474f);
   justify-content: flex-start;
-}
-
-h3 {
-  color: rgb(213, 228, 244);
 }
 
 .ic_search .v-icon {

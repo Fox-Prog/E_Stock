@@ -127,6 +127,11 @@ export default createStore({
 
     setRecentForm(state, value){
       state.recentForm = value
+    },
+
+    resetAll(state){
+      state.composants = []
+      state.catts = []
     }
 
   },
@@ -203,7 +208,12 @@ export default createStore({
 
     setRecentForm({commit}, value){
       commit('setRecentForm', value)
+    },
+
+    resetAll({commit}){
+      commit('resetAll')
     }
+    
   },
   modules: {
   }

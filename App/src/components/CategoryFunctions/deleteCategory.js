@@ -82,3 +82,35 @@ function deleteCategoryLocal(cattToDelete){
 }
 
 
+
+// Reset before backup
+
+export function resetAllCategory(){
+    const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
+
+    try{
+        const request = indexedDB.open("ESS", 1)
+
+        request.onerror = (err) => {
+          console.error("Error with IndexedDB: ", err)
+        }
+
+        request.onsuccess = (() => {
+            const db = request.result
+            const transaction = db.transaction("category", "readwrite")
+            const categoryDB = transaction.objectStore("category")
+
+            const resetAll = categoryDB.clear()
+
+            resetAll.onerror = (()=>{
+                console.error("Error with clear: ", err)
+            })
+
+            transaction.oncomplete = (() => {
+                db.close()
+              })
+        })
+    } catch (err){
+        console.error("Error with IndexedDB: ", err)
+    }
+}

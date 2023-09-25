@@ -18,14 +18,60 @@
 
     <v-card class="bc_form">
         <div class="btn">
+
             <button class="btn_up_down" :disabled="errBackup" @click="createBackup">
                 <h3>Save</h3>
                 <img src="/images/save.png" alt="Do Backup" title="Do Backup">
             </button>
-            <button class="btn_up_down" :disabled="errBackup" @click="restoreBackup">
+            <button class="btn_up_down" :disabled="errBackup" @click="backupFile=null, restoreForm = true">
                 <h3>Restore</h3>
                 <img src="/images/restore.png" alt="Restored Backup" title="Restored Backup">
             </button>
+        </div>
+        <!-- Restore options -->
+        <div class="restoreForm" v-if="restoreForm">
+          <v-form v-model="form" :disabled="errBackup">
+            <!-- Backup src -->
+            <v-file-input
+              v-model="backupFile"
+              variant="outlined"
+              prepend-icon="mdi-file-code-outline"
+              accept=".json"
+              clearable
+            ></v-file-input>
+            <!-- Backup options -->
+            <v-select
+              v-model="backupOptions"
+              variant="outlined"
+              prepend-icon="mdi-cog"
+              :items="options"
+            ></v-select>
+            <!-- Go backup -->
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;  
+              "
+            >
+              <v-btn
+                title="Start backup"
+                color="green"
+                :disabled="!form || errBackup"
+                variant="elevated"
+                rounded="lg"
+                icon="mdi-check"
+                 @click="restoreBackup"
+              ></v-btn>
+              <v-btn
+                title="Cancel backup"
+                color="red"
+                variant="elevated"
+                rounded="lg"
+                icon="mdi-close"
+                 @click="restoreForm = false, resetError()"
+              ></v-btn>
+            </div>
+          </v-form>
         </div>
     </v-card>
 
@@ -61,9 +107,12 @@
 
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 import Btn_cancel from '@/components/bigBTN/cancel.vue'
 
@@ -71,6 +120,31 @@ const imgPath = "/images/bgBackup.png"
 let errBackup = ref(false)
 let showError = ref(false)
 let detailsError = ref("")
+function resetError(){
+  errBackup.value = false
+  showError.value = false
+  detailsError.value = ""
+}
+
+
+let restoreForm = ref(false)
+const options = ["Added changes only", "Reset all before backup"]
+let backupFile = ref(null)
+let backupOptions = ref("Added changes only")
+let form = computed(()=> {
+  try{
+    if(!backupFile.value){
+      return false
+    } else if(backupFile.value[0].type === "application/json"){
+      return true    
+    }
+  } catch{
+    
+  }
+})
+
+
+
 
 // Create backup
 async function createBackup(){
@@ -107,57 +181,77 @@ async function createBackup(){
 
 
 // Restore backup
-import { deleteCategory } from "@/components/CategoryFunctions/deleteCategory.js"
-import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent.js"
+import { resetAllCategory } from "@/components/CategoryFunctions/deleteCategory.js"
+import { resetAllComponents } from "@/components/ComponentFunctions/deleteComponent.js"
 
 import { addCategory } from "@/components/CategoryFunctions/addCategory.js"
 import { addComponent } from "@/components/ComponentFunctions/addComponent.js"
 
+import { getCategoryLocal } from "@/components/CategoryFunctions/getCategory.js";
+import { getComponentLocal } from "@/components/ComponentFunctions/getComponent.js";
+
 async function restoreBackup(){
   try{
-    const inputElement = document.createElement("input");
-    inputElement.type = "file";
-    inputElement.accept = ".json";
+    const file = backupFile.value[0]
+    if (file) {
+      if (file.type.includes("application/json")) {
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          const backup = JSON.parse(event.target.result);
 
-    inputElement.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        if (file.type.includes("application/json")) {
-          const reader = new FileReader()
+          // Options restore changed only
+          if(backupOptions.value === "Added changes only"){
+            // Load backup
+            const cattsApp = store.state.catts
+            let vuex = cattsApp.map(c => c.id)
 
-          reader.onload = (event) => {
-            const backup = JSON.parse(event.target.result);
+            const catts = backup.category
+            for(let c in catts){
+              const category = catts[c]
+              if(!vuex.includes(category.id)){
+                addCategory(store, category.id, category.name, category.color, true)
+              }
+            }
+            const componentsApp = store.state.composants
+            vuex = componentsApp.map(c => c.id)
+            const components = backup.components
+            for(let c in components){
+              const component = components[c]
+              if(!vuex.includes(component.id)){
+                addComponent(store, component.id, component.name, component.description, component.quantity, component.category, component.imgName, component.imgBody, true)
+              }
+            }
+
+          // Options reset and restore
+          } else if (backupOptions.value === "Reset all before backup"){
 
             // Reset store + indexedDB
-            const components = store.state.composants
-            for(let c=0; c<components.length; c++){
-              console.log(components[c]);
-              deleteComponent(store, components[c])
+            store.dispatch('resetAll')
+            resetAllComponents()
+            resetAllCategory()
+
+            // Load backup
+            const catts = backup.category
+            const components = backup.components
+            for(let c in catts){
+              const category = catts[c]
+              addCategory(store, category.id, category.name, category.color, true)
             }
 
-            const catts = store.state.catts
-            for(let c=0; c<catts.length; c++){
-              console.log(catts[c]);
-              deleteCategory(store, catts[c])
+            for(let c in components){
+              const component = components[c]
+              addComponent(store, component.id, component.name, component.description, component.quantity, component.category, component.imgName, component.imgBody, true)
             }
-
-            // const catts = backup.category
-            // const components = backup.components
-            // for(let c in catts){
-            //   const category = catts[c]
-            //   addCategory(store, category.id, category.name, category.color, true)
-            // }
-
-            // for(let c in components){
-            //   const component = components[c]
-            //   addComponent(store, component.id, component.name, component.description, component.quantity, component.category, component.imgName, component.imgBody, true)
-            // }
           }
-          reader.readAsText(file);
         }
+        reader.readAsText(file);
       }
-    })
-    inputElement.click();
+      router.push('/')
+
+    } else {
+      errBackup.value = true
+      detailsError.value = "Error with backup file.json"
+    }
   
   } catch(error){
     errBackup.value = true
@@ -165,6 +259,8 @@ async function restoreBackup(){
     console.log(error)
   }
 }
+
+
 
 
 </script>
@@ -251,7 +347,7 @@ async function restoreBackup(){
     text-align: center;
     padding: 10px;
     margin: 10px;
-    background-color: rgba(255, 255, 255, 0.51);
+    background: linear-gradient(to bottom left, #616161, #8e8b8b, #616161);
     border-radius: 10px;
     overflow: hidden;
     max-width: 250px;
@@ -262,7 +358,7 @@ async function restoreBackup(){
 }
 
 .btn_up_down:hover {
-    background-color: rgba(255, 255, 255, 0.715);
+  background: linear-gradient(to bottom left, #616161, #b7b5b5, #616161);
     box-shadow: 0px 0px 3px 0px rgb(251 250 250);
     transform: translateY(-5px);
 }
@@ -270,6 +366,15 @@ async function restoreBackup(){
 h3 {
   color: black;
   margin-bottom: 10px;
+}
+
+
+.restoreForm {
+  margin-top: 15px;
+  padding: 20px;
+  width: 100%;
+  border-radius: 20px;
+  background: linear-gradient(to bottom left, #616161, #8e8b8b, #616161);
 }
 
 
