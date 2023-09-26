@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "School ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/1080/1080985.png"
+    },
+    {
+        "id": 2,
+        "name": "Studying ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/1081/1081040.png"
+    },
+    {
+        "id": 3,
+        "name": "Book ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/207/207114.png"
+    },
+    {
+        "id": 4,
+        "name": "Exam ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/1081/1081015.png"
+    },
+    {
+        "id": 5,
+        "name": "Left arrow ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/3575/3575967.png"
+    },
+    {
+        "id": 6,
+        "name": "Homework ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/1081/1081007.png"
+    },
+    {
+        "id": 7,
+        "name": "Pizza ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/706/706934.png"
+    },
+    {
+        "id": 8,
+        "name": "Colosseum ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/444/444697.png"
+    },
+    {
+        "id": 9,
+        "name": "Dinosaur ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/6187/6187644.png"
+    },
+    {
+        "id": 10,
+        "name": "Pizza ",
+        "color": "color",
+        "shape": "hand-drawn",
+        "url": "https://cdn-icons-png.flaticon.com/128/706/706918.png"
+    }
+]

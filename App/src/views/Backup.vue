@@ -386,8 +386,8 @@ async function restoreBackup(){
 
 .btn_up_down:hover {
   background: linear-gradient(to bottom left, #616161, #b7b5b5, #616161);
-    box-shadow: 0px 0px 3px 0px rgb(251 250 250);
-    transform: translateY(-5px);
+  box-shadow: 0px 0px 3px 0px rgb(251 250 250);
+  transform: translateY(-5px);
 }
 
 h3 {

@@ -14,12 +14,7 @@ const cache_files = [
     '/images/wind.png',
     '/images/offline.png',
     '/images/save.png',
-    '/images/restore.png',
-
-    '/js/chunk-vendors.js',
-    '/js/app.js',
-    '/js/webfontloader.js',
-    '/fonts/materialdesignicons-webfont.68358e87.woff2'
+    '/images/restore.png'
 ]
 
 

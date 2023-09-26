@@ -28,6 +28,23 @@
     <h1>Offline</h1>
    </div>
 
+   <!-- Json error -->
+   <div 
+    class="error" 
+    v-if="errLoadJson"
+    >
+    <img :src="imgOffline" alt="offline_img">
+    <h1>Error loading the icons file</h1>
+   </div>
+
+   <!-- Loader animation -->
+   <div 
+    class="loader-font"
+    v-if="loader"
+  >
+   <div class="loader"></div>
+  </div>
+
 </template>
 
 
@@ -49,12 +66,14 @@ const imgOffline = "/images/offline.png"
 
 let icons = ref([])
 let empty = ref(false)
+let loader = ref(true)
+let errLoadJson = ref(false)
 
 let online = ref(navigator.onLine)
 function updateOnlineStatus(){
   resetIcons()
   online.value = navigator.onLine
-  getIcons()
+  loadIcons()
 }
 
 let params = computed(() => {
@@ -67,16 +86,36 @@ let params = computed(() => {
 })
 
 let trigger = computed(()=> store.state.trigger)
+let jsonData = null
 
-watch(trigger, getIcons)
+watch(trigger, loadIcons)
+
+async function getJson(){
+  // Fetch request -- GET JSON
+  try {
+    const req = await fetch("/icons.json", { //    <<< Request URL
+      method: 'GET'
+    })
+  
+    if(!req.ok){ throw new Error('Request failed')}
+  
+    jsonData = await req.json()
+    loader.value = false  
+  
+  } catch(err){
+    console.log("Request json error: ")
+    console.error(err)
+    errLoadJson.value = true
+  }
+}
 
 
-
-
-
+// Load icons
+async function loadIcons(){
+  icons.value = await getIcons()
+}
 
 // Get icons from json
-import jsonData from "/src/assets/icons.json"
 async function getIcons(){
 
   // Check empty search
@@ -88,7 +127,6 @@ async function getIcons(){
 
     let word = ""
     if(search !== null){
-
       if(search.length > 1){
         word = search.substring(1)
       } else {
@@ -111,17 +149,19 @@ async function getIcons(){
         let icMax = ((params.value.page)*100)
         let icMin = icMax - 100
     
-        icons.value = resultSort.slice(icMin, icMax)
+        setPages(params.value.page, Math.round(nbrIcons/100))
+        return resultSort.slice(icMin, icMax)
       } else {
-        icons.value = resultSort
+        setPages(params.value.page, Math.round(nbrIcons/100))
+        return resultSort
       }
-    
-      setPages(params.value.page, Math.round(nbrIcons/100))
       
     } else {  // Search value == "" or " "
       resetIcons()
     }
   }
+
+  return []
 }
 
 
@@ -264,9 +304,10 @@ function addIcon(event){
 
 
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener('online', updateOnlineStatus)
   window.addEventListener('offline', updateOnlineStatus)
+  await getJson()
 })
 
 onBeforeUnmount(() => {
@@ -310,6 +351,38 @@ onBeforeUnmount(() => {
 
 .icon-item img {
   max-width: 100%;
+}
+
+
+.loader-font {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  align-content: center;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.166);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: ampl 2s forwards infinite;
+}
+@keyframes ampl {
+  0% { width: 80px; height: 80px;}
+  50% { width: 100px; height: 100px; padding: 25px; background-color: rgba(255, 255, 255, 0.34);}
+  100% { width: 80px; height: 80px;}
+}
+
+.loader {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #212121;
+  border-radius: 50%;
+  border-top: 3px solid #9b9a9a;
+  animation: spin 2s forwards infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }
 
 
