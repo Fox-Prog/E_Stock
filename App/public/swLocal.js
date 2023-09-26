@@ -1,25 +1,25 @@
 const prefix = 'V1'
 const cache_files = [
-    '/index.html',
-    '/manifest.json',
+    'http://localhost:8080/index.html',
+    'http://localhost:8080/manifest.json',
 
-    '/icons/ico.ico',
-    '/icons/icon512.png',
-    '/icons/icon192.png',
+    'http://localhost:8080/icons/ico.ico',
+    'http://localhost:8080/icons/icon512.png',
+    'http://localhost:8080/icons/icon192.png',
 
-    '/images/bgNew.jpg',
-    '/images/bgBackup.jpg',
-    '/images/chip.png',
-    '/images/empty.png',
-    '/images/wind.png',
-    '/images/offline.png',
-    '/images/save.png',
-    '/images/restore.png',
+    'http://localhost:8080/images/bgNew.jpg',
+    'http://localhost:8080/images/bgBackup.jpg',
+    'http://localhost:8080/images/chip.png',
+    'http://localhost:8080/images/empty.png',
+    'http://localhost:8080/images/wind.png',
+    'http://localhost:8080/images/offline.png',
+    'http://localhost:8080/images/save.png',
+    'http://localhost:8080/images/restore.png',
 
-    '/js/chunk-vendors.js',
-    '/js/app.js',
-    '/js/webfontloader.js',
-    '/fonts/materialdesignicons-webfont.68358e87.woff2'
+    'http://localhost:8080/js/chunk-vendors.js',
+    'http://localhost:8080/js/app.js',
+    'http://localhost:8080/js/webfontloader.js',
+    'http://localhost:8080/fonts/materialdesignicons-webfont.68358e87.woff2'
 ]
 
 
@@ -74,7 +74,7 @@ self.addEventListener('activate', (event) => {
 // Ecoute l'évenement fetch sur le sw
 self.addEventListener('fetch', (event) => { 
     
-    // console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
+    console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
 
     if(event.request.mode === 'navigate'){      // Intercepte la requête pour ajouter des comportements
         event.respondWith((async () => {

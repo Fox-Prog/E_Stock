@@ -81,11 +81,19 @@ async function getIcons(){
 
   // Check empty search
   const regex = /^\s*$/
-  let word = params.value.search
-  word = regex.test(word) ? null : word
+  let search = params.value.search
+  search = regex.test(search) ? null : search
 
   if(online.value){
-    if(word !== null){
+
+    let word = ""
+    if(search !== null){
+
+      if(search.length > 1){
+        word = search.substring(1)
+      } else {
+        word = search
+      }
 
       let wordMatch = await jsonData.filter(icon => icon.name.includes(word))
       let result = getOptions(wordMatch)
@@ -99,16 +107,16 @@ async function getIcons(){
         empty.value = false
       }
     
-      if(nbrIcons > 200){
-        let icMax = ((params.value.page)*200)
-        let icMin = icMax - 200
+      if(nbrIcons > 100){
+        let icMax = ((params.value.page)*100)
+        let icMin = icMax - 100
     
         icons.value = resultSort.slice(icMin, icMax)
       } else {
         icons.value = resultSort
       }
     
-      setPages(params.value.page, Math.round(nbrIcons/200))
+      setPages(params.value.page, Math.round(nbrIcons/100))
       
     } else {  // Search value == "" or " "
       resetIcons()
@@ -123,22 +131,14 @@ function getOptions(wordMatch){
   let colorMatch = null
   let shapeMatch = null
   if(params.value.color !== 'All' && params.value.shape !== 'All'){ // IF color + shape
-    if(params.value.color === 'Color'){
-      const colors = ["color", "gray", "white", "red", "rose", "magenta", "orange", "yellow", "chartreuse", "green", "spring-green", "cyan", "azure", "blue", "violet"]
-      colorMatch = wordMatch.filter(icon => colors.includes(icon.color) )
-    } else {
-      colorMatch = wordMatch.filter(icon => icon.color === params.value.color.toLowerCase())
-    }
+    
+    colorMatch = wordMatch.filter(icon => icon.color === params.value.color.toLowerCase())
     shapeMatch = colorMatch.filter(icon => icon.shape === params.value.shape.toLowerCase())
     return shapeMatch
 
   } else if(params.value.color !== 'All'){  // IF just color
-    if(params.value.color === 'Color'){
-      const colors = ["color", "gray", "white", "red", "rose", "magenta", "orange", "yellow", "chartreuse", "green", "spring-green", "cyan", "azure", "blue", "violet"]
-      colorMatch = wordMatch.filter(icon => colors.includes(icon.color) )
-    } else {
-      colorMatch = wordMatch.filter(icon => icon.color === params.value.color.toLowerCase())
-    }
+    
+    colorMatch = wordMatch.filter(icon => icon.color === params.value.color.toLowerCase())
     return colorMatch
 
   } else if(params.value.shape !== 'All'){  // IF just shape

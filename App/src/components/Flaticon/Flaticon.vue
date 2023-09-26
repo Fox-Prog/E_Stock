@@ -6,7 +6,7 @@
         variant="flat"
         @click="store.dispatch('setFlatForm', false)"
     ></v-btn>
-    <v-card style="background-color: #212121db; border-radius: 20px;" height="100vh">
+    <v-card style="background-color: #212121db; border-radius: 20px; height: 100vh;">
         <div>
             <!-- Search form -->
             <div class="search_form_icons">
