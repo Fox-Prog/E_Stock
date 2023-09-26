@@ -76,7 +76,7 @@ watch(trigger, getIcons)
 
 
 // Get icons from json
-import jsonData from 'C:/Users/Utilisateur/Documents/Programmation/ES_assets/icons.json'
+import jsonData from "/src/assets/icons.json"
 async function getIcons(){
 
   // Check empty search
@@ -86,8 +86,6 @@ async function getIcons(){
 
   if(online.value){
     if(word !== null){
-
-      console.log(word, params.value.color, params.value.shape);
 
       let wordMatch = await jsonData.filter(icon => icon.name.includes(word))
       let result = getOptions(wordMatch)

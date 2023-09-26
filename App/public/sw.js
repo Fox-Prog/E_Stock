@@ -24,7 +24,6 @@ const cache_files = [
 
 
 
-
 // Ecoute l'évenement install sur le sw
 self.addEventListener('install', (event) => {  
     // Active directement le sw

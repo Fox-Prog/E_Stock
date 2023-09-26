@@ -139,6 +139,7 @@ const router = useRouter()
 import Btn_cancel from '@/components/bigBTN/cancel.vue'
 
 const imgPath = "/images/bgBackup.jpg"
+
 let errBackup = ref(false)
 let showError = ref(false)
 let detailsError = ref("")
@@ -215,9 +216,6 @@ import { resetAllComponents } from "@/components/ComponentFunctions/deleteCompon
 
 import { addCategory } from "@/components/CategoryFunctions/addCategory.js"
 import { addComponent } from "@/components/ComponentFunctions/addComponent.js"
-
-import { getCategoryLocal } from "@/components/CategoryFunctions/getCategory.js";
-import { getComponentLocal } from "@/components/ComponentFunctions/getComponent.js";
 
 async function restoreBackup(){
   try{
