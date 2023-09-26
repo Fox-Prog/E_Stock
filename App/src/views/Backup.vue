@@ -39,6 +39,28 @@
               accept=".json"
               clearable
             ></v-file-input>
+            <!-- Alert Msg Backup options -->
+            <div style="display: flex;" v-if="warning">
+              <v-icon
+                class="mr-4"
+                icon="mdi-alert"
+                color="#B71C1C"
+                size="25"
+              ></v-icon>
+              <v-banner
+                class="mb-2"
+                rounded="lg"
+                style="
+                  padding: 5px; 
+                  margin: 0;
+                  text-align: center;
+                  background: linear-gradient(to bottom right, #af0b05e2, #cf560ae7);
+                "
+              >
+                <h3>Caution ! Any data not present in the backup will be lost !</h3>
+                <h4>To avoid this, please change the options below.</h4>
+              </v-banner>
+            </div>
             <!-- Backup options -->
             <v-select
               v-model="backupOptions"
@@ -116,7 +138,7 @@ const router = useRouter()
 
 import Btn_cancel from '@/components/bigBTN/cancel.vue'
 
-const imgPath = "/images/bgBackup.png"
+const imgPath = "/images/bgBackup.jpg"
 let errBackup = ref(false)
 let showError = ref(false)
 let detailsError = ref("")
@@ -130,7 +152,7 @@ function resetError(){
 let restoreForm = ref(false)
 const options = ["Added changes only", "Reset all before backup"]
 let backupFile = ref(null)
-let backupOptions = ref("Added changes only")
+let backupOptions = ref("Reset all before backup")
 let form = computed(()=> {
   try{
     if(!backupFile.value){
@@ -138,9 +160,16 @@ let form = computed(()=> {
     } else if(backupFile.value[0].type === "application/json"){
       return true    
     }
-  } catch{
-    
+  } catch(err){
+    console.log(err)
   }
+})
+
+let warning = computed(()=>{
+  if(backupOptions.value === "Reset all before backup"){
+    return true
+  }
+  return false
 })
 
 
@@ -376,7 +405,6 @@ h3 {
   border-radius: 20px;
   background: linear-gradient(to bottom left, #616161, #8e8b8b, #616161);
 }
-
 
     
 

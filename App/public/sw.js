@@ -1,4 +1,4 @@
-const prefix = 'V2'
+const prefix = 'V1'
 const cache_files = [
     'http://localhost:8080/index.html',
     'http://localhost:8080/manifest.json',
@@ -8,10 +8,13 @@ const cache_files = [
     'http://localhost:8080/icons/icon192.png',
 
     'http://localhost:8080/images/bgNew.jpg',
+    'http://localhost:8080/images/bgBackup.jpg',
     'http://localhost:8080/images/chip.png',
     'http://localhost:8080/images/empty.png',
-    'http://localhost:8080/images/offline.png',
     'http://localhost:8080/images/wind.png',
+    'http://localhost:8080/images/offline.png',
+    'http://localhost:8080/images/save.png',
+    'http://localhost:8080/images/restore.png',
 
     'http://localhost:8080/js/chunk-vendors.js',
     'http://localhost:8080/js/app.js',
@@ -64,56 +67,52 @@ self.addEventListener('activate', (event) => {
     })()) // Auto appel de la fonction ()
 
     console.log(`${prefix} Activate`)
-    fetching()
 })
 
 
 
 
-
-
-function fetching(){
-    // Ecoute l'évenement fetch sur le sw
-    self.addEventListener('fetch', (event) => { 
-        
-        console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
+// Ecoute l'évenement fetch sur le sw
+self.addEventListener('fetch', (event) => { 
     
-        if(event.request.mode === 'navigate'){      // Intercepte la requête pour ajouter des comportements
-            event.respondWith((async () => {
-                try {   
-                    // Online
-                    const preloadResponse = await event.preloadResponse
-                    if (preloadResponse){
-                        return preloadResponse
-                    }
-    
-                    return await fetch(event.request)      // Comportement habituel, charge l'app
-                } catch(e) {
-                    // Offline
-                    const cache = await caches.open(prefix)     // Ouvre le cache avec la clé de cache = prefix
-                    return await cache.match('/index.html')   
+    console.log(`${prefix} Fetching: ${event.request.url}, Mode: ${event.request.mode}`)
+
+    if(event.request.mode === 'navigate'){      // Intercepte la requête pour ajouter des comportements
+        event.respondWith((async () => {
+            try {   
+                // Online
+                const preloadResponse = await event.preloadResponse
+                if (preloadResponse){
+                    return preloadResponse
                 }
-            })())   // Auto appel de la fonction ()
-    
-        } 
-        else if(cache_files.includes(event.request.url) && !event.request.url.includes('.hot-update.')){     // Si le fichiers requeté est déjà dans le cache
-            console.log("FROM CACHE")
-            try{
-                event.respondWith(caches.match(event.request))
-            } catch(error){
-                console.log(error)
+
+                return await fetch(event.request)      // Comportement habituel, charge l'app
+            } catch(e) {
+                // Offline
+                const cache = await caches.open(prefix)     // Ouvre le cache avec la clé de cache = prefix
+                return await cache.match('/index.html')   
             }
-        } 
-    
-        if(event.request.url.includes('hot-update')){
-            console.log("HOT-UPDATE...")
-            try{
-                return event
-            
-            } catch(error){
-                console.log("hot-update error: ",error)
-            }
+        })())   // Auto appel de la fonction ()
+
+    } 
+    else if(cache_files.includes(event.request.url) && !event.request.url.includes('.hot-update.')){     // Si le fichiers requeté est déjà dans le cache
+        console.log("FROM CACHE")
+        try{
+            event.respondWith(caches.match(event.request))
+        } catch(error){
+            console.log(error)
         }
-    })
-}
+    } 
+
+    if(event.request.url.includes('hot-update')){
+        console.log("HOT-UPDATE...")
+        try{
+            return event
+        
+        } catch(error){
+            console.log("hot-update error: ",error)
+        }
+    }
+})
+
 
