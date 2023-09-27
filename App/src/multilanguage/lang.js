@@ -85,6 +85,7 @@ const languages = [
 
         SECTEUR_8: 'CATEGORY',
         ttBtn_OpenCatt: 'Open Category',
+        textConfirmDelete: 'Delete this category ?',
         ctBtn_DeleteYes: 'Yes',
         ctBtn_DeleteNo: 'No',
         textCattEmpty: 'Category is empty',
@@ -179,6 +180,7 @@ const languages = [
     
         SECTEUR_8: 'CATEGORY',
         ttBtn_OpenCatt: 'Ouvrir la catégorie',
+        textConfirmDelete: 'Supprimer cette catégorie ?',
         ctBtn_DeleteYes: 'Oui',
         ctBtn_DeleteNo: 'Non',
         textCattEmpty: 'La catégorie est vide',

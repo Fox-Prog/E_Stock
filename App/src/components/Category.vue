@@ -46,7 +46,7 @@
               "
             >
               <v-card-title style="text-align: center"
-                >Delete this category ?</v-card-title
+                >{{ t.textConfirmDelete }}</v-card-title
               >
 
               <div

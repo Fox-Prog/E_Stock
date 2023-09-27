@@ -122,10 +122,10 @@ import { setLang } from '@/multilanguage/lang.js'
 
 #flag {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  right: -40px;
-  top: -40px;
+  width: 60px;
+  height: 60px;
+  right: -30px;
+  top: -30px;
 }
 
 

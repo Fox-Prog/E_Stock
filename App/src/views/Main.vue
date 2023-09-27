@@ -552,7 +552,7 @@ onBeforeUnmount(() => {
 
   display: flex;
   flex-direction: column;
-  min-width: 30vh;
+  min-width: 40vh;
   max-width: 50vh;
 
   height: auto;
