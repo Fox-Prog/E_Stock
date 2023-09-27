@@ -1,5 +1,6 @@
 <template>
     <v-btn
+        :title="t.ttBtnBack"
         id="btn-back"
         icon="mdi-chevron-left"
         elevation="10"
@@ -28,10 +29,11 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 import { useStore } from 'vuex'
 const store = useStore()
+const t = computed(() => store.state.lg)
 
 const icons = ref([])
 

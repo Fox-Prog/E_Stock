@@ -1,5 +1,6 @@
 <template>
     <v-btn
+    :title="t.ttBtnBack"
         id="btn-back"
         icon="mdi-chevron-left"
         elevation="10"
@@ -18,7 +19,7 @@
                             clearable
                             @input="page=1, callIcons()"
                             v-model="search"
-                            label="Search"
+                            :label="t.labelSearch"
                             variant="outlined"
                         ></v-text-field>
     
@@ -55,6 +56,7 @@
 
                     <!-- LEFT (-) -->
                     <v-btn  
+                        :title="t.ttBtn_PreviousPage"
                         width="100px"
                         height="30px"
                         rounded="sm"
@@ -65,6 +67,7 @@
                     <h4>{{ `Page ${currentPage}/${maxPage}` }}</h4>
                     <!-- RIGHT (+) -->
                     <v-btn
+                        :title="t.ttBtn_NextPage"
                         width="100px"
                         height="30px"
                         rounded="sm"
@@ -89,6 +92,7 @@ import { computed, ref, onBeforeUnmount } from 'vue'
 
 import { useStore } from 'vuex'
 const store = useStore()
+const t = computed(() => store.state.lg)
 
 import iconsGrid from '@/components/Flaticon/iconsGrid.vue'
 const colors = ['All', 'Black', 'Color', 'Gradient']

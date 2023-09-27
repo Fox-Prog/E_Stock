@@ -30,7 +30,7 @@
           :rules="[required, unicName, longName]"
           clearable
           color="color_catt"
-          label="Name"
+          :label="t.labelName"
           variant="outlined"
           prepend-icon="mdi-rename-box"
         ></v-text-field>
@@ -58,13 +58,14 @@
 
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 
 import Btn_done from "@/components/bigBTN/done.vue";
 import Btn_cancel from "@/components/bigBTN/cancel.vue";
 
 import { useStore } from "vuex";
 const store = useStore();
+const t = computed(() => store.state.lg)
 
 import { useRouter } from "vue-router";
 const router = useRouter();

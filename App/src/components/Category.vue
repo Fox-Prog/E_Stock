@@ -8,7 +8,7 @@
       <v-btn
         id="Cat-main-btn"
         variant="flat"
-        title="openCategory"
+        :title="t.ttBtn_OpenCatt"
         elevation="10"
         rounded="lg"
         @click="displayCforC(catt)"
@@ -61,13 +61,13 @@
                   variant="text"
                   style="width: 49%"
                   @click="deleteCategory(store, catt), (ckeckDelete = false)"
-                  >Yes</v-btn
+                  >{{ t.ctBtn_DeleteYes }}</v-btn
                 >
                 <v-btn
                   variant="text"
                   style="width: 49%"
                   @click="ckeckDelete = false"
-                  >No</v-btn
+                  >{{ t.ctBtn_DeleteNo }}</v-btn
                 >
               </div>
             </v-card>
@@ -91,7 +91,7 @@
     <v-btn
       id="Cat-btn-expand"
       variant="text"
-      :title="expand ? 'hideDetails' : 'showDetails'"
+      :title="expand ? t.ttBtn_ExpandFalse : t.ttBtn_ExpandTrue"
       block
       :icon="expand ? 'mdi-chevron-up' : 'mdi-chevron-down'"
       density="compact"
@@ -103,10 +103,10 @@
   <!-- If category is empty -->
   <v-dialog v-model="emptyCatt" width="auto">
     <v-card color="bg_color_modules" elevation="20">
-      <v-card-text style="color: black"> Category is empty </v-card-text>
+      <v-card-text style="color: black">{{ t.textCattEmpty }}</v-card-text>
       <v-card-actions>
         <v-btn block style="color: black" @click="emptyCatt = false"
-          >Close</v-btn
+          >{{ t.ctBtn_Close }}</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -121,13 +121,14 @@
 
 
 <script setup>
-import { useStore } from "vuex";
-const store = useStore();
+import { ref, computed } from "vue";
+import { useStore } from "vuex"
+const store = useStore()
+const t = computed(() => store.state.lg)
 
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-import { ref, computed } from "vue";
 
 import addCpBtn from "@/components/littleBTN/addCpBtn.vue";
 import btn_set from "@/components/littleBTN/set.vue";

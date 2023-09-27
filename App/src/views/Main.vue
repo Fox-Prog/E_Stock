@@ -12,40 +12,43 @@
       @focus="resetSearchValue"
       clearable
       class="ma-5 ic_search"
-      label="Search"
+      :label= "t.labelSearch"
       prepend-icon="mdi-magnify"
       variant="outlined"
+      color="#78909C"
     ></v-text-field>
 
+    <v-divider class="my-5" thickness="5"></v-divider>
+
     <v-list density="comfortable" role="group" nav>
-      <h3>Display</h3>
+      <h3>{{ t.h3_DisplayBtn }}</h3>
       <v-btn
         class="ma-5 btn_catt btn_drawer"
         icon="mdi-shape"
         variant="flat"
-        title="Show Category"
+        :title="t.ttBtn_ShowCatt"
         @click="displayCatts"
       ></v-btn>
       <v-btn
         class="ma-5 btn_component btn_drawer"
         icon="mdi-all-inclusive"
         variant="flat"
-        title="Show Component"
+        :title="t.ttBtn_ShowComp"
         @click="displayComposants"
       ></v-btn>
 
-      <h3>Show</h3>
+      <h3>{{ t.h3_ShowIcons }}</h3>
       <v-btn
         class="ma-5 btn_showImg btn_drawer"
         :icon="showImg ? 'mdi-image' : 'mdi-image-off'"
         variant="flat"
-        :title="showImg ? 'Hide Icon' : 'Show Icon'"
+        :title="showImg ? t.ttBtn_HideIcons : t.ttBtn_ShowIcons"
         @click="setShowImg"
       >
         <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C' }"></v-icon>
       </v-btn>
 
-      <h3>Sort to</h3>
+      <h3>{{ t.h3_Sort }}</h3>
       <v-btn
         class="ma-5 btn_alphaSort btn_drawer"
         :icon="
@@ -65,7 +68,7 @@
             : 'mdi-sort-calendar-descending'
         "
         variant="flat"
-        :title="sortToRecently ? 'Less Recent' : 'Most Recent'"
+        :title="sortToRecently ? t.ttBtn_SortLessRecent : t.ttBtn_SortMostRecent"
         @click="recentSort"
       ></v-btn>
       <v-btn
@@ -76,7 +79,7 @@
             : 'mdi-sort-numeric-descending'
         "
         variant="flat"
-        :title="sortToNumber ? 'Little' : 'Many'"
+        :title="sortToNumber ? t.ttBtn_SortLittle : t.ttBtn_SortMany"
         @click="numberSort"
       ></v-btn>
 
@@ -89,7 +92,7 @@
           justify-items: center;
         "
       >
-        <h3 style="margin: 0;">Backup</h3>
+        <h3 style="margin: 0;">{{ t.h3_Backup }}</h3>
         <v-icon
           class="mx-2"
           icon="mdi-cog"
@@ -101,9 +104,21 @@
         class="ma-5 btn_bc btn_drawer"
         icon="mdi-harddisk"
         variant="flat"
-        title="Backup"
+        :title="t.h3_Backup"
         @click="router.push('/Backup')"
       ></v-btn>
+
+      <v-divider class="my-5" thickness="5"></v-divider>
+
+      <v-btn
+        rounded="lg"
+        variant="outlined"
+        color="#78909C"
+        block
+        style="margin-bottom: 20px;"
+        @click="router.push('/Settings')"
+      >{{ t.ctBtn_Settings }}</v-btn>
+
     </v-list>
   </v-navigation-drawer>
 
@@ -112,7 +127,7 @@
       class="ma-1"
       style="font-size: 20px"
       variant="tonal"
-      :title="showCategory ? 'Show Components' : 'Show Category'"
+      :title="showCategory ? t.ttBtn_ShowComp : t.ttBtn_ShowCatt"
       :icon="showCategory ? 'mdi-chevron-right' : 'mdi-chevron-left'"
       @click="
         showCategory
@@ -131,11 +146,11 @@
     "
   >
     <img :src="img_empty" alt="img_empty" />
-    <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">No category</h2>
-    <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">
-      No components
-    </h2>
-    <h2 style="color: rgb(177, 199, 226)">Create the first</h2>
+    <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.noCatt }}</h2>
+    <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.createFirstCatt }}</h2>
+
+    <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.noComp }}</h2>
+    <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.createFirstComp }}</h2>
   </div>
 
 
@@ -209,12 +224,12 @@
               <router-link to="/CSCategory" style="text-decoration: none">
                 <v-btn
                   class="btnChoice"
-                  title="Create Category"
+                  :title="t.ttBtn_CreateCatt"
                   style="
                     color: black;
                     background: linear-gradient(to top right, #1b5e20, #2e7d32);
                   "
-                  >Category</v-btn
+                  >{{ t.ctBtn_CreateCatt }}</v-btn
                 >
               </router-link>
             </div>
@@ -228,12 +243,12 @@
               <router-link to="/CSComponent" style="text-decoration: none">
                 <v-btn
                   class="btnChoice"
-                  title="Create Component"
+                  :title="t.ttBtn_CreateComp"
                   style="
                     color: black;
                     background: linear-gradient(to top right, #01579b, #039be5);
                   "
-                  >Component</v-btn
+                  >{{ t.ctBtn_CreateComp }}</v-btn
                 >
               </router-link>
             </div>
@@ -255,8 +270,10 @@
 
 
 <script setup>
-import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
-import { useStore } from "vuex";
+import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue"
+import { useStore } from "vuex"
+const store = useStore()
+const t = computed(() => store.state.lg)
 
 import Btn_new from "@/components/bigBTN/new.vue";
 import Btn_menu from "@/components/bigBTN/menu.vue";
@@ -267,7 +284,7 @@ import addCpBtn from "@/components/littleBTN/addCpBtn.vue";
 const img_empty = "/images/empty.png";
 
 const drawer = ref(false);
-const store = useStore();
+
 const composants = computed(() => store.state.composants);
 const catts = computed(() => store.state.catts);
 
@@ -455,6 +472,7 @@ function shortcut(event) {
   }
 }
 
+
 onMounted(() => {
   window.addEventListener("keydown", shortcut);
 });
@@ -479,6 +497,7 @@ onBeforeUnmount(() => {
 
 
 <style>
+
 .backSpaceCatt {
   display: flex;
   width: 100%;
@@ -493,7 +512,7 @@ onBeforeUnmount(() => {
 }
 
 .ic_search .v-icon {
-  color: black;
+  color: #78909C;
   font-size: 40px;
 }
 

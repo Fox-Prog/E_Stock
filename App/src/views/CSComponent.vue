@@ -22,7 +22,7 @@
       <img :src="imgPath" alt="background_img" />
     </div>
 
-    <div class="Cp-formulaire">
+    <div class="Cp-form">
       <v-form v-model="form">
         <!-- Image choice -->
         <div class="btn-container"
@@ -31,7 +31,7 @@
           <!-- Local -->
           <v-btn                                  
             class="btn_add_img"
-            title="addLocalIcon"
+            :title="t.ttBtn_AddLocalIcon"
             variant="tonal"
             rounded="lg"
             icon="mdi-folder-image"
@@ -44,7 +44,7 @@
               <v-btn 
                 v-bind="props"
                 class="btn_add_img" 
-                title="addFlaticon"
+                :title="t.ttBtn_DownLoadIcon"
                 variant="tonal" 
                 rounded="lg"
                 icon="mdi-download"
@@ -61,7 +61,7 @@
                 v-if="floatBtn"
                 v-bind="props"
                 class="btn_history" 
-                title="addFlaticon"
+                :title="t.ttBtn_RecentIcons"
                 elevation="10"
                 color="#9f9f9f"
                 icon="mdi-history"
@@ -72,7 +72,7 @@
                 v-if="!floatBtn"
                 v-bind="props"
                 class="btn_add_img" 
-                title="addFlaticon"
+                :title="t.ttBtn_RecentIcons"
                 variant="tonal" 
                 rounded="lg"
                 icon="mdi-history"
@@ -93,7 +93,7 @@
           :rules="[required]"
           clearable
           color="color_component"
-          label="Name"
+          :label="t.labelName"
           variant="outlined"
           prepend-icon="mdi-rename-box"
         ></v-text-field>
@@ -103,7 +103,7 @@
           v-model="description"
           clearable
           color="color_component"
-          label="Description"
+          :label="t.labelDescription"
           variant="outlined"
           prepend-icon="mdi-text-box"
         ></v-text-field>
@@ -113,7 +113,7 @@
           v-model="quantity"
           :rules="[required, nbrPositif]"
           color="color_component"
-          label="Quantity"
+          :label="t.labelQuantity"
           variant="outlined"
           prepend-icon="mdi-plus-minus-variant"
           type="number"
@@ -129,7 +129,7 @@
           variant="outlined"
           prepend-icon="mdi-shape"
           color="color_component"
-          label="Category"
+          :label="t.labelCategory"
           :items="listCattName"
         ></v-combobox>
       </v-form>
@@ -151,6 +151,8 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
+const t = computed(() => store.state.lg)
+
 import { useRouter } from "vue-router";
 const router = useRouter();
 
@@ -389,7 +391,7 @@ onBeforeUnmount(() => {
   object-fit: cover;
 }
 
-.Cp-formulaire {
+.Cp-form {
   position: relative;
   margin-left: 10vw;
   margin-right: 10vw;

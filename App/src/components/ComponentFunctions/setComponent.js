@@ -19,11 +19,12 @@ export function setComponent(store, id, newName, newDescription, newQuantity, ne
 
 
 // Set into IndexedDB
+
 export function setComponentLocal(id, newName, newDescription, newQuantity, newCategory, newImgName, newImgBody){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
-        const request = indexedDB.open("ESS", 1)
+        const request = indexedDB.open("ESS", 1);
 
         request.onerror = (err) => {
           console.error("Error with IndexedDB: ", err)

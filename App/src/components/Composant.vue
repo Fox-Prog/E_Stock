@@ -10,7 +10,7 @@
       <div class="Cp-btn_name">
         <v-dialog v-model="showDescription" width="auto">
           <template v-slot:activator="{ props }">
-            <v-btn variant="text" title="showDescription" v-bind="props">
+            <v-btn variant="text" :title="t.ttBtn_ShowDescription" v-bind="props">
               <h2>{{ composant.name }}</h2>
             </v-btn>
           </template>
@@ -20,7 +20,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn color="primary" block @click="showDescription = false"
-                >Close</v-btn
+                >{{ t.ctBtn_Close }}</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -58,7 +58,7 @@
           <v-btn
             class="CP-ico-btn"
             variant="tonal"
-            title="less"
+            :title="t.ttBtn_Minus"
             icon="mdi-minus"
             size="x-small"
             rounded="sm"
@@ -81,7 +81,7 @@
           <v-btn
             class="CP-ico-btn"
             variant="tonal"
-            title="more"
+            :title="t.ttBtn_Plus"
             icon="mdi-plus"
             size="x-small"
             rounded="sm"
@@ -108,7 +108,7 @@
     <v-btn
       block
       variant="text"
-      :title="expand ? 'hideDetails' : 'showDetails'"
+      :title="expand ? t.ttBtn_ExpandFalse : t.ttBtn_ExpandTrue"
       :icon="expand ? 'mdi-chevron-up' : 'mdi-chevron-down'"
       density="compact"
       rounded="sm"
@@ -122,6 +122,7 @@ import { computed, ref } from "vue";
 
 import { useStore } from "vuex";
 const store = useStore();
+const t = computed(() => store.state.lg)
 
 import { useRouter } from "vue-router";
 const router = useRouter();

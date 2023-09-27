@@ -8,7 +8,7 @@ export async function getCategoryLocal(store){
     
     return new Promise((resolve, reject) => {
         try{
-            const request = indexedDB.open("ESS", 1)
+            const request = indexedDB.open("ESS", 1);
 
             request.onerror = (err) => {
                 console.error("Error with IndexedDB: ", err)

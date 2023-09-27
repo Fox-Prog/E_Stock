@@ -23,7 +23,7 @@ function addCategoryLocal(id, name, color){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
     try{
-        const request = indexedDB.open("ESS", 1)
+        const request = indexedDB.open("ESS", 1);
 
         request.onerror = (err) => {
           console.error("Error with IndexedDB: ", err)

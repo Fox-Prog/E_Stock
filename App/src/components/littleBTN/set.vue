@@ -2,7 +2,7 @@
     <v-btn
         class="Cat-ico-btn"
         variant="tonal"
-        title="set"
+        :title="t.ttBtn_Set"
         icon="mdi-pen"
         color="black"
         size="x-small"
@@ -13,7 +13,11 @@
 
 
 <script setup>
-    
+import { computed } from "vue"
+import { useStore } from "vuex"
+const store = useStore()
+const t = computed(() => store.state.lg)
+
 </script>
 
 

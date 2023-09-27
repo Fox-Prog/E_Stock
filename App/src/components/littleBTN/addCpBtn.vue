@@ -1,7 +1,7 @@
 <template>
     <v-btn
         variant="tonal"
-        title="createComponent"
+        :title="t.ttBtn_CreateCp"
         icon="mdi-memory"
         color="color_component"
         elevation="3"
@@ -10,6 +10,9 @@
 
 
 <script setup>
-
+import { computed } from "vue"
+import { useStore } from "vuex"
+const store = useStore()
+const t = computed(() => store.state.lg)
 
 </script>

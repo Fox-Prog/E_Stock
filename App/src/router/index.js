@@ -3,6 +3,7 @@ import Main from '@/views/Main.vue'
 import CSComponent from '@/views/CSComponent.vue'
 import CSCategory from '@/views/CSCategory.vue'
 import Backup from '@/views/Backup.vue'
+import Settings from '@/views/Settings.vue'
 
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/Backup',
     name: 'Backup',
     component: Backup
+  },
+  {
+    path: '/Settings',
+    name: 'Settings',
+    component: Settings
   }
 ]
 

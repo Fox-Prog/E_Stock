@@ -1,5 +1,5 @@
 
-// Get since IndexedDB and insert into Vuex
+// Get from IndexedDB and insert into Vuex
 
 import { addComponent } from '@/components/ComponentFunctions/addComponent.js'
 
@@ -9,7 +9,7 @@ export async function getComponentLocal(store){
     
     return new Promise((resolve, reject) => {
         try{
-            const request = indexedDB.open("ESS", 1)
+            const request = indexedDB.open("ESS", 1);
 
             request.onerror = (err) => {
                 console.error("Error with IndexedDB: ", err)

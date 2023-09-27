@@ -16,7 +16,7 @@
     v-if="empty"
     >
     <img :src="imgNoResult" alt="no_result_img">
-    <h1>No result</h1>
+    <h1>{{ t.h1_NoResult }}</h1>
    </div>
 
    <!-- Offline -->
@@ -25,7 +25,7 @@
     v-if="!online"
     >
     <img :src="imgOffline" alt="offline_img">
-    <h1>Offline</h1>
+    <h1>{{ t.h1_Offline }}</h1>
    </div>
 
    <!-- Json error -->
@@ -34,7 +34,7 @@
     v-if="errLoadJson"
     >
     <img :src="imgOffline" alt="offline_img">
-    <h1>Error loading the icons file</h1>
+    <h1>{{ t.h1_ErrorJson }}</h1>
    </div>
 
    <!-- Loader animation -->
@@ -59,6 +59,7 @@
 import { computed, watch, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
+const t = computed(() => store.state.lg)
 
 // VARIABLES
 const imgNoResult = "/images/wind.png"

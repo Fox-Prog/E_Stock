@@ -14,6 +14,7 @@ import { onMounted } from "vue";
 
 import { getCategoryLocal } from "@/components/CategoryFunctions/getCategory.js";
 import { getComponentLocal } from "@/components/ComponentFunctions/getComponent.js";
+import { getLang } from '@/multilanguage/lang.js'
 
 let touchStartX = 0;
 let touchStartY = 0;
@@ -74,9 +75,7 @@ function checkDB() {
       const CategoryTable = db.createObjectStore("category", { keyPath: "id" }); // CREATE TABLE
       CategoryTable.createIndex("category", ["category"], { unique: false }); // Préparation pour les requêtes
 
-      const ComponentTable = db.createObjectStore("component", {
-        keyPath: "id",
-      });
+      const ComponentTable = db.createObjectStore("component", {keyPath: "id",});
       ComponentTable.createIndex("component", ["component"], { unique: false });
     };
   } catch (err) {
@@ -85,11 +84,16 @@ function checkDB() {
 }
 
 onMounted(async () => {
+  getLang(store);
   checkDB();
   await getCategoryLocal(store);
   await getComponentLocal(store);
 });
 </script>
+
+
+
+
 
 <style>
 #fond {

@@ -30,7 +30,9 @@ export default createStore({
     imgName: "Chip",
     imgBody: "/images/chip.png",
 
-    recentForm: false
+    recentForm: false,
+
+    lg: null
   },
   
   getters: {
@@ -132,6 +134,10 @@ export default createStore({
     resetAll(state){
       state.composants = []
       state.catts = []
+    },
+
+    setLang(state, values){
+      state.lg = values
     }
 
   },
@@ -212,7 +218,13 @@ export default createStore({
 
     resetAll({commit}){
       commit('resetAll')
+    },
+
+    setLang({commit}, values){
+      commit('setLang', values)
     }
+    
+    
     
   },
   modules: {

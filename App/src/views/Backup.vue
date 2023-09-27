@@ -20,12 +20,12 @@
         <div class="btn">
 
             <button class="btn_up_down" :disabled="errBackup" @click="createBackup">
-                <h3>Save</h3>
-                <img src="/images/save.png" alt="Do Backup" title="Do Backup">
+                <h3>{{ t.ctBtn_Save }}</h3>
+                <img src="/images/save.png" alt="Do Backup" :title="t.ttBtn_GoBackup">
             </button>
             <button class="btn_up_down" :disabled="errBackup" @click="backupFile=null, restoreForm = true">
-                <h3>Restore</h3>
-                <img src="/images/restore.png" alt="Restored Backup" title="Restored Backup">
+                <h3>{{ t.ctBtn_Restore }}</h3>
+                <img src="/images/restore.png" alt="Restored Backup" :title="t.ttBtn_RestoreBackup">
             </button>
         </div>
         <!-- Restore options -->
@@ -38,6 +38,7 @@
               prepend-icon="mdi-file-code-outline"
               accept=".json"
               clearable
+              :label="t.labelBackupFileInput"
             ></v-file-input>
             <!-- Alert Msg Backup options -->
             <div style="display: flex;" v-if="warning">
@@ -57,15 +58,15 @@
                   background: linear-gradient(to bottom right, #af0b05e2, #cf560ae7);
                 "
               >
-                <h3>Caution ! Any data not present in the backup will be lost !</h3>
-                <h4>To avoid this, please change the options below.</h4>
+                <h3>{{ t.h3_warningBackup }}</h3>
+                <h4>{{ t.h4_msgBackup }}</h4>
               </v-banner>
             </div>
             <!-- Backup options -->
             <v-select
               v-model="backupOptions"
-              variant="outlined"
               prepend-icon="mdi-cog"
+              variant="outlined"
               :items="options"
             ></v-select>
             <!-- Go backup -->
@@ -76,7 +77,7 @@
               "
             >
               <v-btn
-                title="Start backup"
+                :title="t.ttBtn_StartBackup"
                 color="green"
                 :disabled="!form || errBackup"
                 variant="elevated"
@@ -85,7 +86,7 @@
                  @click="restoreBackup"
               ></v-btn>
               <v-btn
-                title="Cancel backup"
+                :title="t.ttBtn_CancelBackup"
                 color="red"
                 variant="elevated"
                 rounded="lg"
@@ -104,14 +105,14 @@
           size="35"
           icon="mdi-alert-circle-outline"
         ></v-icon>
-        <h2>Backup error</h2>
+        <h2>{{ t.h2_BackupError }}</h2>
         <v-btn
           class="ms-2"
+          :title="t.ttBtn_ShowErrorDetails"
           variant="tonal"
           rounded="lg"
-          title="Details error"
           @click="showError = !showError"
-        >Details</v-btn>
+        >{{ t.ctBtn_ShowErrorDetails }}</v-btn>
       </div>
 
       <div id="details" v-if="showError">
@@ -132,6 +133,7 @@
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
+const t = computed(() => store.state.lg)
 
 import { useRouter } from 'vue-router'
 const router = useRouter()

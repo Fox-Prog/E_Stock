@@ -25,7 +25,7 @@ export function addComponent(store, id, name, description, quantity, category, i
 function addComponentLocal(id, name, description, quantity, category, imgName, imgBody){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
     try{
-        const request = indexedDB.open("ESS", 1)
+        const request = indexedDB.open("ESS", 1);
 
         request.onerror = (err) => {
           console.error("Error with IndexedDB: ", err)

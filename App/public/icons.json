@@ -1,72 +1,8 @@
-[
-    {
-        "id": 1,
-        "name": "School ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/1080/1080985.png"
-    },
-    {
-        "id": 2,
-        "name": "Studying ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/1081/1081040.png"
-    },
-    {
-        "id": 3,
-        "name": "Book ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/207/207114.png"
-    },
-    {
-        "id": 4,
-        "name": "Exam ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/1081/1081015.png"
-    },
-    {
-        "id": 5,
-        "name": "Left arrow ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/3575/3575967.png"
-    },
-    {
-        "id": 6,
-        "name": "Homework ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/1081/1081007.png"
-    },
-    {
-        "id": 7,
-        "name": "Pizza ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/706/706934.png"
-    },
-    {
-        "id": 8,
-        "name": "Colosseum ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/444/444697.png"
-    },
-    {
-        "id": 9,
-        "name": "Dinosaur ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/6187/6187644.png"
-    },
-    {
-        "id": 10,
-        "name": "Pizza ",
-        "color": "color",
-        "shape": "hand-drawn",
-        "url": "https://cdn-icons-png.flaticon.com/128/706/706918.png"
-    }
-]
+[{"id": 1, "name": "School ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/1080/1080985.png"},{"id": 2, "name": "Studying ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/1081/1081040.png"},{"id": 3, "name": "Book ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/207/207114.png"},{"id": 4, "name": "Exam ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/1081/1081015.png"},{"id": 5, "name": "Left arrow ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/3575/3575967.png"},
+{"id": 6, "name": "Homework ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/1081/1081007.png"},{"id": 7, "name": "Pizza ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/706/706934.png"},{"id": 8, "name": "Colosseum ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/444/444697.png"},{"id": 9, "name": "Dinosaur ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/6187/6187644.png"},{"id": 10, "name": "Pizza ", "color": "color", "shape": "hand-drawn", "url": "https://cdn-icons-png.flaticon.com/128/706/706918.png"},
+{"id": 11, "name": "Leek ", "color": "color", "shape": "lineal-color", "url": "https://cdn-icons-png.flaticon.com/128/6892/6892413.png"},{"id": 12, "name": "Lettuce ", "color": "color", "shape": "lineal-color", "url": "https://cdn-icons-png.flaticon.com/128/6892/6892417.png"},{"id": 13, "name": "Carrot ", "color": "color", "shape": "lineal-color", "url": "https://cdn-icons-png.flaticon.com/128/6892/6892430.png"},{"id": 14, "name": "Tomato ", "color": "color", "shape": "lineal-color", "url": "https://cdn-icons-png.flaticon.com/128/6892/6892436.png"},{"id": 15, "name": "Chili pepper ", "color": "color", "shape": "lineal-color", "url": "https://cdn-icons-png.flaticon.com/128/6892/6892441.png"},
+{"id": 16, "name": "Artichoke ", "color": "color", "shape": "lineal-color", "url": "https://cdn-icons-png.flaticon.com/128/6892/6892454.png"},{"id": 17, "name": "School ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4327/4327455.png"},{"id": 18, "name": "Dental implant ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4327/4327576.png"},{"id": 19, "name": "Hospital ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4327/4327935.png"},{"id": 20, "name": "Barbershop pole ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4329/4329505.png"},
+{"id": 21, "name": "Usb hub ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4330/4330491.png"},{"id": 22, "name": "Cross platform ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4330/4330673.png"},{"id": 23, "name": "Bouquet ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4331/4331077.png"},{"id": 24, "name": "Coffee break ", "color": "black", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/4331/4331603.png"},{"id": 25, "name": "Measurement ", "color": "gradient", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/2637/2637574.png"},
+{"id": 26, "name": "Blood type ", "color": "gradient", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/2637/2637647.png"},{"id": 27, "name": "Audio ", "color": "gradient", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/2637/2637805.png"},{"id": 28, "name": "Choir ", "color": "gradient", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/2637/2637815.png"},{"id": 29, "name": "Equalizer ", "color": "gradient", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/2637/2637840.png"},{"id": 30, "name": "Foot ", "color": "gradient", "shape": "outline", "url": "https://cdn-icons-png.flaticon.com/128/2637/2637845.png"},
+{"id": 31, "name": "Calendar ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6172/6172965.png"},{"id": 32, "name": "Beard ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6172/6172980.png"},{"id": 33, "name": "Ufo ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6172/6172982.png"},{"id": 34, "name": "Hen ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6172/6172987.png"},{"id": 35, "name": "Hair dryer ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6173/6173000.png"},
+{"id": 36, "name": "Motor ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6173/6173005.png"},{"id": 37, "name": "Clock ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6173/6173008.png"},{"id": 38, "name": "Guide ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6173/6173021.png"},{"id": 39, "name": "Battery ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6173/6173022.png"},{"id": 40, "name": "Rechargeable battery ", "color": "gradient", "shape": "fill", "url": "https://cdn-icons-png.flaticon.com/128/6173/6173026.png"}]
