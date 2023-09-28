@@ -14,7 +14,10 @@ const cache_files = [
     '/images/wind.png',
     '/images/offline.png',
     '/images/save.png',
-    '/images/restore.png'
+    '/images/restore.png',
+    '/images/en.png',
+    '/images/fr.png'
+
 ]
 
 

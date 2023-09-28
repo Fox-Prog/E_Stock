@@ -10,7 +10,7 @@
         variant="flat"
         :title="t.ttBtn_OpenCatt"
         elevation="10"
-        rounded="lg"
+        rounded="sm"
         @click="displayCforC(catt)"
         @touchstart="longClic()"
         @touchend="resetLongClic()"
@@ -202,7 +202,7 @@ import { deleteCategory } from "@/components/CategoryFunctions/deleteCategory.js
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 5vh;
   max-width: 90%;
   min-width: 70%;

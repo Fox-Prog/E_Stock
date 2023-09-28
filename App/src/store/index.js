@@ -23,6 +23,7 @@ export default createStore({
     shapeIcons: "",
     page:1,
     trigger: false,
+    jsonLoaded: true,
 
     currentPage: 0,
     maxPage: 0,
@@ -118,6 +119,9 @@ export default createStore({
     setTrigger(state, value){
       state.trigger = value
     },
+    setJsonLoaded(state, value){
+      state.jsonLoaded = value
+    },
     setPages(state, values){
       state.currentPage = values.currentPage
       state.maxPage = values.maxPage
@@ -205,6 +209,9 @@ export default createStore({
     setTrigger({commit}, value){
       commit('setTrigger', value)
     },
+    setJsonLoaded({commit}, value){
+      commit('setJsonLoaded', value)
+    },    
     setPages({commit}, values){
       commit('setPages', values)
     },

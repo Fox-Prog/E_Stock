@@ -150,7 +150,7 @@ function setComponent() {
 <style>
 .Cp-card {
   background: linear-gradient(to bottom, #424242, #616161ad, #424242);
-  border-radius: 10px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   margin: 2vh 4vw 2vh 4vw;

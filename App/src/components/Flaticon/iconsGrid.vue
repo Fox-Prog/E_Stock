@@ -6,7 +6,7 @@
          :key="icon.id"
          @click="addIcon"
       >
-        <img :src="icon.url" :alt="icon.name" :title="icon.name">
+        <img :src="icon.url" :alt="icon.name" :title="`${icon.name}, ${icon.color}, ${icon.shape}`">
       </button>
    </div>
 
@@ -92,6 +92,7 @@ let jsonData = null
 watch(trigger, loadIcons)
 
 async function getJson(){
+  store.dispatch('setJsonLoaded', false)
   // Fetch request -- GET JSON
   try {
     const req = await fetch("/icons.json", { //    <<< Request URL
@@ -108,6 +109,8 @@ async function getJson(){
     console.error(err)
     errLoadJson.value = true
   }
+
+  store.dispatch('setJsonLoaded', true)
 }
 
 
@@ -119,13 +122,9 @@ async function loadIcons(){
 // Get icons from json
 async function getIcons(){
 
-  // Check empty search
-  const regex = /^\s*$/
-  let search = params.value.search
-  search = regex.test(search) ? null : search
+  const search = params.value.search.toLowerCase()
 
   if(online.value){
-
     let word = ""
     if(search !== null){
       if(search.length > 1){
@@ -364,13 +363,8 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   width: 80px;
   height: 80px;
-  animation: ampl 2s forwards infinite;
 }
-@keyframes ampl {
-  0% { width: 80px; height: 80px;}
-  50% { width: 100px; height: 100px; padding: 25px; background-color: rgba(255, 255, 255, 0.34);}
-  100% { width: 80px; height: 80px;}
-}
+
 
 .loader {
   display: inline-block;
