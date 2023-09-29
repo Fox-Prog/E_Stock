@@ -35,6 +35,7 @@
     >
     <img :src="imgOffline" alt="offline_img">
     <h1>{{ t.h1_ErrorJson }}</h1>
+    <h3>{{ t.h3_checkConnect }}</h3>
    </div>
 
    <!-- Loader animation -->
@@ -86,31 +87,45 @@ let params = computed(() => {
   }
 })
 
+
 let trigger = computed(()=> store.state.trigger)
-let jsonData = null
 
 watch(trigger, loadIcons)
 
+let jsonData
+
 async function getJson(){
   store.dispatch('setJsonLoaded', false)
+
+  const delay = 12000
+
+  const controleur = new AbortController()
+  const timeoutID = setTimeout(() => controleur.abort(), delay)
+
   // Fetch request -- GET JSON
   try {
-    const req = await fetch("/icons.json", { //    <<< Request URL
-      method: 'GET'
+    const jsonReq = fetch("/icons.json", {
+      method: 'GET',
+      signal: controleur.signal
     })
-  
-    if(!req.ok){ throw new Error('Request failed')}
-  
-    jsonData = await req.json()
-    loader.value = false  
+
+    const res = await jsonReq
+
+    if(!res.ok){ throw new Error('Request failed'), errLoadJson.value = true }
+
+    jsonData = await res.json() 
+   
   
   } catch(err){
     console.log("Request json error: ")
     console.error(err)
     errLoadJson.value = true
-  }
 
-  store.dispatch('setJsonLoaded', true)
+  } finally {
+    loader.value = false 
+    store.dispatch('setJsonLoaded', true)
+    clearTimeout(timeoutID)
+  }
 }
 
 

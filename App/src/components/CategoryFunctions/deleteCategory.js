@@ -32,7 +32,7 @@ export function deleteCategory(store, cattToDelete){
             }
 
             if(store.state.catts.find((catt) => catt.id === 123454321) === undefined){
-                addCategory(store, 123454321, 'No Category', '#546E7A', true)    // CREATE Vuex + local
+                addCategory(store, 123454321, 'No category', '#546E7A', true)    // CREATE Vuex + local
             }
         }
 

@@ -89,10 +89,9 @@ onMounted(async () => {
   await getCategoryLocal(store);
   await getComponentLocal(store);
 });
+
+
 </script>
-
-
-
 
 
 <style>
@@ -116,4 +115,5 @@ onMounted(async () => {
 ::-webkit-scrollbar-track {
   background-color: rgb(33, 33, 33); /* Couleur de la piste de défilement */
 }
+
 </style>

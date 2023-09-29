@@ -58,12 +58,24 @@ const router = useRouter()
 
 const flags = [
   {
-    name: 'en',
-    img: 'images/en.png'
+    name: 'Deutsch',
+    img: '/images/flag/de.png'
   },
   {
-    name: 'fr',
-    img: '/images/fr.png'
+    name: 'English',
+    img: 'images/flag/en.png'
+  },
+  {
+    name: 'Français',
+    img: '/images/flag/fr.png'
+  },
+  {
+    name: 'Italian',
+    img: '/images/flag/it.png'
+  },
+  {
+    name: 'Spanish',
+    img: '/images/flag/es.png'
   }
 ]
 
@@ -72,11 +84,10 @@ const flag = computed(()=>{
   return selectedFlag.img
 })
 
-
 const imgPath = "/images/cog.jpg"
 const lgSave = ref(store.state.lg.name)
 const language = ref(lgSave.value)
-const lgs = ['en', 'fr']
+const lgs = ['Deutsch', 'English', 'Français', 'Italian', 'Spanish']
 
 import { setLang } from '@/multilanguage/lang.js'
 

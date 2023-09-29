@@ -290,7 +290,7 @@ function pushComponent() {
     if (noCatt) {
       category = noCatt.id;
     } else {
-      addCategory(store, 123454321, "No Category", "#546E7A", true);
+      addCategory(store, 123454321, 'No category', "#546E7A", true);
       category = 123454321;
     }
   }

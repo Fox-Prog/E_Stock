@@ -18,7 +18,6 @@
 
     <v-card class="bc_form">
         <div class="btn">
-
             <button class="btn_up_down" :disabled="errBackup" @click="createBackup">
                 <h3>{{ t.ctBtn_Save }}</h3>
                 <img src="/images/save.png" alt="Do Backup" :title="t.ttBtn_GoBackup">
@@ -321,8 +320,8 @@ async function restoreBackup(){
 
 .bc_form {
   position: relative;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  margin-left: 8vw;
+  margin-right: 8vw;
   margin-top: 20vh;
   padding-left: 10px;
   padding-right: 10px;
@@ -338,8 +337,8 @@ async function restoreBackup(){
 }
 .error_form {
   position: relative;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  margin-left: 8vw;
+  margin-right: 8vw;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
@@ -385,6 +384,11 @@ async function restoreBackup(){
 .btn_up_down img {
     width: 100%;
 }
+@media screen and (max-width: 500px) {
+  .btn_up_down h3 {
+    font-size: 10px;
+  }
+}
 
 .btn_up_down:hover {
   background: linear-gradient(to bottom left, #616161, #b7b5b5, #616161);
@@ -394,7 +398,7 @@ async function restoreBackup(){
 
 h3 {
   color: black;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 
@@ -404,6 +408,10 @@ h3 {
   width: 100%;
   border-radius: 20px;
   background: linear-gradient(to bottom left, #616161, #8e8b8b, #616161);
+}
+
+.ajust-h3 {
+  font-size: 0.8rem;
 }
 
     

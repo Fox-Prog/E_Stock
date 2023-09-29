@@ -155,8 +155,7 @@
 
 
 
-  <div
-    class="empty"
+  <div class="empty"
     v-if="
       (showCategory && nbrCatt === 0) || (showComposant && nbrComposant === 0)
     "
@@ -611,9 +610,17 @@ onBeforeUnmount(() => {
 
 .empty img {
   border-radius: 10px;
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: cover;
+}
+@media screen and (max-width: 600px) {
+  .empty img {
+    width: 60%;
+  }
+  .empty h2 {
+    font-size: 20px;
+  }
 }
 
 .catts_container {
