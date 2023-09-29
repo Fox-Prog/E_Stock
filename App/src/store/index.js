@@ -6,7 +6,7 @@ export default createStore({
     composants: [],
     catts: [],
     preCatt: null,
-    showImg: false,
+    showImg: JSON.parse(localStorage.getItem('showImg')) || false,
     showComposant: false,
     showCategory: true,
     selectedCatt: null,

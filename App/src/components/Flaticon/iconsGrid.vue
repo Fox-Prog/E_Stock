@@ -1,7 +1,7 @@
 <template>
     <div class="icon-grid">
       <button
-         class="icon-item"
+         class="icon-item-n"
          v-for="icon in icons"
          :key="icon.id"
          @click="addIcon"
@@ -335,7 +335,7 @@ onBeforeUnmount(() => {
   gap: 15px;
 }
 
-.icon-item {
+.icon-item-n {
   text-align: center;
   padding: 5px;
   background-color: rgba(255, 255, 255, 0.51);
@@ -343,13 +343,13 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 
-.icon-item:hover {
+.icon-item-n:hover {
   background-color: rgba(255, 255, 255, 0.715);
   box-shadow: 0px 0px 3px 0px rgb(251 250 250);
   transform: translateY(-5px);
 }
 
-.icon-item img {
+.icon-item-n img {
   max-width: 100%;
 }
 

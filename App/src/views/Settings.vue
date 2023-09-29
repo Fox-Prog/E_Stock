@@ -48,7 +48,6 @@
 
 <script setup>
 import Btn_done from "@/components/bigBTN/done.vue";
-import Btn_cancel from "@/components/bigBTN/cancel.vue";
 
 import { ref, computed } from 'vue' 
 import { useStore } from 'vuex'

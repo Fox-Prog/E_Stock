@@ -11,7 +11,7 @@
     <v-card style="background-color: #212121db; border-radius: 20px;" height="100vh">
         <div class="icon-grid">
             <button
-                class="icon-item"
+                class="icon-item-r"
                 v-for="icon in icons"
                 :key="icon.id"
                 @click="addIcon"
@@ -106,22 +106,23 @@ onMounted(() => {
   gap: 15px;
 }
 
-.icon-item {
-  text-align: center;
-  padding: 5px;
-  background-color: rgba(255, 255, 255, 0.51);
-  border-radius: 10px;
-  overflow: hidden;
+.icon-item-r {
+    padding: 5px;
+    background-color: transparent;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.icon-item:hover {
+.icon-item-r:hover {
   background-color: rgba(255, 255, 255, 0.715);
   box-shadow: 0px 0px 3px 0px rgb(251 250 250);
   transform: translateY(-5px);
 }
 
-.icon-item img {
-  max-width: 100%;
+.icon-item-r img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
 
 

@@ -64,9 +64,7 @@
             rounded="sm"
             elevation="3"
             @click="
-              composant.quantity > 0 ? composant.quantity-- : composant.quantity
-            "
-            @mouseleave="
+              composant.quantity > 0 ? composant.quantity-- : composant.quantity,
               setComponentLocal(
                 composant.id,
                 composant.name,
@@ -86,9 +84,8 @@
             size="x-small"
             rounded="sm"
             elevation="3"
-            @click="composant.quantity++"
-            @mouseleave="
-              setComponentLocal(
+            @click="composant.quantity++,
+            setComponentLocal(
                 composant.id,
                 composant.name,
                 composant.description,
@@ -133,7 +130,7 @@ import btn_delete from "@/components/littleBTN/delete.vue";
 const props = defineProps(["composant"]);
 const expand = ref(false);
 const showDescription = ref(false);
-let showImg = computed(() => store.state.showImg);
+const showImg = computed(() => store.state.showImg)
 
 // Delete
 import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent.js";
@@ -164,7 +161,9 @@ function setComponent() {
 }
 
 .Cp-imgBox {
+  min-width: 80px;
   min-height: 50px;
+  margin-right: 10px;
 }
 
 .Cp-imgContainer {
@@ -180,7 +179,7 @@ function setComponent() {
   justify-content: center;
 }
 .Cp-imgContainer img {
-  border-radius: 10px;
+  border-radius: 5px;
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -190,12 +189,16 @@ function setComponent() {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  max-width: 40vw;
+  overflow: hidden;
 }
+
 #Cp-nbr_contained {
   display: flex;
   justify-content: flex-end;
   background-color: rgb(117, 117, 117);
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 10px;
   padding: 3px;
   border-radius: 5px;
 }

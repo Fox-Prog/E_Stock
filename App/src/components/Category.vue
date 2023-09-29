@@ -1,6 +1,6 @@
 <template>
   <div class="Cat-card">
-    <!-- Compteur de composant -->
+    <!-- Components count -->
     <v-badge :content="nbrComposant" :color="catt.color"></v-badge>
 
     <!-- Bouton principal -> Ouvre la catégorie -->

@@ -43,10 +43,18 @@
         :icon="showImg ? 'mdi-image' : 'mdi-image-off'"
         variant="flat"
         :title="showImg ? t.ttBtn_HideIcons : t.ttBtn_ShowIcons"
-        @click="setShowImg"
+        @click="toggleShowImg"
       >
         <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C' }"></v-icon>
       </v-btn>
+
+      <v-btn
+        class="ma-5 btn_displayGrid btn_drawer"
+        :icon="displayGrid ? 'mdi-view-headline' : 'mdi-view-grid-outline'"
+        variant="flat"
+        :title="displayGrid ? t.ttBtn_DisplayRows : t.ttBtn_DisplayGrid"
+        @click="toggleDisplayGrid"
+      ></v-btn>
 
       <h3>{{ t.h3_Sort }}</h3>
       <v-btn
@@ -135,6 +143,14 @@
           : store.dispatch('setSwipe', 'S_right')
       "
     ></v-btn>
+
+    <div 
+      class="catt-select" 
+      v-if="selectedCatt"
+      :style="{
+        backgroundColor: store.getters.getCattColor(selectedCatt.id),
+      }"
+      ><h3>{{ selectedCatt.name }}</h3></div>
   </div>
 
 
@@ -154,8 +170,16 @@
   </div>
 
 
+  <div class="grid-components" v-if="showComposant && displayGrid">
+    <ComposantGrid
+      v-for="composant in filteredComposants"
+      :key="composant.id"
+      :composant="composant"
+    />
+  </div>
 
-  <div v-if="showComposant">
+
+  <div v-if="showComposant && !displayGrid">
     <Composant
       v-for="composant in filteredComposants"
       :key="composant.id"
@@ -278,6 +302,7 @@ const t = computed(() => store.state.lg)
 import Btn_new from "@/components/bigBTN/new.vue";
 import Btn_menu from "@/components/bigBTN/menu.vue";
 import Composant from "@/components/Composant.vue";
+import ComposantGrid from '@/components/ComposantGrid.vue';
 import Category from "@/components/Category.vue";
 import addCpBtn from "@/components/littleBTN/addCpBtn.vue";
 
@@ -309,11 +334,20 @@ let noCattContent = computed(() => {
   }
 });
 
-// Show or Not image
-let showImg = computed(() => store.state.showImg);
-function setShowImg() {
-  store.dispatch("setShowImg", !showImg.value);
+// Show and Display components
+const showImg = ref(JSON.parse(localStorage.getItem('showImg')) || false)
+const displayGrid = ref(JSON.parse(localStorage.getItem('displayGrid')) || false)
+
+function toggleShowImg(){
+  showImg.value = !showImg.value
+  localStorage.setItem('showImg', JSON.stringify(showImg.value))
+  store.dispatch('setShowImg', showImg.value)
 }
+function toggleDisplayGrid(){
+  displayGrid.value = !displayGrid.value
+  localStorage.setItem('displayGrid', JSON.stringify(displayGrid.value))
+}
+
 
 // Search field
 let inputSearch = ref(null);
@@ -498,6 +532,16 @@ onBeforeUnmount(() => {
 
 <style>
 
+.grid-components {
+  display: grid;
+  margin: 40px 20px 0 20px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+}
+@media screen and (max-width: 600px) {
+  .grid-components {grid-template-columns: repeat(4, 1fr);}
+}
+
 .backSpaceCatt {
   display: flex;
   width: 100%;
@@ -527,6 +571,10 @@ onBeforeUnmount(() => {
 .btn_showImg {
   font-size: 20px;
 }
+.btn_displayGrid .v-icon{
+  color: rgb(230, 81, 0); /* #E65100 orange-foncé-4 */
+  font-size: 30px;
+}
 .btn_alphaSort .v-icon {
   color: rgb(123, 31, 162); /* #7B1FA2 purple-darken-2 */
   font-size: 30px;
@@ -552,8 +600,7 @@ onBeforeUnmount(() => {
 
   display: flex;
   flex-direction: column;
-  min-width: 40vh;
-  max-width: 50vh;
+  width: 50vh;
 
   height: auto;
 
@@ -597,5 +644,18 @@ onBeforeUnmount(() => {
 .btnChoice {
   width: 150px;
   font-size: medium;
+}
+
+.catt-select {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px;
+  border-radius: 2px;
+  margin-top: 10px;
+}
+
+.catt-select h3 {
+  margin: 0;
 }
 </style>

@@ -90,7 +90,7 @@
         <!-- Name field -->
         <v-text-field
           v-model="name"
-          :rules="[required]"
+          :rules="[required, longName]"
           clearable
           color="color_component"
           :label="t.labelName"
@@ -222,6 +222,13 @@ function required(v) {
 function nbrPositif(v) {
   if (v <= 0) {
     return "No negative numbers";
+  }
+  return true;
+}
+
+function longName(v) {
+  if (v.length > 13) {
+    return "Max 13 caracters";
   }
   return true;
 }
