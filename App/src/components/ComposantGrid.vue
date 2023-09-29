@@ -128,6 +128,8 @@ function setComponent() {
 .Cp-block {
   position: relative;
   border-radius: 5px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
 }
 .Cp-block:hover {
   background-color: rgba(255, 255, 255, 0.715);
@@ -138,7 +140,7 @@ function setComponent() {
 .Cp-block img {
   border-radius: 5px;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
 }
 

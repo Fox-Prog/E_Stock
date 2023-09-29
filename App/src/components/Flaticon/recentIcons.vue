@@ -107,9 +107,9 @@ onMounted(() => {
 }
 
 .icon-item-r {
-    padding: 5px;
     background-color: transparent;
     border-radius: 10px;
+    aspect-ratio: 1/1;
     overflow: hidden;
 }
 
@@ -121,7 +121,7 @@ onMounted(() => {
 
 .icon-item-r img {
   width: 100%;
-  height: 100%;
+  height: auto;
   border-radius: 10px;
 }
 
