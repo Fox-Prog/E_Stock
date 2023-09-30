@@ -29,7 +29,7 @@
 
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import { useStore } from 'vuex'
 const store = useStore()

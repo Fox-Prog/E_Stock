@@ -40,10 +40,10 @@
 
    <!-- Loader animation -->
    <div 
-    class="loader-font"
+    class="loaderIcons-font"
     v-if="loader"
   >
-   <div class="loader"></div>
+   <div class="loaderIcons"></div>
   </div>
 
 </template>
@@ -370,7 +370,7 @@ onBeforeUnmount(() => {
 }
 
 
-.loader-font {
+.loaderIcons-font {
   margin-left: 50%;
   transform: translateX(-50%);
   align-content: center;
@@ -382,7 +382,7 @@ onBeforeUnmount(() => {
 }
 
 
-.loader {
+.loaderIcons {
   display: inline-block;
   width: 50px;
   height: 50px;

@@ -6,7 +6,7 @@
   >
     <!-- Btn done -->
     <template v-slot:append>
-      <Btn_done @click="router.push('/')"></Btn_done>
+      <Btn_done v-if="!loader" @click="router.push('/')"></Btn_done>
     </template>
   </v-app-bar>
 
@@ -34,16 +34,15 @@
     <div class="pattern-form">
       <v-divider class="my-5"></v-divider>
       <v-select
-          class="my-2"
-          v-model="pattern"
-          prepend-icon="mdi-format-paint"
-          variant="outlined"
-          label="Pattern"
-          :items="patterns"
-          @update:model-value="setPattern(pattern)"
+        class="my-2"
+        v-model="pattern"
+        prepend-icon="mdi-format-paint"
+        variant="outlined"
+        label="Pattern"
+        :items="patterns"
+        @update:model-value="setPattern(pattern)"
       ></v-select>
     </div>
-
 
     <!-- Email form -->
     <div class="email-form">
@@ -54,12 +53,13 @@
           <h4>{{ t.mailDone }}</h4>
           <v-icon icon="mdi-check" />
         </div>
-        <div v-if="sendError" class="sendRes" id="send-error">
-          <h4>{{ t.mailError }}</h4>
+
+        <div v-if="sendError || !online" class="sendRes" id="send-error">
+          <h4>{{ errorMsg }}</h4>
           <v-icon icon="mdi-alert-circle-outline" />
         </div>
       </div>
-      <v-form v-model="form">
+      <v-form v-model="form" :disabled="!online || loader">
         <!-- Name -->
         <v-text-field
           class="mb-2"
@@ -103,33 +103,29 @@
         ></v-textarea>
 
         <!-- Submit -->
-        <v-btn variant="tonal" block :disabled="!form" @click="sendMail">{{
-          t.sendMail
-        }}</v-btn>
+        <v-btn
+          variant="tonal"
+          block
+          :disabled="!form || loader"
+          @click="sendMail"
+          >{{ t.sendMail }}</v-btn
+        >
       </v-form>
+
+      <!-- Loader animation -->
+      <div class="loaderMail-font" v-if="loader">
+        <div class="loaderMail"></div>
+      </div>
     </div>
   </div>
 </template>
 
-
-
-
-
-
-
-
-
-
-
-
 <script setup>
 import Btn_done from "@/components/bigBTN/done.vue";
 
-import { ref, computed } from "vue";
-import { useStore } from "vuex";
-const store = useStore();
-import { getTranslate } from '@/multilanguage/lang.js' 
-const t = getTranslate()
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import { getTranslate } from "@/multilanguage/lang.js";
+const t = getTranslate();
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -137,29 +133,31 @@ const router = useRouter();
 const imgPath = "/images/cog.jpg";
 
 // Language
-import { getLangsNames, setLang, getFlag } from '@/multilanguage/lang.js'
+import { getLangsNames, setLang, getFlag } from "@/multilanguage/lang.js";
 
-const language = ref(localStorage.getItem('lang'));
-const lgs = ref(getLangsNames())
-const flag = ref(getFlag(language.value))
-
+const language = ref(localStorage.getItem("lang"));
+const lgs = ref(getLangsNames());
+const flag = ref(getFlag(language.value));
 
 // Email form
 import emailjs from "emailjs-com";
+let loader = ref(false);
 
 const form = ref(false);
 const name = ref(null);
 const email = ref(null);
-const objects = [
-  t.objects.bug,
-  t.objects.feedback,
-  t.objects.other,
-];
+const objects = [t.objects.bug, t.objects.feedback, t.objects.other];
 const object = ref(objects[0]);
 const content = ref(null);
 
 const sendDone = ref(false);
 const sendError = ref(false);
+const errorMsg = computed(() => {
+  if (online.value) {
+    return t.mailError;
+  }
+  return t.offlineError;
+});
 
 // Check input fields
 function required(v) {
@@ -175,60 +173,82 @@ function isEmail(v) {
 }
 
 function sendMail() {
+  loader.value = true;
+
+  sendDone.value = false;
+  sendError.value = false;
+
   let translateObject;
 
-  if (object === objects[0]) {
+  if (object.value === objects[0]) {
     translateObject = "Problème";
-  } else if (object === objects[1]) {
+  } else if (object.value === objects[1]) {
     translateObject = "Retour d'expérience";
-  } else if (object === objects[2]) {
+  } else if (object.value === objects[2]) {
     translateObject = "Autre";
   }
 
-  try {
-    emailjs.send(
-      "service_knj3pa6",
-      "template_opfkckr",
-      {
-        object: translateObject,
-        name: name.value,
-        content: content,
-        email: email.value,
-      },
-      "s6Y1Al8q1MCbFJVSJ"
-    );
+  const sendPromise = emailjs.send(
+    "service_knj3pa6",
+    "template_opfkckr",
+    {
+      object: translateObject,
+      name: name.value,
+      content: content.value,
+      email: email.value,
+    },
+    "s6Y1Al8q1MCbFJVSJ"
+  );
 
-    sendDone.value = true;
-    name.value = null;
-    email.value = null;
-    content = null;
-    
-  } catch (error) {
-    console.log(error);
-    sendError.value = true;
-  }
+  const timeoutPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error("Timeout..."));
+    }, 10000);
+  });
+
+  Promise.race([sendPromise, timeoutPromise])
+    .then((res) => {
+      sendDone.value = true;
+      name.value = null;
+      email.value = null;
+      content.value = null;
+    })
+
+    .catch((err) => {
+      console.log(err);
+      sendError.value = true;
+    })
+
+    .finally(() => {
+      loader.value = false;
+      clearTimeout(timeoutPromise);
+    });
 }
-
 
 // Set patterns
 
-import { getPatternsNames, setPattern } from '@/assets/patterns.js'
+import { getPatternsNames, setPattern } from "@/assets/patterns.js";
 
-const patterns = ref(getPatternsNames()) // Select choice
-const pattern = ref(localStorage.getItem('patternName'))
+const patterns = ref(getPatternsNames()); // Select choice
+const pattern = ref(localStorage.getItem("patternName"));
 
+// Online or not
+let online = ref(navigator.onLine);
+
+function updateOnlineStatus() {
+  online.value = navigator.onLine;
+}
+
+onMounted(async () => {
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("online", updateOnlineStatus);
+  window.removeEventListener("offline", updateOnlineStatus);
+});
 </script>
-
-
-
-
-
-
-
-
-
-
-
 
 <style>
 .img_font {
@@ -294,5 +314,37 @@ const pattern = ref(localStorage.getItem('patternName'))
 }
 #send-error h4 {
   margin-right: 10px;
+}
+
+.loaderMail-font {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+  align-content: center;
+  padding: 15px;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.loaderMail {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #9b9a9a;
+  border-radius: 50%;
+  border-top: 3px solid #212121;
+  animation: spin 2s forwards infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

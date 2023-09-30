@@ -1,6 +1,6 @@
 
 
-export function getLang(store){
+export function getLang(){
     // Check lang save in local storage
     let lang = localStorage.getItem('lang')
     
@@ -141,6 +141,7 @@ const languages = [
         sendMail: 'Senden',
         mailDone: 'E-Mail erfolgreich gesendet',
         mailError: 'Fehler, E-Mail konnte nicht gesendet werden',
+        offlineError: 'Du bist offline',
 
         SECTEUR_12: 'CHECK-FIELD',
         requireMsg: 'Dieses Feld ist erforderlich',
@@ -259,6 +260,7 @@ const languages = [
         sendMail: 'Send',
         mailDone: 'Email sent successfully',
         mailError: 'Error, e-mail not sent', 
+        offlineError: 'You are offline',
 
         SECTEUR_12: 'CHECK-FIELD',
         requireMsg: 'Field is required',
@@ -378,6 +380,7 @@ const languages = [
         sendMail: 'Envoyer',
         mailDone: 'E-mail envoyé avec succès',
         mailError: 'Erreur, l\'e-mail n\'a pas pu être envoyé',
+        offlineError:'Vous êtes hors ligne',
   
         SECTEUR_12: 'CHECK-FIELD',
         requireMsg: 'Ce champ est requis',
@@ -496,6 +499,7 @@ const languages = [
         sendMail: 'Invia',
         mailDone: 'Email inviata con successo',
         mailError: 'Errore, email non inviata',
+        offlineError:'Sei offline',
 
         SECTEUR_12: 'CHECK-FIELD',
         requireMsg: 'Questo campo è obbligatorio',
@@ -615,6 +619,7 @@ const languages = [
         sendMail: 'Enviar',
         mailDone: 'Correo electrónico enviado con éxito',
         mailError: 'Error, correo electrónico no enviado',
+        offlineError:'Estás fuera de línea',
 
         SECTEUR_12: 'CHECK-FIELD',
         requireMsg: 'Este campo es obligatorio',
