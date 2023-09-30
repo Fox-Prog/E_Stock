@@ -93,7 +93,7 @@ function selectMode() {
 
 // Check input fields
 function required(v) {
-  return !!v || "Field is required";
+  return !!v || t.value.requireMsg;
 }
 
 function unicName(v) {
@@ -101,7 +101,7 @@ function unicName(v) {
     // Create mode
     const cattExist = store.state.catts.some((catt) => catt.name === v);
     if (cattExist) {
-      return "This name already exists";
+      return t.value.nameAlreadyExists;
     }
     return true;
   } else {
@@ -109,7 +109,7 @@ function unicName(v) {
     const allCattNames = store.state.catts.map((catt) => catt.name);
     const filteredNames = allCattNames.filter((name) => name === v);
     if (filteredNames.length > 1) {
-      return "This name already exists";
+      return t.value.nameAlreadyExists;
     }
     return true;
   }
@@ -117,7 +117,7 @@ function unicName(v) {
 
 function longName(v) {
   if (v.length > 15) {
-    return "Max 15 caracters";
+    return t.value.max15;
   }
   return true;
 }

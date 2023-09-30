@@ -216,19 +216,19 @@ function selectMode() {
 
 // Check input fields
 function required(v) {
-  return !!v || "Field is required";
+  return !!v || t.value.requireMsg;
 }
 
 function nbrPositif(v) {
   if (v <= 0) {
-    return "No negative numbers";
+    return t.value.noNegativeNumber;
   }
   return true;
 }
 
 function longName(v) {
   if (v.length > 13) {
-    return "Max 13 caracters";
+    return t.value.max13;
   }
   return true;
 }
@@ -238,7 +238,7 @@ function cattExist(v) {
   if (listCattName.includes(v) || v === null) {
     return true;
   } else {
-    return "Unknown category";
+    return t.value.unknownCategory;
   }
 }
 

@@ -106,7 +106,32 @@ const languages = [
         h1_ErrorJson: 'Fehler beim Laden der Symboldatei',
         h3_checkConnect: 'Überprüfen Sie Ihre Internetverbindung',
         ttBtn_NextPage: 'Nächste Seite',
-        ttBtn_PreviousPage: 'Vorherige Seite'
+        ttBtn_PreviousPage: 'Vorherige Seite',
+
+        SECTEUR_11: "SETTINGS",
+        h3_titleContactForm: 'Kontaktformular',
+        labelEmail: 'Ihre E-Mail-Adresse',
+        objectEmail: 'Betreff der E-Mail',
+        objects:
+        {
+            bug: 'Problem melden',
+            feedback: 'Feedback geben',
+            other: 'Anderer Grund'
+        },
+        labelMailArea: 'Geben Sie hier Ihre Nachricht ein',
+        sendMail: 'Senden',
+        mailDone: 'E-Mail erfolgreich gesendet',
+        mailError: 'Fehler, E-Mail konnte nicht gesendet werden',
+
+        SECTEUR_12: 'CHECK-FIELD',
+        requireMsg: 'Dieses Feld ist erforderlich',
+        nameAlreadyExists: 'Dieser Name existiert bereits',
+        max15: 'Maximal 15 Zeichen',
+        max13: 'Maximal 13 Zeichen',
+        noNegativeNumber: 'Keine negativen Zahlen erlaubt',
+        unknownCategory: 'Unbekannte Kategorie',
+        isNotEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein'
+
     },
 
     {
@@ -198,7 +223,31 @@ const languages = [
         h1_ErrorJson: 'Error loading the icons file',
         h3_checkConnect: 'Check your internet connection',
         ttBtn_NextPage: 'Next page',
-        ttBtn_PreviousPage: 'Previous page'        
+        ttBtn_PreviousPage: 'Previous page',
+        
+        SECTEUR_11: "SETTINGS",
+        h3_titleContactForm: 'Contact form',
+        labelEmail: 'Your e-mail adress',
+        objectEmail: 'Mail object',
+        objects: 
+        {
+            bug: 'Report an issue',
+            feedback: 'Provide feedback',
+            other: 'Another reason'
+        },
+        labelMailArea: 'Enter your message here',
+        sendMail: 'Send',
+        mailDone: 'Email sent successfully',
+        mailError: 'Error, e-mail not sent', 
+
+        SECTEUR_12: 'CHECK-FIELD',
+        requireMsg: 'Field is required',
+        nameAlreadyExists: 'This name already exists',
+        max15: 'Max 15 caracters',
+        max13: 'Max 13 caracters',
+        noNegativeNumber: 'No negative numbers',
+        unknownCategory: 'Unknown category',
+        isNotEmail: 'Please enter a valid e-mail address'
     },
 
 
@@ -292,7 +341,32 @@ const languages = [
         h1_ErrorJson: 'Erreur lors du chargement du fichier d\'icônes',
         h3_checkConnect: 'Vérifiez votre connexion internet',
         ttBtn_NextPage: 'Page suivante',
-        ttBtn_PreviousPage: 'Page précédente'
+        ttBtn_PreviousPage: 'Page précédente',
+
+        SECTEUR_11: "SETTINGS",
+        h3_titleContactForm: 'Formulaire de contact',
+        labelEmail: 'Votre adresse e-mail',
+        objectEmail: 'Objet du courriel',
+        objects:
+        {
+            bug: 'Signaler un problème',
+            feedback: 'Retour d\'expérience',
+            other: 'Autre raison'
+        },
+        labelMailArea: 'Saisissez votre message ici',
+        sendMail: 'Envoyer',
+        mailDone: 'E-mail envoyé avec succès',
+        mailError: 'Erreur, l\'e-mail n\'a pas pu être envoyé',
+  
+        SECTEUR_12: 'CHECK-FIELD',
+        requireMsg: 'Ce champ est requis',
+        nameAlreadyExists: 'Ce nom existe déjà',
+        max15: 'Maximum 15 caractères',
+        max13: 'Maximum 13 caractères',
+        noNegativeNumber: 'Pas de nombres négatifs autorisés',
+        unknownCategory: 'Catégorie inconnue',
+        isNotEmail: 'Veuillez saisir une adresse e-mail valide'
+
     },
 
     {
@@ -384,7 +458,33 @@ const languages = [
         h1_ErrorJson: 'Errore durante il Caricamento del File delle Icone',
         h3_checkConnect: 'Verifica la Connessione Internet',
         ttBtn_NextPage: 'Pagina Successiva',
-        ttBtn_PreviousPage: 'Pagina Precedente'
+        ttBtn_PreviousPage: 'Pagina Precedente',
+
+        SECTEUR_11: "SETTINGS",
+        h3_titleContactForm: 'Modulo di contatto',
+        labelEmail: 'Il tuo indirizzo e-mail',
+        objectEmail: 'Oggetto della mail',
+        objects:
+        {
+            bug: 'Segnala un problema',
+            feedback: 'Fornisci un feedback',
+            other: 'Altro motivo'
+        },
+        labelMailArea: 'Inserisci qui il tuo messaggio',
+        sendMail: 'Invia',
+        mailDone: 'Email inviata con successo',
+        mailError: 'Errore, email non inviata',
+
+        SECTEUR_12: 'CHECK-FIELD',
+        requireMsg: 'Questo campo è obbligatorio',
+        nameAlreadyExists: 'Questo nome esiste già',
+        max15: 'Massimo 15 caratteri',
+        max13: 'Massimo 13 caratteri',
+        noNegativeNumber: 'Nessun numero negativo consentito',
+        unknownCategory: 'Categoria sconosciuta',
+        isNotEmail: 'Inserisci un indirizzo e-mail valido'
+
+        
     },
 
     {
@@ -476,7 +576,31 @@ const languages = [
         h1_ErrorJson: 'Error al cargar el archivo de iconos',
         h3_checkConnect: 'Verifica tu conexión a internet',
         ttBtn_NextPage: 'Página siguiente',
-        ttBtn_PreviousPage: 'Página anterior'
+        ttBtn_PreviousPage: 'Página anterior',
+
+        SECTEUR_11: "SETTINGS",
+        h3_titleContactForm: 'Formulario de contacto',
+        labelEmail: 'Tu dirección de correo electrónico',
+        objectEmail: 'Asunto del correo',
+        objects:
+        {
+            bug: 'Informar un problema',
+            feedback: 'Proporcionar comentarios',
+            other: 'Otra razón'
+        },
+        labelMailArea: 'Ingresa tu mensaje aquí',
+        sendMail: 'Enviar',
+        mailDone: 'Correo electrónico enviado con éxito',
+        mailError: 'Error, correo electrónico no enviado',
+
+        SECTEUR_12: 'CHECK-FIELD',
+        requireMsg: 'Este campo es obligatorio',
+        nameAlreadyExists: 'Este nombre ya existe',
+        max15: 'Máximo 15 caracteres',
+        max13: 'Máximo 13 caracteres',
+        noNegativeNumber: 'No se permiten números negativos',
+        unknownCategory: 'Categoría desconocida',
+        isNotEmail: 'Por favor, ingresa una dirección de correo electrónico válida'
     }
 ]
 

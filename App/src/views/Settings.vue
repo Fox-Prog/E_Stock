@@ -14,6 +14,7 @@
       <img :src="imgPath" alt="background_img" />
     </div>
 
+    <!-- Language selector -->
     <div class="lg-form">
       <v-form>
         <div style="display: flex;">
@@ -22,7 +23,7 @@
               prepend-icon="mdi-translate"
               variant="outlined"
               :items="lgs"
-              @update:model-value="setLang(store, language)"
+              @update:model-value="updateLang"
           ></v-select> 
 
           <img
@@ -31,11 +32,73 @@
             alt="flag"
            >
         </div>
-
-
-
       </v-form>
+
+      
+
+      <!-- Email form -->
+      <div class="email-form">
+        <v-divider class="my-5"></v-divider>
+        <div id="title-contact-form">
+          <h3>{{ t.h3_titleContactForm }}</h3>
+          <div v-if="sendDone" class="sendRes" id="send-done"><h4>{{ t.mailDone }}</h4><v-icon icon="mdi-check"/></div>
+          <div v-if="sendError" class="sendRes" id="send-error"><h4>{{ t.mailError }}</h4><v-icon icon="mdi-alert-circle-outline"/></div>
+        </div>
+        <v-form v-model="form">
+          <!-- Name -->
+          <v-text-field
+            class="mb-2"
+            v-model="name"
+            prepend-icon="mdi-account"
+            clearable
+            variant="outlined"
+            :label="t.labelName"
+            :rules="[required]"
+          ></v-text-field>
+  
+          <!-- Email -->
+          <v-text-field
+            class="mb-2"
+            v-model="email"
+            type="email"
+            prepend-icon="mdi-at"
+            clearable
+            variant="outlined"
+            :label="t.labelEmail"
+            :rules="[required, isEmail]"
+          ></v-text-field>
+  
+          <!-- Objet -->
+          <v-select
+            class="mb-2"
+            v-model="object"
+            prepend-icon="mdi-text-short"
+            variant="outlined"
+            :label="t.objectEmail"
+            :items="objects"
+          ></v-select>
+  
+          <!-- Content -->
+          <v-textarea
+            class="mb-2"
+            v-model="content"
+            variant="outlined"
+            :label="t.labelMailArea"
+            :rules="[required]"
+          ></v-textarea>
+  
+          <!-- Submit -->
+          <v-btn
+            variant="tonal"
+            block
+            :disabled="!form"
+            @click="sendMail"
+          >{{ t.sendMail }}</v-btn>
+        </v-form>
+      </div>
     </div>
+
+
 </template>
 
 
@@ -52,10 +115,13 @@ import Btn_done from "@/components/bigBTN/done.vue";
 import { ref, computed } from 'vue' 
 import { useStore } from 'vuex'
 const store = useStore()
+const t = computed(() => store.state.lg)
 
 import { useRouter } from "vue-router"
 const router = useRouter()
 
+
+// Language
 const flags = [
   {
     name: 'Deutsch',
@@ -91,6 +157,69 @@ const lgs = ['Deutsch', 'English', 'Français', 'Italian', 'Spanish']
 
 import { setLang } from '@/multilanguage/lang.js'
 
+function updateLang(){
+  setLang(store, language.value)
+  document.location.reload(true)
+}
+
+
+
+// Email form
+import emailjs from 'emailjs-com';
+
+const form = ref(false)
+const name = ref(null)
+const email = ref(null)
+const objects = [t.value.objects.bug, t.value.objects.feedback, t.value.objects.other]
+const object = ref(objects[0])
+const content = ref(null)
+
+const sendDone = ref(false)
+const sendError = ref(false)
+
+
+// Check input fields
+function required(v) {
+  return !!v || t.value.requireMsg
+}
+
+function isEmail(v){
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if(!regex.test(v)){
+    return t.value.isNotEmail
+  }
+  return true
+}
+
+function sendMail(){
+  let translateObject
+
+  if(object.value === objects[0]){
+    translateObject = "Problème"
+  } else if(object.value === objects[1]){
+    translateObject = "Retour d'expérience"
+  } else if(object.value === objects[2]){
+    translateObject = "Autre"
+  }
+
+  try{
+    emailjs.send("service_knj3pa6","template_opfkckr",{
+      object: translateObject,
+      name: name.value,
+      content: content.value,
+      email: email.value
+    }, 's6Y1Al8q1MCbFJVSJ')
+
+    sendDone.value = true
+    name.value = null
+    email.value = null
+    content.value = null
+
+  } catch(error){
+    console.log(error)
+    sendError.value = true
+  }
+}
 
 </script>
 
@@ -136,6 +265,37 @@ import { setLang } from '@/multilanguage/lang.js'
   height: 60px;
   right: -30px;
   top: -30px;
+}
+
+.email-form {
+  display: block;
+  
+}
+#title-contact-form {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sendRes {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+#send-done {
+  background: linear-gradient(to top right, #17650c, #33c31a);
+}
+#send-done h4 {
+  margin-right: 10px;
+}
+
+#send-error {
+  background: linear-gradient(to top right, #ac3705, #e30909);
+}
+#send-error h4 {
+  margin-right: 10px;
 }
 
 
