@@ -60,7 +60,8 @@
 import { computed, watch, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
-const t = computed(() => store.state.lg)
+import { getTranslate } from '@/multilanguage/lang.js' 
+const t = getTranslate()
 
 // VARIABLES
 const imgNoResult = "/images/wind.png"

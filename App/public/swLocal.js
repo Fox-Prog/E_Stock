@@ -9,12 +9,18 @@ const cache_files = [
 
     'http://localhost:8080/images/bgNew.jpg',
     'http://localhost:8080/images/bgBackup.jpg',
+    'http://localhost:8080/images/cog.jpg',
     'http://localhost:8080/images/chip.png',
     'http://localhost:8080/images/empty.png',
     'http://localhost:8080/images/wind.png',
     'http://localhost:8080/images/offline.png',
     'http://localhost:8080/images/save.png',
     'http://localhost:8080/images/restore.png',
+    'http://localhost:8080/images/flag/de.png',
+    'http://localhost:8080/images/flag/en.png',
+    'http://localhost:8080/images/flag/es.png',
+    'http://localhost:8080/images/flag/fr.png',
+    'http://localhost:8080/images/flag/it.png',
 
     'http://localhost:8080/js/chunk-vendors.js',
     'http://localhost:8080/js/app.js',

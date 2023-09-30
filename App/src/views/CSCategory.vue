@@ -65,7 +65,8 @@ import Btn_cancel from "@/components/bigBTN/cancel.vue";
 
 import { useStore } from "vuex";
 const store = useStore();
-const t = computed(() => store.state.lg)
+import { getTranslate } from '@/multilanguage/lang.js' 
+const t = getTranslate()
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -93,7 +94,7 @@ function selectMode() {
 
 // Check input fields
 function required(v) {
-  return !!v || t.value.requireMsg;
+  return !!v || t.requireMsg;
 }
 
 function unicName(v) {
@@ -101,7 +102,7 @@ function unicName(v) {
     // Create mode
     const cattExist = store.state.catts.some((catt) => catt.name === v);
     if (cattExist) {
-      return t.value.nameAlreadyExists;
+      return t.nameAlreadyExists;
     }
     return true;
   } else {
@@ -109,7 +110,7 @@ function unicName(v) {
     const allCattNames = store.state.catts.map((catt) => catt.name);
     const filteredNames = allCattNames.filter((name) => name === v);
     if (filteredNames.length > 1) {
-      return t.value.nameAlreadyExists;
+      return t.nameAlreadyExists;
     }
     return true;
   }
@@ -117,7 +118,7 @@ function unicName(v) {
 
 function longName(v) {
   if (v.length > 15) {
-    return t.value.max15;
+    return t.max15;
   }
   return true;
 }

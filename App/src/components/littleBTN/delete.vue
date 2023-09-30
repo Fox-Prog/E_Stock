@@ -16,7 +16,8 @@
 import { computed } from "vue"
 import { useStore } from "vuex"
 const store = useStore()
-const t = computed(() => store.state.lg)
+import { getTranslate } from '@/multilanguage/lang.js' 
+const t = getTranslate()
 
 </script>
 

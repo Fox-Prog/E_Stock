@@ -151,7 +151,8 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-const t = computed(() => store.state.lg)
+import { getTranslate } from '@/multilanguage/lang.js' 
+const t = getTranslate()
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -216,19 +217,19 @@ function selectMode() {
 
 // Check input fields
 function required(v) {
-  return !!v || t.value.requireMsg;
+  return !!v || t.requireMsg;
 }
 
 function nbrPositif(v) {
   if (v <= 0) {
-    return t.value.noNegativeNumber;
+    return t.noNegativeNumber;
   }
   return true;
 }
 
 function longName(v) {
   if (v.length > 13) {
-    return t.value.max13;
+    return t.max13;
   }
   return true;
 }
@@ -238,7 +239,7 @@ function cattExist(v) {
   if (listCattName.includes(v) || v === null) {
     return true;
   } else {
-    return t.value.unknownCategory;
+    return t.unknownCategory;
   }
 }
 

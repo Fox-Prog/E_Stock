@@ -101,7 +101,8 @@ import { computed, ref, onBeforeUnmount } from 'vue'
 
 import { useStore } from 'vuex'
 const store = useStore()
-const t = computed(() => store.state.lg)
+import { getTranslate } from '@/multilanguage/lang.js' 
+const t = getTranslate()
 
 import iconsGrid from '@/components/Flaticon/iconsGrid.vue'
 const colors = ['All', 'Black', 'Color', 'Gradient']

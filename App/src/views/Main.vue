@@ -296,7 +296,8 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue"
 import { useStore } from "vuex"
 const store = useStore()
-const t = computed(() => store.state.lg)
+import { getTranslate } from '@/multilanguage/lang.js' 
+const t = getTranslate()
 
 import Btn_new from "@/components/bigBTN/new.vue";
 import Btn_menu from "@/components/bigBTN/menu.vue";

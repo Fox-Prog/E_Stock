@@ -9,6 +9,7 @@ const cache_files = [
 
     '/images/bgNew.jpg',
     '/images/bgBackup.jpg',
+    '/images/cog.jpg',
     '/images/chip.png',
     '/images/empty.png',
     '/images/wind.png',

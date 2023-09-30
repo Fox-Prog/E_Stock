@@ -9,16 +9,35 @@ export function getLang(store){
         localStorage.setItem('lang', 'English')
         lang = 'English'
     }
-    
-    // Load language into Vuex
-    setLang(store, lang)
 }
+
+export function getLangsNames(){
+    return languages.map(lang => lang.name).sort()
+}
+
+export function setLang(lg){
+    localStorage.setItem('lang', lg)
+    document.location.reload(true);
+}
+
+export function getFlag(lg){
+    const language = languages.find(lang => lang.name === lg)
+    return language.flag
+}
+
+export function getTranslate(){
+    const langSave = localStorage.getItem('lang')
+    const lang = langSave ? langSave : 'English'
+    return languages.find(lg => lg.name === lang)
+}
+
 
 // ____________________________________________
 
 const languages = [
     {
         name: 'Deutsch',
+        flag: "/images/flag/de.png",
 
         SECTION_1: "LEER",
         noCatt: 'Keine Kategorie gefunden',
@@ -136,6 +155,7 @@ const languages = [
 
     {
         name: 'English',
+        flag: "images/flag/en.png",
 
         SECTION_1: "EMPTY",
         noCatt: 'No categories found',
@@ -254,6 +274,7 @@ const languages = [
 
     {
         name: 'Français',
+        flag: "/images/flag/fr.png",
 
         SECTION_1: "EMPTY",
         noCatt: 'Aucune catégorie trouvée',
@@ -371,6 +392,7 @@ const languages = [
 
     {
         name: 'Italian',
+        flag: "/images/flag/it.png",
 
         SECTION_1: "EMPTY",
         noCatt: 'Nessuna categoria trovata',
@@ -489,6 +511,7 @@ const languages = [
 
     {
         name: 'Spanish',
+        flag: "/images/flag/es.png",
 
         SECTION_1: "EMPTY",
         noCatt: 'No se encontraron categorías',
@@ -605,8 +628,4 @@ const languages = [
 ]
 
 
-export function setLang(store, lg){
-    let lang = languages.find(lang => lang.name === lg)
-    store.dispatch('setLang', lang) // Load language into Vuex
-    localStorage.setItem('lang', lg) // Load language into Local storage
-}
+
