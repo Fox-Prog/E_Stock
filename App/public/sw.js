@@ -4,23 +4,23 @@ const cache_files = [
     '/manifest.json',
 
     '/icons/ico.ico',
-    '/icons/icon512.png',
-    '/icons/icon192.png',
+    '/icons/icon512.webp',
+    '/icons/icon192.webp',
 
-    '/images/bgNew.jpg',
-    '/images/bgBackup.jpg',
-    '/images/cog.jpg',
-    '/images/chip.png',
-    '/images/empty.png',
-    '/images/wind.png',
-    '/images/offline.png',
-    '/images/save.png',
-    '/images/restore.png',
-    '/images/flag/de.png',
-    '/images/flag/en.png',
-    '/images/flag/es.png',
-    '/images/flag/fr.png',
-    '/images/flag/it.png'
+    '/images/bgNew.webp',
+    '/images/bgBackup.webp',
+    '/images/cog.webp',
+    '/images/chip.webp',
+    '/images/empty.webp',
+    '/images/wind.webp',
+    '/images/offline.webp',
+    '/images/save.webp',
+    '/images/restore.webp',
+    '/images/flag/de.webp',
+    '/images/flag/en.webp',
+    '/images/flag/es.webp',
+    '/images/flag/fr.webp',
+    '/images/flag/it.webp'
 ]
 
 

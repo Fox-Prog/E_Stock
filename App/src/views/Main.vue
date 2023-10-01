@@ -307,7 +307,7 @@ import ComposantGrid from '@/components/ComposantGrid.vue';
 import Category from "@/components/Category.vue";
 import addCpBtn from "@/components/littleBTN/addCpBtn.vue";
 
-const img_empty = "/images/empty.png";
+const img_empty = "/images/empty.webp";
 
 const drawer = ref(false);
 

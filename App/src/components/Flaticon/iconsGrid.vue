@@ -64,8 +64,8 @@ import { getTranslate } from '@/multilanguage/lang.js'
 const t = getTranslate()
 
 // VARIABLES
-const imgNoResult = "/images/wind.png"
-const imgOffline = "/images/offline.png"
+const imgNoResult = "/images/wind.webp"
+const imgOffline = "/images/offline.webp"
 
 let icons = ref([])
 let empty = ref(false)

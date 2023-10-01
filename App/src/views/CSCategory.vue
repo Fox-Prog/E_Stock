@@ -73,7 +73,7 @@ const router = useRouter();
 
 // VARIABLES
 const form = ref(false);
-const imgPath = "/images/bgNew.jpg";
+const imgPath = "/images/bgNew.webp";
 
 const category = ref(null);
 const name = ref(null);

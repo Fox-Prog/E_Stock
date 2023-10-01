@@ -20,11 +20,11 @@
         <div class="btn">
             <button class="btn_up_down" :title="t.ttBtn_GoBackup" :disabled="errBackup" @click="createBackup">
                 <h3>{{ t.ctBtn_Save }}</h3>
-                <img src="/images/save.png" alt="Do Backup" width="512" height="512">
+                <img src="/images/save.webp" alt="Do Backup" width="512" height="512">
             </button>
             <button class="btn_up_down" :title="t.ttBtn_RestoreBackup" :disabled="errBackup" @click="backupFile=null, restoreForm = true">
                 <h3>{{ t.ctBtn_Restore }}</h3>
-                <img src="/images/restore.png" alt="Restored Backup" width="512" height="512">
+                <img src="/images/restore.webp" alt="Restored Backup" width="512" height="512">
             </button>
         </div>
         <!-- Restore options -->
@@ -140,7 +140,7 @@ const router = useRouter()
 
 import Btn_cancel from '@/components/bigBTN/cancel.vue'
 
-const imgPath = "/images/bgBackup.jpg"
+const imgPath = "/images/bgBackup.webp"
 
 let errBackup = ref(false)
 let showError = ref(false)

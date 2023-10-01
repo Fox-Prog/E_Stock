@@ -37,7 +37,7 @@ export function getTranslate(){
 const languages = [
     {
         name: 'Deutsch',
-        flag: "/images/flag/de.png",
+        flag: "/images/flag/de.webp",
 
         SECTION_1: "LEER",
         noCatt: 'Keine Kategorie gefunden',
@@ -157,7 +157,7 @@ const languages = [
 
     {
         name: 'English',
-        flag: "images/flag/en.png",
+        flag: "images/flag/en.webp",
 
         SECTION_1: "EMPTY",
         noCatt: 'No categories found',
@@ -278,7 +278,7 @@ const languages = [
 
     {
         name: 'Français',
-        flag: "/images/flag/fr.png",
+        flag: "/images/flag/fr.webp",
 
         SECTION_1: "EMPTY",
         noCatt: 'Aucune catégorie trouvée',
@@ -398,7 +398,7 @@ const languages = [
 
     {
         name: 'Italian',
-        flag: "/images/flag/it.png",
+        flag: "/images/flag/it.webp",
 
         SECTION_1: "EMPTY",
         noCatt: 'Nessuna categoria trovata',
@@ -519,7 +519,7 @@ const languages = [
 
     {
         name: 'Spanish',
-        flag: "/images/flag/es.png",
+        flag: "/images/flag/es.webp",
 
         SECTION_1: "EMPTY",
         noCatt: 'No se encontraron categorías',

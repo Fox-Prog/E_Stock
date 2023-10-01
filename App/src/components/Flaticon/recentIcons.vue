@@ -53,7 +53,7 @@ async function loadIcons(){
     icons.value = tab.filter(icon => {
         if(
             !unicValue.has(icon.body) && 
-            !icon.body.includes("/images/chip.png")
+            !icon.body.includes("/images/chip.webp")
         ){
             unicValue.add(icon.body)
             return true

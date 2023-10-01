@@ -130,7 +130,7 @@ const t = getTranslate();
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-const imgPath = "/images/cog.jpg";
+const imgPath = "/images/cog.webp";
 
 // Language
 import { getLangsNames, setLang, getFlag } from "@/multilanguage/lang.js";

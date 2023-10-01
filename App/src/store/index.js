@@ -29,7 +29,7 @@ export default createStore({
     maxPage: 0,
 
     imgName: "Chip",
-    imgBody: "/images/chip.png",
+    imgBody: "/images/chip.webp",
 
     recentForm: false
   },

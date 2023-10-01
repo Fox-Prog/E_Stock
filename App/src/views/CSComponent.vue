@@ -184,7 +184,7 @@ function updateFloatBtn(){
   floatBtn.value = screenWidth < 500 ? true : false
 }
 
-const imgPath = "/images/bgNew.jpg";
+const imgPath = "/images/bgNew.webp";
 
 function checkCatts() {
   if (store.state.catts.length > 0) {
@@ -364,7 +364,7 @@ onBeforeUnmount(() => {
   store.dispatch("setPreCatt", null);
   let imgFile = {
     name: "Chip",
-    body: "/images/chip.png"
+    body: "/images/chip.webp"
   }
   store.dispatch("setImg", imgFile)
 });
