@@ -1,5 +1,7 @@
 {
     "name": "E_Stock",
+    "background_color": "#212121",
+    "theme_color": "#212121",
     "icons": [
         {
             "src": "/icons/icon512.png",

@@ -47,6 +47,7 @@ const languages = [
 
         SECTION_2: "NAVIGATIONSSCHUBLADE",
         labelSearch: 'Suche',
+        tt_SearchBar: 'Suchleiste',
         h3_DisplayBtn: 'Anzeige',
         ttBtn_ShowCatt: 'Kategorien anzeigen',
         ttBtn_ShowComp: 'Komponenten anzeigen',
@@ -166,6 +167,7 @@ const languages = [
 
         SECTION_2: "NAV-DRAWER",
         labelSearch: 'Search',
+        tt_SearchBar: 'Search bar',
         h3_DisplayBtn: 'Display',
         ttBtn_ShowCatt: 'Show Category',
         ttBtn_ShowComp: 'Show Components',
@@ -286,6 +288,7 @@ const languages = [
 
         SECTION_2: "NAV-DRAWER",
         labelSearch: 'Recherche',
+        tt_SearchBar: 'Barre de recherche',
         h3_DisplayBtn: 'Affichage',
         ttBtn_ShowCatt: 'Afficher les catégories',
         ttBtn_ShowComp: 'Afficher les composants',
@@ -405,6 +408,7 @@ const languages = [
 
         SECTION_2: "NAV-DRAWER",
         labelSearch: 'Ricerca',
+        tt_SearchBar: 'Barra di ricerca',
         h3_DisplayBtn: 'Visualizza',
         ttBtn_ShowCatt: 'Mostra Categoria',
         ttBtn_ShowComp: 'Mostra Componenti',
@@ -525,6 +529,7 @@ const languages = [
 
         SECTION_2: "NAV-DRAWER",
         labelSearch: 'Buscar',
+        tt_SearchBar: 'Barra de búsqueda',
         h3_DisplayBtn: 'Mostrar',
         ttBtn_ShowCatt: 'Mostrar Categoría',
         ttBtn_ShowComp: 'Mostrar Componentes',

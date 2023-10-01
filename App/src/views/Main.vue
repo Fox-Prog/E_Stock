@@ -13,6 +13,7 @@
       clearable
       class="ma-5 ic_search"
       :label= "t.labelSearch"
+      :title="t.tt_SearchBar"
       prepend-icon="mdi-magnify"
       variant="outlined"
       color="#78909C"
