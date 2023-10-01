@@ -13,18 +13,18 @@
     </v-app-bar>
 
     <div class="img_font">
-      <img :src="imgPath" alt="background_img" />
+      <img :src="imgPath" alt="background_img" width="1920" height="1357" />
     </div>
 
     <v-card class="bc_form">
         <div class="btn">
-            <button class="btn_up_down" :disabled="errBackup" @click="createBackup">
+            <button class="btn_up_down" :title="t.ttBtn_GoBackup" :disabled="errBackup" @click="createBackup">
                 <h3>{{ t.ctBtn_Save }}</h3>
-                <img src="/images/save.png" alt="Do Backup" :title="t.ttBtn_GoBackup">
+                <img src="/images/save.png" alt="Do Backup" width="512" height="512">
             </button>
-            <button class="btn_up_down" :disabled="errBackup" @click="backupFile=null, restoreForm = true">
+            <button class="btn_up_down" :title="t.ttBtn_RestoreBackup" :disabled="errBackup" @click="backupFile=null, restoreForm = true">
                 <h3>{{ t.ctBtn_Restore }}</h3>
-                <img src="/images/restore.png" alt="Restored Backup" :title="t.ttBtn_RestoreBackup">
+                <img src="/images/restore.png" alt="Restored Backup" width="512" height="512">
             </button>
         </div>
         <!-- Restore options -->
@@ -384,6 +384,7 @@ async function restoreBackup(){
 }
 .btn_up_down img {
     width: 100%;
+    height: auto;
 }
 @media screen and (max-width: 500px) {
   .btn_up_down h3 {

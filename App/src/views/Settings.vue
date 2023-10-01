@@ -11,7 +11,7 @@
   </v-app-bar>
 
   <div class="img_font">
-    <img :src="imgPath" alt="background_img" />
+    <img :src="imgPath" alt="background_img" width="1920" height="638" />
   </div>
 
   <!-- Language selector -->
@@ -240,8 +240,8 @@ function updateOnlineStatus() {
 }
 
 onMounted(async () => {
-  window.addEventListener("online", updateOnlineStatus);
-  window.addEventListener("offline", updateOnlineStatus);
+  window.addEventListener("online", updateOnlineStatus, {passive: true});
+  window.addEventListener("offline", updateOnlineStatus, {passive: true});
 });
 
 onBeforeUnmount(() => {

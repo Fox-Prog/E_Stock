@@ -6,7 +6,7 @@
          :key="icon.id"
          @click="addIcon"
       >
-        <img :src="icon.url" :alt="icon.name" :title="`${icon.name}, ${icon.color}, ${icon.shape}`">
+        <img :src="icon.url" :alt="icon.name" :title="`${icon.name}, ${icon.color}, ${icon.shape}`" width="128" height="128">
       </button>
    </div>
 
@@ -15,7 +15,7 @@
     class="error" 
     v-if="empty"
     >
-    <img :src="imgNoResult" alt="no_result_img">
+    <img :src="imgNoResult" alt="no_result_img" width="512" height="512">
     <h1>{{ t.h1_NoResult }}</h1>
    </div>
 
@@ -24,7 +24,7 @@
     class="error" 
     v-if="!online"
     >
-    <img :src="imgOffline" alt="offline_img">
+    <img :src="imgOffline" alt="offline_img" width="512" height="512">
     <h1>{{ t.h1_Offline }}</h1>
    </div>
 
@@ -33,7 +33,7 @@
     class="error" 
     v-if="errLoadJson"
     >
-    <img :src="imgOffline" alt="offline_img">
+    <img :src="imgOffline" alt="offline_img" width="512" height="512">
     <h1>{{ t.h1_ErrorJson }}</h1>
     <h3>{{ t.h3_checkConnect }}</h3>
    </div>
@@ -88,7 +88,6 @@ let params = computed(() => {
   }
 })
 
-
 let trigger = computed(()=> store.state.trigger)
 
 watch(trigger, loadIcons)
@@ -96,36 +95,40 @@ watch(trigger, loadIcons)
 let jsonData
 
 async function getJson(){
-  store.dispatch('setJsonLoaded', false)
-
-  const delay = 12000
-
-  const controleur = new AbortController()
-  const timeoutID = setTimeout(() => controleur.abort(), delay)
-
-  // Fetch request -- GET JSON
-  try {
-    const jsonReq = fetch("/icons.json", {
-      method: 'GET',
-      signal: controleur.signal
-    })
-
-    const res = await jsonReq
-
-    if(!res.ok){ throw new Error('Request failed'), errLoadJson.value = true }
-
-    jsonData = await res.json() 
-   
+  if(online.value){
+    store.dispatch('setJsonLoaded', false)
   
-  } catch(err){
-    console.log("Request json error: ")
-    console.error(err)
-    errLoadJson.value = true
-
-  } finally {
-    loader.value = false 
-    store.dispatch('setJsonLoaded', true)
-    clearTimeout(timeoutID)
+    const delay = 12000
+  
+    const controleur = new AbortController()
+    const timeoutID = setTimeout(() => controleur.abort(), delay)
+  
+    // Fetch request -- GET JSON
+    try {
+      const jsonReq = fetch("/icons.json", {
+        method: 'GET',
+        signal: controleur.signal
+      })
+  
+      const res = await jsonReq
+  
+      if(!res.ok){ throw new Error('Request failed'), errLoadJson.value = true }
+  
+      jsonData = await res.json() 
+     
+    
+    } catch(err){
+      console.log("Request json error: ")
+      console.error(err)
+      errLoadJson.value = true
+  
+    } finally {
+      loader.value = false 
+      store.dispatch('setJsonLoaded', true)
+      clearTimeout(timeoutID)
+    }
+  } else {
+    loader.value = false
   }
 }
 
@@ -252,6 +255,7 @@ function sortBySimilarity(search, icons) {
 
 
 function resetIcons(){
+  empty.value = false
   icons.value = []
   setPages(0, 0)
 }
@@ -321,8 +325,8 @@ function addIcon(event){
 
 
 onMounted(async () => {
-  window.addEventListener('online', updateOnlineStatus)
-  window.addEventListener('offline', updateOnlineStatus)
+  window.addEventListener('online', updateOnlineStatus, {passive: true})
+  window.addEventListener('offline', updateOnlineStatus, {passive: true})
   await getJson()
 })
 
@@ -351,6 +355,7 @@ onBeforeUnmount(() => {
   gap: 15px;
 }
 
+
 .icon-item-n {
   text-align: center;
   padding: 5px;
@@ -367,6 +372,7 @@ onBeforeUnmount(() => {
 
 .icon-item-n img {
   max-width: 100%;
+  height: auto;
 }
 
 

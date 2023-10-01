@@ -161,7 +161,7 @@
       (showCategory && nbrCatt === 0) || (showComposant && nbrComposant === 0)
     "
   >
-    <img :src="img_empty" alt="img_empty" />
+    <img :src="img_empty" alt="img_empty" width="512" height="512" />
     <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.noCatt }}</h2>
     <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.createFirstCatt }}</h2>
 
@@ -509,7 +509,7 @@ function shortcut(event) {
 
 
 onMounted(() => {
-  window.addEventListener("keydown", shortcut);
+  window.addEventListener("keydown", shortcut, {passive: true});
 });
 
 onBeforeUnmount(() => {

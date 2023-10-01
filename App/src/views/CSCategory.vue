@@ -19,7 +19,7 @@
     </v-app-bar>
 
     <div class="img_font">
-      <img :src="imgPath" alt="background_img" />
+      <img :src="imgPath" alt="background_img" width="4000" height="4575" />
     </div>
     
     <div class="Cat-formulaire">
@@ -158,7 +158,7 @@ function shortcut(event) {
 }
 
 onMounted(() => {
-  window.addEventListener("keydown", shortcut);
+  window.addEventListener("keydown", shortcut, {passive: true});
   selectMode();
 });
 
