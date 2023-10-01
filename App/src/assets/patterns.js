@@ -6,7 +6,6 @@ export function checkPattern(){
     // If no pattern --> pcb
     if(!patternName){
         localStorage.setItem('patternName', 'Circuit Board')
-        // document.location.reload(true);
     }
 }
 
