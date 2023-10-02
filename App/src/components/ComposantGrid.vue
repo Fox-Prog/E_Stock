@@ -4,8 +4,8 @@
       <button class="Cp-block" v-bind="props">
         <img :src="composant.imgBody" alt="Component_image" />
         <div class="Cp-block-info">
-          <p>{{ composant.name }}</p>
-          <p>{{ composant.quantity }}</p>
+          <p id="Cp-block-name">{{ composant.name }}</p>
+          <p id="Cp-block-q">{{ composant.quantity }}</p>
         </div>
       </button>
     </template>
@@ -21,6 +21,7 @@
 
     <v-card id="cp-menu">
 
+        <h4 id="Cp-block-card-name">{{ composant.name }}</h4>
         <p>{{ composant.description }}</p>
         <div style="display: flex; justify-content: space-between;">
             <div style="display: flex; justify-content: space-between; width: 80px;">
@@ -149,6 +150,7 @@ function setComponent() {
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: auto;
   display: flex;
   justify-content: space-between;
   padding: 5px;
@@ -160,7 +162,27 @@ function setComponent() {
 .Cp-block-info p {
   font-size: 2vw;
   color: beige;
+  overflow: hidden;
 }
+
+#Cp-block-name {
+  width: 75px;
+  text-align: left;
+}
+#Cp-block-q {
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color: #413e3e;
+  border-radius: 5px;
+}
+
+#Cp-block-card-name {
+  width: 100%;
+  text-align: center;
+  background-color: #21212130;
+  margin: 0;
+}
+
 
 #cp-menu {
     background: linear-gradient(to bottom left, #908e8e, #bdbdbd);

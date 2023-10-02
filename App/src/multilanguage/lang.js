@@ -148,7 +148,7 @@ const languages = [
         requireMsg: 'Dieses Feld ist erforderlich',
         nameAlreadyExists: 'Dieser Name existiert bereits',
         max15: 'Maximal 15 Zeichen',
-        max13: 'Maximal 13 Zeichen',
+        max50: 'Maximal 50 Zeichen',
         noNegativeNumber: 'Keine negativen Zahlen erlaubt',
         unknownCategory: 'Unbekannte Kategorie',
         isNotEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein'
@@ -268,7 +268,7 @@ const languages = [
         requireMsg: 'Field is required',
         nameAlreadyExists: 'This name already exists',
         max15: 'Max 15 caracters',
-        max13: 'Max 13 caracters',
+        max50: 'Max 50 caracters',
         noNegativeNumber: 'No negative numbers',
         unknownCategory: 'Unknown category',
         isNotEmail: 'Please enter a valid e-mail address'
@@ -389,7 +389,7 @@ const languages = [
         requireMsg: 'Ce champ est requis',
         nameAlreadyExists: 'Ce nom existe déjà',
         max15: 'Maximum 15 caractères',
-        max13: 'Maximum 13 caractères',
+        max50: 'Maximum 50 caractères',
         noNegativeNumber: 'Pas de nombres négatifs autorisés',
         unknownCategory: 'Catégorie inconnue',
         isNotEmail: 'Veuillez saisir une adresse e-mail valide'
@@ -509,7 +509,7 @@ const languages = [
         requireMsg: 'Questo campo è obbligatorio',
         nameAlreadyExists: 'Questo nome esiste già',
         max15: 'Massimo 15 caratteri',
-        max13: 'Massimo 13 caratteri',
+        max50: 'Massimo 50 caratteri',
         noNegativeNumber: 'Nessun numero negativo consentito',
         unknownCategory: 'Categoria sconosciuta',
         isNotEmail: 'Inserisci un indirizzo e-mail valido'
@@ -630,7 +630,7 @@ const languages = [
         requireMsg: 'Este campo es obligatorio',
         nameAlreadyExists: 'Este nombre ya existe',
         max15: 'Máximo 15 caracteres',
-        max13: 'Máximo 13 caracteres',
+        max50: 'Máximo 50 caracteres',
         noNegativeNumber: 'No se permiten números negativos',
         unknownCategory: 'Categoría desconocida',
         isNotEmail: 'Por favor, ingresa una dirección de correo electrónico válida'

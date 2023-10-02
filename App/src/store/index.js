@@ -31,7 +31,9 @@ export default createStore({
     imgName: "Chip",
     imgBody: "/images/chip.webp",
 
-    recentForm: false
+    recentForm: false,
+
+    trigPattern: false
   },
   
   getters: {
@@ -136,6 +138,10 @@ export default createStore({
     resetAll(state){
       state.composants = []
       state.catts = []
+    },
+
+    setTrigPattern(state, value){
+      state.trigPattern = value
     }
   },
 
@@ -218,7 +224,12 @@ export default createStore({
 
     resetAll({commit}){
       commit('resetAll')
+    },
+
+    setTrigPattern({commit}, value){
+      commit('setTrigPattern', value)
     }
+    
   
   },
   modules: {

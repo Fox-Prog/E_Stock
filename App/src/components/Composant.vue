@@ -11,7 +11,7 @@
         <v-dialog v-model="showDescription" width="auto">
           <template v-slot:activator="{ props }">
             <v-btn variant="text" :title="t.ttBtn_ShowDescription" v-bind="props">
-              <h2>{{ composant.name }}</h2>
+              <h2 id="Cp-name">{{ composant.name }}</h2>
             </v-btn>
           </template>
           <v-card>
@@ -192,6 +192,25 @@ function setComponent() {
   transform: translateX(-50%);
   max-width: 40vw;
   overflow: hidden;
+}
+.Cp-btn_name .v-btn {
+  height: 50px;
+}
+.Cp-btn_name .v-btn__content {
+  white-space: normal;
+}
+
+#Cp-name {
+  max-width: 40vw;
+  max-height: 50px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+@media screen and (max-width: 860px) {
+  #Cp-name {font-size: 17px;}
+}
+@media screen and (max-width: 680px) {
+  #Cp-name {font-size: 12px;}
 }
 
 #Cp-nbr_contained {

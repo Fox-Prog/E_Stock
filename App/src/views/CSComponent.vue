@@ -228,8 +228,8 @@ function nbrPositif(v) {
 }
 
 function longName(v) {
-  if (v.length > 13) {
-    return t.max13;
+  if (v.length > 50) {
+    return t.max50;
   }
   return true;
 }

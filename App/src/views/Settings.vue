@@ -40,7 +40,7 @@
         variant="outlined"
         label="Pattern"
         :items="patterns"
-        @update:model-value="setPattern(pattern)"
+        @update:model-value="setPattern(store, pattern)"
       ></v-select>
     </div>
 
@@ -126,6 +126,9 @@ import Btn_done from "@/components/bigBTN/done.vue";
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { getTranslate } from "@/multilanguage/lang.js";
 const t = getTranslate();
+
+import { useStore } from "vuex";
+const store = useStore();
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -240,8 +243,8 @@ function updateOnlineStatus() {
 }
 
 onMounted(async () => {
-  window.addEventListener("online", updateOnlineStatus, {passive: true});
-  window.addEventListener("offline", updateOnlineStatus, {passive: true});
+  window.addEventListener("online", updateOnlineStatus, { passive: true });
+  window.addEventListener("offline", updateOnlineStatus, { passive: true });
 });
 
 onBeforeUnmount(() => {

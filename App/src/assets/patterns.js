@@ -9,9 +9,10 @@ export function checkPattern(){
     }
 }
 
-export function setPattern(patName){
+export function setPattern(store, patName){
     localStorage.setItem('patternName', patName)
-    document.location.reload(true);
+    const trigValue = store.state.trigPattern
+    store.dispatch('setTrigPattern', !trigValue)
 }
 
 export function getPatternsNames(){

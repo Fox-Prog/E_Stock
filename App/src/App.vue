@@ -10,7 +10,7 @@
 import { useStore } from "vuex";
 const store = useStore();
 
-import { onMounted } from "vue";
+import { computed, onMounted, watch, ref } from "vue";
 
 import { getCategoryLocal } from "@/components/CategoryFunctions/getCategory.js";
 import { getComponentLocal } from "@/components/ComponentFunctions/getComponent.js";
@@ -88,7 +88,15 @@ function checkDB() {
 
 // Gestion du bg pattern
 import { getPatternUrl } from '@/assets/patterns.js'
-const bgPattern = `url("${getPatternUrl()}")`
+let bgPattern = ref(`url("${getPatternUrl()}")`)
+
+const trigPattern = computed(() => store.state.trigPattern)
+watch(trigPattern, changePattern)
+
+function changePattern(){
+  bgPattern.value = `url("${getPatternUrl()}")`
+}
+
 const bgColor = "#212121";
 
 onMounted(async () => {

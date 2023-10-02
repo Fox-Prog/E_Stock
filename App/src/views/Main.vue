@@ -536,11 +536,8 @@ onBeforeUnmount(() => {
 .grid-components {
   display: grid;
   margin: 40px 20px 0 20px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 15px;
-}
-@media screen and (max-width: 600px) {
-  .grid-components {grid-template-columns: repeat(4, 1fr);}
 }
 
 .backSpaceCatt {
@@ -616,14 +613,6 @@ onBeforeUnmount(() => {
   height: auto;
   object-fit: cover;
 }
-@media screen and (max-width: 600px) {
-  .empty img {
-    width: 60%;
-  }
-  .empty h2 {
-    font-size: 20px;
-  }
-}
 
 .catts_container {
   display: grid;
@@ -666,5 +655,20 @@ onBeforeUnmount(() => {
 
 .catt-select h3 {
   margin: 0;
+}
+
+@media screen and (max-width: 800px) {
+  .grid-components {grid-template-columns: repeat(4, 1fr);}
+}
+
+@media screen and (max-width: 600px) {
+  .empty img {
+    width: 60%;
+  }
+  .empty h2 {
+    font-size: 20px;
+  }
+
+  .grid-components {grid-template-columns: repeat(3, 1fr);}
 }
 </style>
