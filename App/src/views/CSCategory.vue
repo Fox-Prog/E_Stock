@@ -117,8 +117,8 @@ function unicName(v) {
 }
 
 function longName(v) {
-  if (v.length > 15) {
-    return t.max15;
+  if (v.length > 50) {
+    return t.max50;
   }
   return true;
 }

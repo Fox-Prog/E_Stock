@@ -16,7 +16,7 @@
         @touchend="resetLongClic()"
         :style="{ backgroundColor: catt.color }"
       >
-        {{ catt.name }}
+        <p id="Cat-name">{{ catt.name }}</p>
       </v-btn>
     </div>
 
@@ -223,11 +223,19 @@ import { deleteCategory } from "@/components/CategoryFunctions/deleteCategory.js
 .Cat-top .v-btn {
   text-transform: none;
 }
+.Cat-top .v-btn__content {
+  white-space: normal;
+}
 
 #Cat-main-btn {
   width: 100%;
-  min-height: 10vh;
+  height: 10vh;
   overflow: hidden;
+}
+#Cat-name {
+  width: 35vw;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .Cat-options {
