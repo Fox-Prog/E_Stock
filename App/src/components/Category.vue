@@ -137,12 +137,12 @@ import btn_delete from "@/components/littleBTN/delete.vue";
 
 const props = defineProps(["catt"]);
 
-let expand = ref(false);
-let ckeckDelete = ref(false);
+const expand = ref(false);
+const ckeckDelete = ref(false);
 
-let timeClic = ref(null);
+const timeClic = ref(null);
 
-let emptyCatt = ref(false);
+const emptyCatt = ref(false);
 
 const nbrComposant = computed(
   () =>

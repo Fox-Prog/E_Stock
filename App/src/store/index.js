@@ -33,7 +33,9 @@ export default createStore({
 
     recentForm: false,
 
-    trigPattern: false
+    trigPattern: false,
+
+    componentSelected: null
   },
   
   getters: {
@@ -142,6 +144,10 @@ export default createStore({
 
     setTrigPattern(state, value){
       state.trigPattern = value
+    },
+
+    selectComponent(state, component){
+      state.componentSelected = component
     }
   },
 
@@ -228,7 +234,12 @@ export default createStore({
 
     setTrigPattern({commit}, value){
       commit('setTrigPattern', value)
+    },
+
+    selectComponent({commit}, component){
+      commit('selectComponent', component)
     }
+    
     
   
   },

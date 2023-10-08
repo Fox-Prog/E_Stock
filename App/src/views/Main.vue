@@ -24,6 +24,7 @@
     <v-list density="comfortable" role="group" nav>
       <h3>{{ t.h3_DisplayBtn }}</h3>
       <v-btn
+      :disabled="selector"
         class="ma-5 btn_catt btn_drawer"
         icon="mdi-shape"
         variant="flat"
@@ -46,7 +47,7 @@
         :title="showImg ? t.ttBtn_HideIcons : t.ttBtn_ShowIcons"
         @click="toggleShowImg"
       >
-        <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C' }"></v-icon>
+        <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C'}"></v-icon>
       </v-btn>
 
       <v-btn
@@ -92,6 +93,40 @@
         @click="numberSort"
       ></v-btn>
 
+      <h3 v-if="showComposant">{{ t.h3_selectMode }}</h3>
+      <div v-if="showComposant" style="display: flex; align-items: center;">
+        <v-btn
+          class="ma-5 btn_multiSelect btn_drawer"
+          :icon="
+            selector
+              ? 'mdi-check-all'
+              : 'mdi-check-all'
+          "
+          variant="flat"
+          :title="selector ? t.ttBtn_Disable : t.ttBtn_Enable"
+          @click="initMultiSelect"
+        >
+          <v-icon :style="{ color: selector ? '#558B2F' : '#D50000' }"></v-icon>
+        </v-btn>
+
+        <div style="
+          padding: 5px;
+          border-radius: 5px;
+          background-color: rgba(102, 102, 102, 0.492);
+        ">
+          <p
+            :style="{ color: selector ? '#558B2F' : '#D50000' }"
+          >{{ selector ? t.ttBtn_Enable : t.ttBtn_Disable }}</p>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
       <v-divider class="my-5" thickness="5"></v-divider>
 
       <div
@@ -133,6 +168,7 @@
 
   <div :class="showCategory ? 'backSpaceCatt' : 'backSpaceComponent'">
     <v-btn
+    :disabled="selector"
       class="ma-1"
       style="font-size: 20px"
       variant="tonal"
@@ -147,14 +183,29 @@
 
     <div 
       class="catt-select" 
-      v-if="selectedCatt"
+      v-if="selectedCatt && !selector"
       :style="{
         backgroundColor: store.getters.getCattColor(selectedCatt.id),
       }"
       ><h3>{{ selectedCatt.name }}</h3></div>
+
+      <div
+        class="catt-select" 
+        style="background-color: rgba(150, 150, 150, 0.5); border-radius: 5px;"
+        v-if="selector"
+      >
+        <v-btn
+          class="mr-10"
+          icon="mdi-close"
+          color="red"
+          variant="text"
+          rounded="sm"
+          size="sm"
+          @click="initMultiSelect"
+        ></v-btn>
+        <h3>{{ `${countSelected} ${t.selectedCount}` }}</h3>
+      </div>
   </div>
-
-
 
   <div class="empty"
     v-if="
@@ -169,21 +220,23 @@
     <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.createFirstComp }}</h2>
   </div>
 
-
   <div class="grid-components" v-if="showComposant && displayGrid">
     <ComposantGrid
       v-for="composant in filteredComposants"
       :key="composant.id"
       :composant="composant"
+      :selector="selector"
+      :componentsList="componentsList"
     />
   </div>
-
 
   <div v-if="showComposant && !displayGrid">
     <Composant
       v-for="composant in filteredComposants"
       :key="composant.id"
       :composant="composant"
+      :selector="selector"
+      :componentsList="componentsList"
     />
   </div>
 
@@ -218,16 +271,74 @@
 
     <router-link to="/CSComponent" style="text-decoration: none">
       <addCpBtn
-        v-if="selectedCatt"
+        v-if="selectedCatt && !selector"
         style="font-size: 22px"
         @click="store.dispatch('setPreCatt', selectedCatt.name)"
       ></addCpBtn>
     </router-link>
 
+    <!-- Delete all selections -->
+    <v-dialog v-model="ckeckDelete" width="1024" persistent>
+
+      <template v-slot:activator="{ props }">
+        <!-- DELETE -->
+        <BtnDeleteAll
+          v-if="selector && componentsList.length > 0"
+          v-bind="props"
+          style="
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+          "
+        ></BtnDeleteAll>
+      </template>
+
+      <!-- Check delete -->
+      <v-card
+        style="
+          background: linear-gradient(
+            to bottom,
+            #424242,
+            #616161,
+            #424242
+          );
+          border-radius: 5px;
+          width: 300px;
+          margin-left: 50%;
+          transform: translateX(-50%);
+        "
+      >
+        <v-card-title style="text-align: center"
+          >{{ t.textConfirmDeleteAll }}</v-card-title
+        >
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            padding: 4px;
+            margin-top: 10px;
+          "
+        >
+          <v-btn
+            variant="text"
+            style="width: 49%"
+            @click="deleteAll(), (ckeckDelete = false)"
+            >{{ t.ctBtn_DeleteYes }}</v-btn
+          >
+          <v-btn
+            variant="text"
+            style="width: 49%"
+            @click="ckeckDelete = false"
+            >{{ t.ctBtn_DeleteNo }}</v-btn
+          >
+        </div>
+      </v-card>
+    </v-dialog>
+
     <template v-slot:append>
       <v-menu location="bottom">
         <template v-slot:activator="{ props }">
-          <Btn_new v-bind="props"></Btn_new>
+          <Btn_new v-if="!selector" v-bind="props"></Btn_new>
         </template>
 
         <v-list
@@ -306,6 +417,7 @@ import Composant from "@/components/Composant.vue";
 import ComposantGrid from '@/components/ComposantGrid.vue';
 import Category from "@/components/Category.vue";
 import addCpBtn from "@/components/littleBTN/addCpBtn.vue";
+import BtnDeleteAll from '@/components/bigBTN/deleteAll.vue';
 
 const img_empty = "/images/empty.webp";
 
@@ -347,6 +459,7 @@ function toggleShowImg(){
 function toggleDisplayGrid(){
   displayGrid.value = !displayGrid.value
   localStorage.setItem('displayGrid', JSON.stringify(displayGrid.value))
+  componentsList.value = []
 }
 
 
@@ -508,6 +621,50 @@ function shortcut(event) {
 }
 
 
+
+// Multiselection
+import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent.js";
+
+const selector = ref(false);
+let componentsList = ref([])
+let countSelected = computed(() => componentsList.value.length)
+
+const component = computed(() => store.state.componentSelected)
+
+watch(component, registerComponent)
+
+function registerComponent(){
+  if(component.value !== null){
+    let id = component.value.id
+    let ids = componentsList.value.map(c => c.id)
+
+    if(ids.includes(id)){
+      componentsList.value.splice(ids.indexOf(id), 1)
+    } else {
+      componentsList.value.push(component.value)
+    }
+     
+    store.dispatch('selectComponent', null)
+  }
+}
+
+function initMultiSelect(){
+  selector.value = !selector.value
+  componentsList.value = []
+}
+
+const ckeckDelete = ref(false)
+
+function deleteAll(){
+  componentsList.value.forEach((c) => {
+    deleteComponent(store, c)
+  })
+  selector.value = false
+}
+
+
+
+// HOOK
 onMounted(() => {
   window.addEventListener("keydown", shortcut, {passive: true});
 });
@@ -581,6 +738,10 @@ onBeforeUnmount(() => {
   color: rgb(123, 31, 162); /* #7B1FA2 purple-darken-2 */
   font-size: 30px;
 }
+.btn_multiSelect {
+  font-size: 20px;
+}
+
 .btn_bc .v-icon {
   color: rgb(33, 4, 45); /* #7B1FA2 purple-darken-2 */
   font-size: 30px;
@@ -646,6 +807,8 @@ onBeforeUnmount(() => {
 
 .catt-select {
   position: absolute;
+  display: flex;
+  align-items: center;
   left: 50%;
   transform: translateX(-50%);
   padding: 5px;

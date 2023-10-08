@@ -1,5 +1,12 @@
 <template>
   <div class="Cp-card">
+
+    <button class="Cp-btn-selector-off" v-if="selector && !selected" @click="selectOn"></button>
+
+    <button class="Cp-btn-selector-on" v-if="selector && selected" @click="selectOff">
+      <h1>{{ countSelected }}</h1>
+    </button>
+
     <div class="Cp-top">
       <div class="Cp-imgBox">
         <div class="Cp-imgContainer" v-if="showImg">
@@ -103,6 +110,7 @@
     <v-divider></v-divider>
 
     <v-btn
+      :disabled="selector"
       block
       variant="text"
       :title="expand ? t.ttBtn_ExpandFalse : t.ttBtn_ExpandTrue"
@@ -115,7 +123,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { useStore } from "vuex";
 const store = useStore();
@@ -128,7 +136,7 @@ const router = useRouter();
 import btn_set from "@/components/littleBTN/set.vue";
 import btn_delete from "@/components/littleBTN/delete.vue";
 
-const props = defineProps(["composant"]);
+const props = defineProps(["composant", "selector", "componentsList"]);
 const expand = ref(false);
 const showDescription = ref(false);
 const showImg = computed(() => store.state.showImg)
@@ -143,15 +151,49 @@ function setComponent() {
   store.dispatch("setComponentToSet", props.composant);
   router.push("/CSComponent");
 }
+
+// Multiselection
+const selected = ref(false)
+
+watch(() => props.selector, () => {
+  selected.value = false
+})
+
+function selectOn(){
+  selected.value = !selected.value
+  store.dispatch('selectComponent', props.composant)
+}
+function selectOff(){
+  selected.value = !selected.value
+  store.dispatch('selectComponent', props.composant)
+}
+
+const countSelected = computed(() => {
+  return props.componentsList.indexOf(props.composant) + 1
+})
+
+
 </script>
+
+
+
+
+
+
+
+
+
+
 
 <style>
 .Cp-card {
+  position: relative;
   background: linear-gradient(to bottom, #424242, #616161ad, #424242);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   margin: 2vh 4vw 2vh 4vw;
+  overflow: hidden;
 }
 .Cp-top {
   display: flex;
@@ -251,5 +293,28 @@ function setComponent() {
 
 h2 {
   text-transform: none;
+}
+
+
+.Cp-btn-selector-off {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 2;
+}
+.Cp-btn-selector-off:hover {
+  background-color: rgba(255, 255, 255, 0.115);
+}
+
+.Cp-btn-selector-on {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(253, 253, 253, 0.677);
+  z-index: 2;
+}
+.Cp-btn-selector-on:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style>

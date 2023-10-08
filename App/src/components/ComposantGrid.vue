@@ -1,11 +1,18 @@
 <template>
-  <v-dialog v-model="cpMenu">
+  <v-dialog :disabled="selector" v-model="cpMenu">
     <template v-slot:activator="{ props }">
       <button class="Cp-block" v-bind="props">
         <img :src="composant.imgBody" alt="Component_image" />
         <div class="Cp-block-info">
           <p id="Cp-block-name">{{ composant.name }}</p>
           <p id="Cp-block-q">{{ composant.quantity }}</p>
+        </div>
+
+        <div class="Cp-block-msOff" v-if="selector && !selected">
+          <button class="Cp-block-btn-multi" @click="selectOn"></button>
+        </div>
+        <div class="Cp-block-msOn" v-if="selector && selected">
+          <button class="Cp-block-btn-multi" @click="selectOff"><h1>{{ countSelected }}</h1></button>
         </div>
       </button>
     </template>
@@ -86,7 +93,7 @@
 
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 import { getTranslate } from '@/multilanguage/lang.js' 
@@ -103,13 +110,33 @@ import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent
 // Set component
 import { setComponentLocal } from "@/components/ComponentFunctions/setComponent.js";
 
-const props = defineProps(["composant"]);
+const props = defineProps(["composant", "selector", "componentsList"]);
 let cpMenu = ref(false);
 
 function setComponent() {
   store.dispatch("setComponentToSet", props.composant);
   router.push("/CSComponent");
 }
+
+// Multiselection
+const selected = ref(false)
+
+watch(() => props.selector, () => {
+  selected.value = false
+})
+
+function selectOn(){
+  selected.value = !selected.value
+  store.dispatch('selectComponent', props.composant)
+}
+function selectOff(){
+  selected.value = !selected.value
+  store.dispatch('selectComponent', props.composant)
+}
+
+const countSelected = computed(() => {
+  return props.componentsList.indexOf(props.composant) + 1
+})
 
 </script>
 
@@ -216,4 +243,31 @@ function setComponent() {
     #cp-menu {width: 50%;}
     #categoryID { left: 25%;}
 }
+
+
+
+.Cp-block-msOff {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  z-index: 2;
+}
+
+
+.Cp-block-msOn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  z-index: 2;
+  background-color: rgba(253, 253, 253, 0.677);
+}
+
+.Cp-block-btn-multi {
+  width: 100%;
+  height: 100%;
+}
+
+
 </style>

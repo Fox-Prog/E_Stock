@@ -61,6 +61,7 @@ const languages = [
         ttBtn_SortMostRecent: 'Neueste',
         ttBtn_SortLittle: 'Wenig',
         ttBtn_SortMany: 'Viel',
+        h3_selectMode: 'Mehrfachauswahl',
         h3_Backup: 'Sicherung',
         ctBtn_Settings: "Einstellungen",
 
@@ -180,6 +181,9 @@ const languages = [
         ttBtn_SortMostRecent: 'Most Recent',
         ttBtn_SortLittle: 'Little',
         ttBtn_SortMany: 'Many',
+        h3_selectMode: 'Multiple selections',
+        ttBtn_Enable: 'Enable',
+        ttBtn_Disable: 'Disable',
         h3_Backup: 'Backup',
         ctBtn_Settings: "Settings",
 
@@ -222,7 +226,7 @@ const languages = [
 
         SECTEUR_7: 'CATEGORY',
         ttBtn_OpenCatt: 'Open Category',
-        textConfirmDelete: 'Delete this category ?',
+        textConfirmDelete: 'Remove this category ?',
         ctBtn_DeleteYes: 'Yes',
         ctBtn_DeleteNo: 'No',
         textCattEmpty: 'Category is empty',
@@ -237,6 +241,7 @@ const languages = [
         ttBtn_Menu: 'Menu',
         ttBtn_Done: 'Done',
         ttBtn_Cancel: 'Cancel',
+        ttBtn_DeleteAll: 'Delete',
 
         SECTEUR_10: "FLATICON",
         ttBtnBack: 'Go back',
@@ -269,7 +274,11 @@ const languages = [
         max50: 'Max 50 caracters',
         noNegativeNumber: 'No negative numbers',
         unknownCategory: 'Unknown category',
-        isNotEmail: 'Please enter a valid e-mail address'
+        isNotEmail: 'Please enter a valid e-mail address',
+
+        SECTEUR_13: "Multi selections",
+        selectedCount: 'items selected',
+        textConfirmDeleteAll: 'Remove all selected ?'
     },
 
 
@@ -300,6 +309,7 @@ const languages = [
         ttBtn_SortMostRecent: 'Plus récent',
         ttBtn_SortLittle: 'Peu',
         ttBtn_SortMany: 'Beaucoup',
+        h3_selectMode: 'Selections multiples',
         h3_Backup: 'Sauvegarde',
         ctBtn_Settings: "Paramètres",
     
@@ -419,6 +429,7 @@ const languages = [
         ttBtn_SortMostRecent: 'Più Recenti',
         ttBtn_SortLittle: 'Pochi',
         ttBtn_SortMany: 'Molti',
+        h3_selectMode: 'Selezioni multiple',
         h3_Backup: 'Backup',
         ctBtn_Settings: "Impostazioni",
 
@@ -539,6 +550,7 @@ const languages = [
         ttBtn_SortMostRecent: 'Más reciente',
         ttBtn_SortLittle: 'Poco',
         ttBtn_SortMany: 'Mucho',
+        h3_selectMode: 'Selecciones mùltiples',
         h3_Backup: 'Respaldo',
         ctBtn_Settings: "Configuración",
 
