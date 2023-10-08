@@ -1,7 +1,7 @@
 <template>
   <v-dialog :disabled="selector" v-model="cpMenu">
     <template v-slot:activator="{ props }">
-      <button class="Cp-block" v-bind="props">
+      <button class="Cp-block" v-bind="props" @touchstart="tStart" @touchend="tEnd">
         <img :src="composant.imgBody" alt="Component_image" />
         <div class="Cp-block-info">
           <p id="Cp-block-name">{{ composant.name }}</p>
@@ -111,6 +111,7 @@ import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent
 import { setComponentLocal } from "@/components/ComponentFunctions/setComponent.js";
 
 const props = defineProps(["composant", "selector", "componentsList"]);
+const emit = defineEmits(["touch1200"])
 let cpMenu = ref(false);
 
 function setComponent() {
@@ -137,6 +138,18 @@ function selectOff(){
 const countSelected = computed(() => {
   return props.componentsList.indexOf(props.composant) + 1
 })
+
+// Tactile multiselections
+let timer
+function tStart(){
+  timer = setTimeout(() => {
+    emit('touch1200')
+  }, 1200)
+}
+
+function tEnd(){
+  clearTimeout(timer)
+}
 
 </script>
 

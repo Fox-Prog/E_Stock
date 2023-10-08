@@ -62,6 +62,8 @@ const languages = [
         ttBtn_SortLittle: 'Wenig',
         ttBtn_SortMany: 'Viel',
         h3_selectMode: 'Mehrfachauswahl',
+        ttBtn_Enable: 'Aktivieren',
+        ttBtn_Disable: 'Deaktivieren',
         h3_Backup: 'Sicherung',
         ctBtn_Settings: "Einstellungen",
 
@@ -94,7 +96,7 @@ const languages = [
         ttBtn_ShowErrorDetails: 'Fehlerdetails anzeigen',
         ctBtn_ShowErrorDetails: 'Details',
 
-        SECTION_7: "KOMPONENTE",
+        SECTION_6: "KOMPONENTE",
         ttBtn_ShowDescription: 'Beschreibung anzeigen',
         ctBtn_Close: 'Schließen',
         ttBtn_Minus: 'Minus',
@@ -102,25 +104,26 @@ const languages = [
         ttBtn_ExpandTrue: 'Details anzeigen',
         ttBtn_ExpandFalse: 'Details ausblenden',
 
-        SECTION_8: 'KATEGORIE',
+        SECTION_7: 'KATEGORIE',
         ttBtn_OpenCatt: 'Kategorie öffnen',
         textConfirmDelete: 'Diese Kategorie löschen?',
         ctBtn_DeleteYes: 'Ja',
         ctBtn_DeleteNo: 'Nein',
         textCattEmpty: 'Die Kategorie ist leer',
 
-        SECTION_9: "KLEINER KNOPF",
+        SECTION_8: "KLEINER KNOPF",
         ttBtn_Set: 'Bearbeiten',
         ttBtn_Delete: 'Löschen',
         ttBtn_CreateCp: 'Komponente erstellen',
 
-        SECTION_10: "GROSSER KNOPF",
+        SECTION_9: "GROSSER KNOPF",
         ttBtn_Create: 'Neu',
         ttBtn_Menu: 'Menü',
         ttBtn_Done: 'Fertig',
         ttBtn_Cancel: 'Abbrechen',
+        ttBtn_DeleteAll: 'Entfernen',
 
-        SECTION_11: "FLATICON",
+        SECTION_10: "FLATICON",
         ttBtnBack: 'Zurück',
         h1_NoResult: 'Keine Ergebnisse',
         h1_Offline: 'Offline',
@@ -151,7 +154,11 @@ const languages = [
         max50: 'Maximal 50 Zeichen',
         noNegativeNumber: 'Keine negativen Zahlen erlaubt',
         unknownCategory: 'Unbekannte Kategorie',
-        isNotEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein'
+        isNotEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+
+        SECTEUR_13: "Multi selections",
+        selectedCount: 'ausgewählte Elemente',
+        textConfirmDeleteAll: 'Alle ausgewählten Elemente entfernen?',       
 
     },
 
@@ -310,6 +317,8 @@ const languages = [
         ttBtn_SortLittle: 'Peu',
         ttBtn_SortMany: 'Beaucoup',
         h3_selectMode: 'Selections multiples',
+        ttBtn_Enable: 'Activer',
+        ttBtn_Disable: 'Désactiver',
         h3_Backup: 'Sauvegarde',
         ctBtn_Settings: "Paramètres",
     
@@ -367,6 +376,7 @@ const languages = [
         ttBtn_Menu: 'Menu',
         ttBtn_Done: 'Terminé',
         ttBtn_Cancel: 'Annuler',
+        ttBtn_DeleteAll: 'Supprimer',
     
         SECTEUR_10: "FLATICON",
         ttBtnBack: 'Revenir en arrière',
@@ -399,10 +409,13 @@ const languages = [
         max50: 'Maximum 50 caractères',
         noNegativeNumber: 'Pas de nombres négatifs autorisés',
         unknownCategory: 'Catégorie inconnue',
-        isNotEmail: 'Veuillez saisir une adresse e-mail valide'
+        isNotEmail: 'Veuillez saisir une adresse e-mail valide',
+
+        SECTEUR_13: "Multi selections",
+        selectedCount: 'éléments sélectionnés',
+        textConfirmDeleteAll: 'Supprimer tous les éléments sélectionnés ?',       
 
     },
-
     {
         name: 'Italiano',
         flag: "/images/flag/it.webp",
@@ -430,6 +443,8 @@ const languages = [
         ttBtn_SortLittle: 'Pochi',
         ttBtn_SortMany: 'Molti',
         h3_selectMode: 'Selezioni multiple',
+        ttBtn_Enable: 'Abilita',
+        ttBtn_Disable: 'Disabilita',
         h3_Backup: 'Backup',
         ctBtn_Settings: "Impostazioni",
 
@@ -487,6 +502,7 @@ const languages = [
         ttBtn_Menu: 'Menu',
         ttBtn_Done: 'Fatto',
         ttBtn_Cancel: 'Annulla',
+        ttBtn_DeleteAll: 'Rimuovere',
 
         SECTEUR_10: "FLATICON",
         ttBtnBack: 'Indietro',
@@ -519,9 +535,11 @@ const languages = [
         max50: 'Massimo 50 caratteri',
         noNegativeNumber: 'Nessun numero negativo consentito',
         unknownCategory: 'Categoria sconosciuta',
-        isNotEmail: 'Inserisci un indirizzo e-mail valido'
+        isNotEmail: 'Inserisci un indirizzo e-mail valido',
 
-        
+        SECTEUR_13: "Multi selections",
+        selectedCount: 'elementi selezionati',
+        textConfirmDeleteAll: 'Rimuovere tutti gli elementi selezionati?',        
     },
 
     {
@@ -551,6 +569,8 @@ const languages = [
         ttBtn_SortLittle: 'Poco',
         ttBtn_SortMany: 'Mucho',
         h3_selectMode: 'Selecciones mùltiples',
+        ttBtn_Enable: 'Habilitar',
+        ttBtn_Disable: 'Deshabilitar',        
         h3_Backup: 'Respaldo',
         ctBtn_Settings: "Configuración",
 
@@ -608,6 +628,7 @@ const languages = [
         ttBtn_Menu: 'Menú',
         ttBtn_Done: 'Listo',
         ttBtn_Cancel: 'Cancelar',
+        ttBtn_DeleteAll: 'Eliminar',
 
         SECTEUR_10: "FLATICON",
         ttBtnBack: 'Volver',
@@ -640,7 +661,11 @@ const languages = [
         max50: 'Máximo 50 caracteres',
         noNegativeNumber: 'No se permiten números negativos',
         unknownCategory: 'Categoría desconocida',
-        isNotEmail: 'Por favor, ingresa una dirección de correo electrónico válida'
+        isNotEmail: 'Por favor, ingresa una dirección de correo electrónico válida',
+
+        SECTEUR_13: "Multi selections",
+        selectedCount: 'elementos seleccionados',
+        textConfirmDeleteAll: '¿Eliminar todos los elementos seleccionados?',        
     }
 ]
 

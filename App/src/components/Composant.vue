@@ -7,7 +7,7 @@
       <h1>{{ countSelected }}</h1>
     </button>
 
-    <div class="Cp-top">
+    <div class="Cp-top" @touchstart="tStart" @touchend="tEnd">
       <div class="Cp-imgBox">
         <div class="Cp-imgContainer" v-if="showImg">
           <img :src="composant.imgBody" alt="Component_image" />
@@ -137,6 +137,7 @@ import btn_set from "@/components/littleBTN/set.vue";
 import btn_delete from "@/components/littleBTN/delete.vue";
 
 const props = defineProps(["composant", "selector", "componentsList"]);
+const emit = defineEmits(["touch1200"])
 const expand = ref(false);
 const showDescription = ref(false);
 const showImg = computed(() => store.state.showImg)
@@ -171,6 +172,19 @@ function selectOff(){
 const countSelected = computed(() => {
   return props.componentsList.indexOf(props.composant) + 1
 })
+
+
+// Tactile multiselections
+let timer
+function tStart(){
+  timer = setTimeout(() => {
+    emit('touch1200')
+  }, 1200)
+}
+
+function tEnd(){
+  clearTimeout(timer)
+}
 
 
 </script>

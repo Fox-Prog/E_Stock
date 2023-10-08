@@ -140,8 +140,6 @@ const props = defineProps(["catt"]);
 const expand = ref(false);
 const ckeckDelete = ref(false);
 
-const timeClic = ref(null);
-
 const emptyCatt = ref(false);
 
 const nbrComposant = computed(
@@ -167,10 +165,13 @@ function resetSearchValue() {
 }
 
 // Set touch screen
+let timeClic
+
 function longClic() {
   timeClic = setTimeout(() => {
     setCategory();
   }, 500);
+
 }
 function resetLongClic() {
   clearTimeout(timeClic);

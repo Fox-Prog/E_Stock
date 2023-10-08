@@ -203,7 +203,7 @@
           size="sm"
           @click="initMultiSelect"
         ></v-btn>
-        <h3>{{ `${countSelected} ${t.selectedCount}` }}</h3>
+        <p id="txt-selected">{{ `${countSelected} ${t.selectedCount}` }}</p>
       </div>
   </div>
 
@@ -227,6 +227,7 @@
       :composant="composant"
       :selector="selector"
       :componentsList="componentsList"
+      @touch1200="initMultiSelect"
     />
   </div>
 
@@ -237,6 +238,7 @@
       :composant="composant"
       :selector="selector"
       :componentsList="componentsList"
+      @touch1200="initMultiSelect"
     />
   </div>
 
@@ -306,11 +308,21 @@
           width: 300px;
           margin-left: 50%;
           transform: translateX(-50%);
+          overflow: visible;
         "
       >
-        <v-card-title style="text-align: center"
-          >{{ t.textConfirmDeleteAll }}</v-card-title
+        <div
+          style="
+          text-align: center;
+          overflow: visible;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          max-width: 300px;
+          "
         >
+          <h3>{{ t.textConfirmDeleteAll }}</h3>
+        </div>
+
         <div
           style="
             display: flex;
@@ -820,6 +832,10 @@ onBeforeUnmount(() => {
   margin: 0;
 }
 
+#txt-selected {
+  font-size: 20px;
+}
+
 @media screen and (max-width: 800px) {
   .grid-components {grid-template-columns: repeat(4, 1fr);}
 }
@@ -833,5 +849,7 @@ onBeforeUnmount(() => {
   }
 
   .grid-components {grid-template-columns: repeat(3, 1fr);}
+
+  #txt-selected{font-size: 12px;}
 }
 </style>
