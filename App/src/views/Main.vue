@@ -23,14 +23,15 @@
 
     <v-list density="comfortable" role="group" nav>
       <h3>{{ t.h3_DisplayBtn }}</h3>
+      <!-- Display Category -->
       <v-btn
-      :disabled="selector"
         class="ma-5 btn_catt btn_drawer"
         icon="mdi-shape"
         variant="flat"
         :title="t.ttBtn_ShowCatt"
         @click="displayCatts"
       ></v-btn>
+      <!-- Display Components -->
       <v-btn
         class="ma-5 btn_component btn_drawer"
         icon="mdi-all-inclusive"
@@ -95,6 +96,7 @@
 
       <h3 v-if="showComposant">{{ t.h3_selectMode }}</h3>
       <div v-if="showComposant" style="display: flex; align-items: center;">
+        <!-- Enable or Disable multiselect -->
         <v-btn
           class="ma-5 btn_multiSelect btn_drawer"
           :icon="
@@ -167,8 +169,8 @@
   </v-navigation-drawer>
 
   <div :class="showCategory ? 'backSpaceCatt' : 'backSpaceComponent'">
+    <!-- Navigation / Switch -->
     <v-btn
-    :disabled="selector"
       class="ma-1"
       style="font-size: 20px"
       variant="tonal"
@@ -194,6 +196,7 @@
         style="background-color: rgba(150, 150, 150, 0.5); border-radius: 5px;"
         v-if="selector"
       >
+        <!-- Close select mode top screen -->
         <v-btn
           class="mr-10"
           icon="mdi-close"
@@ -350,7 +353,7 @@
     <template v-slot:append>
       <v-menu location="bottom">
         <template v-slot:activator="{ props }">
-          <Btn_new v-if="!selector" v-bind="props"></Btn_new>
+          <Btn_new v-bind="props"></Btn_new>
         </template>
 
         <v-list
@@ -539,6 +542,7 @@ function displayCatts() {
   store.dispatch("setSelectedCategory", null);
   store.dispatch("setShowComposant", false);
   store.dispatch("setShowCategory", true);
+  restMultiSelect()
 }
 
 // Sort
@@ -662,6 +666,11 @@ function registerComponent(){
 
 function initMultiSelect(){
   selector.value = !selector.value
+  componentsList.value = []
+}
+
+function restMultiSelect(){
+  selector.value = false
   componentsList.value = []
 }
 
