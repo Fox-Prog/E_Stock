@@ -261,12 +261,13 @@ function tEnd(){
   max-height: 50px;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  color: rgb(219, 219, 219);
 }
 @media screen and (max-width: 860px) {
-  #Cp-name {font-size: 17px;}
+  #Cp-name {font-size: 14px;}
 }
 @media screen and (max-width: 680px) {
-  #Cp-name {font-size: 12px;}
+  #Cp-name {font-size: 11px;}
 }
 
 #Cp-nbr_contained {

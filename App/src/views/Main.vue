@@ -210,55 +210,57 @@
       </div>
   </div>
 
-  <div class="empty"
-    v-if="
-      (showCategory && nbrCatt === 0) || (showComposant && nbrComposant === 0)
-    "
-  >
-    <img :src="img_empty" alt="img_empty" width="512" height="512" />
-    <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.noCatt }}</h2>
-    <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.createFirstCatt }}</h2>
-
-    <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.noComp }}</h2>
-    <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.createFirstComp }}</h2>
-  </div>
-
-  <div class="grid-components" v-if="showComposant && displayGrid">
-    <ComposantGrid
-      v-for="composant in filteredComposants"
-      :key="composant.id"
-      :composant="composant"
-      :selector="selector"
-      :componentsList="componentsList"
-      @touch1200="initMultiSelect"
-    />
-  </div>
-
-  <div v-if="showComposant && !displayGrid">
-    <Composant
-      v-for="composant in filteredComposants"
-      :key="composant.id"
-      :composant="composant"
-      :selector="selector"
-      :componentsList="componentsList"
-      @touch1200="initMultiSelect"
-    />
-  </div>
-
-  <div class="catts_container" v-if="showCategory">
-    <Category 
-      v-for="catt in filteredCatts" 
-      :key="catt.id" 
-      :catt="catt" 
-    />
-  </div>
-
-  <div class="catts_container_noCatt" v-if="showCategory && noCattContent">
-    <Category 
-      v-for="catt in noCatt" 
-      :key="catt.id" 
-      :catt="catt" 
-    />
+  <div id="base">
+    <div class="empty"
+      v-if="
+        (showCategory && nbrCatt === 0) || (showComposant && nbrComposant === 0)
+      "
+    >
+      <img :src="img_empty" alt="img_empty" width="512" height="512" />
+      <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.noCatt }}</h2>
+      <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.createFirstCatt }}</h2>
+  
+      <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.noComp }}</h2>
+      <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.createFirstComp }}</h2>
+    </div>
+  
+    <div class="grid-components" v-if="showComposant && displayGrid">
+      <ComposantGrid
+        v-for="composant in filteredComposants"
+        :key="composant.id"
+        :composant="composant"
+        :selector="selector"
+        :componentsList="componentsList"
+        @touch1200="initMultiSelect"
+      />
+    </div>
+  
+    <div v-if="showComposant && !displayGrid">
+      <Composant
+        v-for="composant in filteredComposants"
+        :key="composant.id"
+        :composant="composant"
+        :selector="selector"
+        :componentsList="componentsList"
+        @touch1200="initMultiSelect"
+      />
+    </div>
+  
+    <div class="catts_container" v-if="showCategory">
+      <Category 
+        v-for="catt in filteredCatts" 
+        :key="catt.id" 
+        :catt="catt" 
+      />
+    </div>
+  
+    <div class="catts_container_noCatt" v-if="showCategory && noCattContent">
+      <Category 
+        v-for="catt in noCatt" 
+        :key="catt.id" 
+        :catt="catt" 
+      />
+    </div>
   </div>
 
   <v-app-bar
@@ -492,26 +494,26 @@ function resetSearchValue() {
 
 // Component.filter
 let filteredComposants = computed(() => {
-  if (selectedCatt.value) {
-    if (searchValue.value) {
+  if (selectedCatt.value) { // Into category
+    if (searchValue.value) {  // Search value
       const fSearch = searchValue.value.toLowerCase();
       const selectCatt = composants.value.filter(
         (composant) => composant.category === selectedCatt.value.id
       );
       return selectCatt.filter((composant) =>
-        composant.name.toLowerCase().startsWith(fSearch)
+        composant.name.toLowerCase().includes(fSearch)
       );
     } else {
       return composants.value.filter(
         (composant) => composant.category === selectedCatt.value.id
       );
     }
-  } else if (searchValue.value) {
+  } else if (searchValue.value) { // Out of category + Search value
     const fSearch = searchValue.value.toLowerCase();
     return composants.value.filter((composant) =>
-      composant.name.toLowerCase().startsWith(fSearch)
+      composant.name.toLowerCase().includes(fSearch)
     );
-  } else {
+  } else { // Out of category
     return composants.value;
   }
 });
@@ -711,6 +713,11 @@ onBeforeUnmount(() => {
 
 <style>
 
+#base {
+  margin-top: 70px;
+  padding: 0;
+}
+
 .grid-components {
   display: grid;
   margin: 40px 20px 0 20px;
@@ -719,16 +726,20 @@ onBeforeUnmount(() => {
 }
 
 .backSpaceCatt {
+  position: fixed;
   display: flex;
   width: 100%;
   background: linear-gradient(to left, #37474f, #212121);
   justify-content: flex-end;
+  z-index: 1;
 }
 .backSpaceComponent {
+  position: fixed;
   display: flex;
   width: 100%;
   background: linear-gradient(to left, #212121, #37474f);
   justify-content: flex-start;
+  z-index: 1;
 }
 
 .ic_search .v-icon {
@@ -798,8 +809,7 @@ onBeforeUnmount(() => {
 
 .catts_container {
   display: grid;
-  align-content: center;
-  align-items: center;
+  justify-items: center;
   grid-template-columns: repeat(2, 1fr);
   padding: 0 3vw 0 3vw;
 }
