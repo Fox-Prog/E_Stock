@@ -58,7 +58,7 @@
 
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 import Btn_done from "@/components/bigBTN/done.vue";
 import Btn_cancel from "@/components/bigBTN/cancel.vue";

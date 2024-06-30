@@ -24,9 +24,9 @@
     <v-expand-transition>
       <div class="Cat-options" v-if="expand">
         <div class="Cat-btn">
+          <!-- DELETE -->
           <v-dialog v-model="ckeckDelete" width="1024" persistent>
             <template v-slot:activator="{ props }">
-              <!-- DELETE -->
               <btn_delete v-bind="props"></btn_delete>
             </template>
 
@@ -185,6 +185,7 @@ function setCategory() {
 
 // Delete category
 import { deleteCategory } from "@/components/CategoryFunctions/deleteCategory.js";
+
 </script>
 
 

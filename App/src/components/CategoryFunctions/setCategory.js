@@ -10,14 +10,7 @@ export function setCategory(store, id, newName, newColor){
     setCategoryLocal(id, newName, newColor)
 }
 
-
-
-
-
-
-
 // Set into IndexedDB
-
 export function setCategoryLocal(id, newName, newColor){
     const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 
@@ -63,7 +56,3 @@ export function setCategoryLocal(id, newName, newColor){
         console.error("Error with IndexedDB: ", err)
     }
 }
-
-
-
-// Set into MySQL DB

@@ -12,7 +12,7 @@
       @focus="resetSearchValue"
       clearable
       class="ma-5 ic_search"
-      :label= "t.labelSearch"
+      :label="t.labelSearch"
       :title="t.tt_SearchBar"
       prepend-icon="mdi-magnify"
       variant="outlined"
@@ -48,7 +48,7 @@
         :title="showImg ? t.ttBtn_HideIcons : t.ttBtn_ShowIcons"
         @click="toggleShowImg"
       >
-        <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C'}"></v-icon>
+        <v-icon :style="{ color: showImg ? '#FF6F00' : '#BF360C' }"></v-icon>
       </v-btn>
 
       <v-btn
@@ -79,7 +79,9 @@
             : 'mdi-sort-calendar-descending'
         "
         variant="flat"
-        :title="sortToRecently ? t.ttBtn_SortLessRecent : t.ttBtn_SortMostRecent"
+        :title="
+          sortToRecently ? t.ttBtn_SortLessRecent : t.ttBtn_SortMostRecent
+        "
         @click="recentSort"
       ></v-btn>
       <v-btn
@@ -95,15 +97,11 @@
       ></v-btn>
 
       <h3 v-if="showComposant">{{ t.h3_selectMode }}</h3>
-      <div v-if="showComposant" style="display: flex; align-items: center;">
+      <div v-if="showComposant" style="display: flex; align-items: center">
         <!-- Enable or Disable multiselect -->
         <v-btn
           class="ma-5 btn_multiSelect btn_drawer"
-          :icon="
-            selector
-              ? 'mdi-check-all'
-              : 'mdi-check-all'
-          "
+          :icon="selector ? 'mdi-check-all' : 'mdi-check-all'"
           variant="flat"
           :title="selector ? t.ttBtn_Disable : t.ttBtn_Enable"
           @click="initMultiSelect"
@@ -111,40 +109,24 @@
           <v-icon :style="{ color: selector ? '#558B2F' : '#D50000' }"></v-icon>
         </v-btn>
 
-        <div style="
-          padding: 5px;
-          border-radius: 5px;
-          background-color: rgba(102, 102, 102, 0.492);
-        ">
-          <p
-            :style="{ color: selector ? '#558B2F' : '#D50000' }"
-          >{{ selector ? t.ttBtn_Enable : t.ttBtn_Disable }}</p>
+        <div
+          style="
+            padding: 5px;
+            border-radius: 5px;
+            background-color: rgba(102, 102, 102, 0.492);
+          "
+        >
+          <p :style="{ color: selector ? '#558B2F' : '#D50000' }">
+            {{ selector ? t.ttBtn_Enable : t.ttBtn_Disable }}
+          </p>
         </div>
       </div>
 
-
-
-
-
-
-
-
       <v-divider class="my-5" thickness="5"></v-divider>
 
-      <div
-        style="
-          display: flex;
-          align-items: center;
-          justify-items: center;
-        "
-      >
-        <h3 style="margin: 0;">{{ t.h3_Backup }}</h3>
-        <v-icon
-          class="mx-2"
-          icon="mdi-cog"
-          color="#212121"
-          size="20"
-        ></v-icon>
+      <div style="display: flex; align-items: center; justify-items: center">
+        <h3 style="margin: 0">{{ t.h3_Backup }}</h3>
+        <v-icon class="mx-2" icon="mdi-cog" color="#212121" size="20"></v-icon>
       </div>
       <v-btn
         class="ma-5 btn_bc btn_drawer"
@@ -161,10 +143,10 @@
         variant="outlined"
         color="#78909C"
         block
-        style="margin-bottom: 20px;"
+        style="margin-bottom: 20px"
         @click="router.push('/Settings')"
-      >{{ t.ctBtn_Settings }}</v-btn>
-
+        >{{ t.ctBtn_Settings }}</v-btn
+      >
     </v-list>
   </v-navigation-drawer>
 
@@ -183,47 +165,58 @@
       "
     ></v-btn>
 
-    <div 
-      class="catt-select" 
+    <div
+      class="catt-select"
       v-if="selectedCatt && !selector"
       :style="{
         backgroundColor: store.getters.getCattColor(selectedCatt.id),
       }"
-      ><h3>{{ selectedCatt.name }}</h3></div>
+    >
+      <h3>{{ selectedCatt.name }}</h3>
+    </div>
 
-      <div
-        class="catt-select" 
-        style="background-color: rgba(150, 150, 150, 0.5); border-radius: 5px;"
-        v-if="selector"
-      >
-        <!-- Close select mode top screen -->
-        <v-btn
-          class="mr-10"
-          icon="mdi-close"
-          color="red"
-          variant="text"
-          rounded="sm"
-          size="sm"
-          @click="initMultiSelect"
-        ></v-btn>
-        <p id="txt-selected">{{ `${countSelected} ${t.selectedCount}` }}</p>
-      </div>
+    <div
+      class="catt-select"
+      style="background-color: rgba(150, 150, 150, 0.5); border-radius: 5px"
+      v-if="selector"
+    >
+      <!-- Close select mode top screen -->
+      <v-btn
+        class="mr-10"
+        icon="mdi-close"
+        color="red"
+        variant="text"
+        rounded="sm"
+        size="sm"
+        @click="initMultiSelect"
+      ></v-btn>
+      <p id="txt-selected">{{ `${countSelected} ${t.selectedCount}` }}</p>
+    </div>
   </div>
 
   <div id="base">
-    <div class="empty"
+    <div
+      class="empty"
       v-if="
         (showCategory && nbrCatt === 0) || (showComposant && nbrComposant === 0)
       "
     >
       <img :src="img_empty" alt="img_empty" width="512" height="512" />
-      <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.noCatt }}</h2>
-      <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">{{ t.createFirstCatt }}</h2>
-  
-      <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.noComp }}</h2>
-      <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">{{ t.createFirstComp }}</h2>
+      <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">
+        {{ t.noCatt }}
+      </h2>
+      <h2 v-if="showCategory" style="color: rgb(177, 199, 226)">
+        {{ t.createFirstCatt }}
+      </h2>
+
+      <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">
+        {{ t.noComp }}
+      </h2>
+      <h2 v-if="showComposant" style="color: rgb(177, 199, 226)">
+        {{ t.createFirstComp }}
+      </h2>
     </div>
-  
+
     <div class="grid-components" v-if="showComposant && displayGrid">
       <ComposantGrid
         v-for="composant in filteredComposants"
@@ -234,7 +227,7 @@
         @touch1200="initMultiSelect"
       />
     </div>
-  
+
     <div v-if="showComposant && !displayGrid">
       <Composant
         v-for="composant in filteredComposants"
@@ -245,29 +238,21 @@
         @touch1200="initMultiSelect"
       />
     </div>
-  
+
     <div class="catts_container" v-if="showCategory">
-      <Category 
-        v-for="catt in filteredCatts" 
-        :key="catt.id" 
-        :catt="catt" 
-      />
+      <Category v-for="catt in filteredCatts" :key="catt.id" :catt="catt" />
     </div>
-  
+
     <div class="catts_container_noCatt" v-if="showCategory && noCattContent">
-      <Category 
-        v-for="catt in noCatt" 
-        :key="catt.id" 
-        :catt="catt" 
-      />
+      <Category v-for="catt in noCatt" :key="catt.id" :catt="catt" />
     </div>
   </div>
 
   <v-app-bar
     app
     :style="
-      showCategory ?
-       'background: linear-gradient(to left, #37474F, #212121);'
+      showCategory
+        ? 'background: linear-gradient(to left, #37474F, #212121);'
         : 'background: linear-gradient(to left, #212121, #37474F);'
     "
     location="bottom"
@@ -286,29 +271,19 @@
 
     <!-- Delete all selections -->
     <v-dialog v-model="ckeckDelete" width="1024" persistent>
-
       <template v-slot:activator="{ props }">
         <!-- DELETE -->
         <BtnDeleteAll
           v-if="selector && componentsList.length > 0"
           v-bind="props"
-          style="
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%);
-          "
+          style="position: absolute; left: 50%; transform: translate(-50%)"
         ></BtnDeleteAll>
       </template>
 
       <!-- Check delete -->
       <v-card
         style="
-          background: linear-gradient(
-            to bottom,
-            #424242,
-            #616161,
-            #424242
-          );
+          background: linear-gradient(to bottom, #424242, #616161, #424242);
           border-radius: 5px;
           width: 300px;
           margin-left: 50%;
@@ -318,11 +293,11 @@
       >
         <div
           style="
-          text-align: center;
-          overflow: visible;
-          overflow-wrap: break-word;
-          word-wrap: break-word;
-          max-width: 300px;
+            text-align: center;
+            overflow: visible;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            max-width: 300px;
           "
         >
           <h3>{{ t.textConfirmDeleteAll }}</h3>
@@ -409,32 +384,169 @@
       </v-menu>
     </template>
   </v-app-bar>
+
+  <v-dialog v-model="newnd" width="90%">
+    <v-card
+      style="
+        text-align: center;
+        border-radius: 10px;
+        width: 100%;
+      "
+      min-height="200px"
+      color="#7B7B7B"
+    >
+      <v-card-title
+        style="
+          max-height: 6rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        "
+        ><h2 v-if="lgc === 'Français'" style="white-space: normal">
+          Changement de nom de domaine !
+        </h2>
+        <h2 v-if="lgc === 'English'" style="white-space: normal">
+          Domain name change !
+        </h2>
+        </v-card-title
+      >
+      <v-card-subtitle
+        ><h2
+          style="
+            white-space: normal;
+            border-radius: 5px;
+            padding: 5px;
+            text-decoration: underline;
+            animation: subLight 3s forwards infinite;
+          "
+        >
+          e-stock.tech
+          <p v-if="lgc === 'Français'">deviens</p>
+          <p v-if="lgc === 'English'">becomes</p>
+          e-stock.foxprog.fr
+        </h2></v-card-subtitle
+      >
+      <v-card-text style="text-align: left">
+        <div
+          class="cndFlex"
+          style="border: none; justify-content: space-between"
+        >
+          <h1 v-if="lgc === 'Français'">Protocole</h1>
+          <h1 v-if="lgc === 'English'">Protocol</h1>
+          <v-select
+            style="max-width: 100px"
+            class="ms-3"
+            variant="underlined"
+            v-model="lgc"
+            :items="protoLang"
+          ></v-select>
+        </div>
+        <!-- ___ 1 ___ -->
+        <div class="cndFlex">
+          <h1 class="cndH3 ms-3">1</h1>
+          <img class="cndImg ms-3" src="images/arrow_right.png" alt="arrow" />
+          <v-btn class="ms-3" variant="flat" color="green" @click="createBackup"
+            ><p v-if="lgc === 'Français'">Sauvegarde</p>
+            <p v-if="lgc === 'English'">Backup</p></v-btn
+          >
+        </div>
+        <!-- ___ 2 ___ -->
+        <div class="cndFlex">
+          <h1 class="cndH3 ms-3">2</h1>
+          <img class="cndImg ms-3" src="images/arrow_right.png" alt="arrow" />
+          <p class="ms-3" v-if="lgc === 'Français'">
+            Si vous avez téléchargé l'application et que vous y accédez sans
+            passer par le navigateur, désinstallez l'application.
+          </p>
+          <p class="ms-3" v-if="lgc === 'English'">
+            If you've downloaded the app and are accessing it without using the
+            browser, uninstall the app.
+          </p>
+        </div>
+        <!-- ___ 3 ___ -->
+        <div class="cndFlex">
+          <h1 class="cndH3 ms-3">3</h1>
+          <img class="cndImg ms-3" src="images/arrow_right.png" alt="arrow" />
+          <p class="ms-3" v-if="lgc === 'Français'">
+            Rendez-vous sur
+            <a href="https://e-stock.foxprog.fr">e-stock.foxprog.fr</a> pour
+            télécharger l'application depuis ce nouveau nom de domaine.
+          </p>
+          <p class="ms-3" v-if="lgc === 'English'">
+            Go to
+            <a href="https://e-stock.foxprog.fr">e-stock.foxprog.fr</a> to
+            download the application from this new domain name.
+          </p>
+        </div>
+        <!-- ___ 4 ___ -->
+        <div class="cndFlex">
+          <h1 class="cndH3 ms-3">4</h1>
+          <img class="cndImg ms-3" src="images/arrow_right.png" alt="arrow" />
+          <p class="ms-3" v-if="lgc === 'Français'">
+            Une fois cette nouvelle application installée, chargez la sauvegarde
+            présente sur votre appareil (fichier .json) depuis le menu
+            'Sauvegarde' pour récupérer toutes vos données.
+          </p>
+          <p class="ms-3" v-if="lgc === 'English'">
+            Once this new application is installed, load the backup file present
+            on your device in (.json format) from the 'Backup' menu to retrieve
+            all your data.
+          </p>
+        </div>
+        <!-- ___ END ___ -->
+        <div class="cndFlex" style="border: solid 3px red; animation: warnLight 2s forwards infinite;">
+          <img class="cndImg ms-3" src="images/danger.png" alt="warning" />
+          <p class="ms-3" v-if="lgc === 'Français'">
+            Le nom de domaine e-stock.tech sera inactif le 27/09/2024. Sauvegardez vos données avant !
+          </p>
+          <p class="ms-3" v-if="lgc === 'English'">
+            The domain name e-stock.tech will be inactive on 27/09/2024. Back up your data beforehand !
+          </p>
+        </div>
+      </v-card-text>
+      <v-card-actions
+        ><v-btn block variant="tonal" @click="newnd = false"
+          ><p v-if="lgc === 'Français'">Fermer</p>
+          <p v-if="lgc === 'English'">Close</p></v-btn
+        ></v-card-actions
+      >
+    </v-card>
+  </v-dialog>
+
+  <v-card class="error_form" v-if="errBackup">
+    <div id="error">
+      <v-icon class="mr-2" size="35" icon="mdi-alert-circle-outline"></v-icon>
+      <h2>{{ t.h2_BackupError }}</h2>
+      <v-btn
+        class="ms-2"
+        :title="t.ttBtn_ShowErrorDetails"
+        variant="tonal"
+        rounded="lg"
+        @click="showError = !showError"
+        >{{ t.ctBtn_ShowErrorDetails }}</v-btn
+      >
+    </div>
+
+    <div id="details" v-if="showError">
+      <p>{{ detailsError }}</p>
+    </div>
+  </v-card>
 </template>
 
-
-
-
-
-
-
-
-
-
-
 <script setup>
-import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue"
-import { useStore } from "vuex"
-const store = useStore()
-import { getTranslate } from '@/multilanguage/lang.js' 
-const t = getTranslate()
+import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+import { getTranslate } from "@/multilanguage/lang.js";
+const t = getTranslate();
 
 import Btn_new from "@/components/bigBTN/new.vue";
 import Btn_menu from "@/components/bigBTN/menu.vue";
 import Composant from "@/components/Composant.vue";
-import ComposantGrid from '@/components/ComposantGrid.vue';
+import ComposantGrid from "@/components/ComposantGrid.vue";
 import Category from "@/components/Category.vue";
 import addCpBtn from "@/components/littleBTN/addCpBtn.vue";
-import BtnDeleteAll from '@/components/bigBTN/deleteAll.vue';
+import BtnDeleteAll from "@/components/bigBTN/deleteAll.vue";
 
 const img_empty = "/images/empty.webp";
 
@@ -465,20 +577,21 @@ let noCattContent = computed(() => {
 });
 
 // Show and Display components
-const showImg = ref(JSON.parse(localStorage.getItem('showImg')) || false)
-const displayGrid = ref(JSON.parse(localStorage.getItem('displayGrid')) || false)
+const showImg = ref(JSON.parse(localStorage.getItem("showImg")) || false);
+const displayGrid = ref(
+  JSON.parse(localStorage.getItem("displayGrid")) || false
+);
 
-function toggleShowImg(){
-  showImg.value = !showImg.value
-  localStorage.setItem('showImg', JSON.stringify(showImg.value))
-  store.dispatch('setShowImg', showImg.value)
+function toggleShowImg() {
+  showImg.value = !showImg.value;
+  localStorage.setItem("showImg", JSON.stringify(showImg.value));
+  store.dispatch("setShowImg", showImg.value);
 }
-function toggleDisplayGrid(){
-  displayGrid.value = !displayGrid.value
-  localStorage.setItem('displayGrid', JSON.stringify(displayGrid.value))
-  componentsList.value = []
+function toggleDisplayGrid() {
+  displayGrid.value = !displayGrid.value;
+  localStorage.setItem("displayGrid", JSON.stringify(displayGrid.value));
+  componentsList.value = [];
 }
-
 
 // Search field
 let inputSearch = ref(null);
@@ -494,8 +607,10 @@ function resetSearchValue() {
 
 // Component.filter
 let filteredComposants = computed(() => {
-  if (selectedCatt.value) { // Into category
-    if (searchValue.value) {  // Search value
+  if (selectedCatt.value) {
+    // Into category
+    if (searchValue.value) {
+      // Search value
       const fSearch = searchValue.value.toLowerCase();
       const selectCatt = composants.value.filter(
         (composant) => composant.category === selectedCatt.value.id
@@ -508,12 +623,14 @@ let filteredComposants = computed(() => {
         (composant) => composant.category === selectedCatt.value.id
       );
     }
-  } else if (searchValue.value) { // Out of category + Search value
+  } else if (searchValue.value) {
+    // Out of category + Search value
     const fSearch = searchValue.value.toLowerCase();
     return composants.value.filter((composant) =>
       composant.name.toLowerCase().includes(fSearch)
     );
-  } else { // Out of category
+  } else {
+    // Out of category
     return composants.value;
   }
 });
@@ -544,7 +661,7 @@ function displayCatts() {
   store.dispatch("setSelectedCategory", null);
   store.dispatch("setShowComposant", false);
   store.dispatch("setShowCategory", true);
-  restMultiSelect()
+  restMultiSelect();
 }
 
 // Sort
@@ -638,58 +755,90 @@ function shortcut(event) {
   }
 }
 
-
-
 // Multiselection
 import { deleteComponent } from "@/components/ComponentFunctions/deleteComponent.js";
 
 const selector = ref(false);
-let componentsList = ref([])
-let countSelected = computed(() => componentsList.value.length)
+let componentsList = ref([]);
+let countSelected = computed(() => componentsList.value.length);
 
-const component = computed(() => store.state.componentSelected)
+const component = computed(() => store.state.componentSelected);
 
-watch(component, registerComponent)
+watch(component, registerComponent);
 
-function registerComponent(){
-  if(component.value !== null){
-    let id = component.value.id
-    let ids = componentsList.value.map(c => c.id)
+function registerComponent() {
+  if (component.value !== null) {
+    let id = component.value.id;
+    let ids = componentsList.value.map((c) => c.id);
 
-    if(ids.includes(id)){
-      componentsList.value.splice(ids.indexOf(id), 1)
+    if (ids.includes(id)) {
+      componentsList.value.splice(ids.indexOf(id), 1);
     } else {
-      componentsList.value.push(component.value)
+      componentsList.value.push(component.value);
     }
-     
-    store.dispatch('selectComponent', null)
+
+    store.dispatch("selectComponent", null);
   }
 }
 
-function initMultiSelect(){
-  selector.value = !selector.value
-  componentsList.value = []
+function initMultiSelect() {
+  selector.value = !selector.value;
+  componentsList.value = [];
 }
 
-function restMultiSelect(){
-  selector.value = false
-  componentsList.value = []
+function restMultiSelect() {
+  selector.value = false;
+  componentsList.value = [];
 }
 
-const ckeckDelete = ref(false)
+const ckeckDelete = ref(false);
 
-function deleteAll(){
+function deleteAll() {
   componentsList.value.forEach((c) => {
-    deleteComponent(store, c)
-  })
-  selector.value = false
+    deleteComponent(store, c);
+  });
+  selector.value = false;
 }
 
+// Changement de nom de domaine
+const newnd = ref(true);
+const protoLang = ["Français", "English"];
+let lgc = ref("Français");
+let errBackup = ref(false);
+let showError = ref(false);
+let detailsError = ref("");
+async function createBackup() {
+  try {
+    // Backup json
+    const JSONfile = {
+      components: store.state.composants,
+      category: store.state.catts,
+    };
+    const jsonStr = JSON.stringify(JSONfile);
 
+    // Get date for name
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, "0");
+    const month = (now.getMonth() + 1).toString().padStart(2, "0");
+    const year = now.getFullYear().toString();
+    const nameFile = `Backup_E-Stock_${day}/${month}/${year}`;
+
+    // Downloading
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = nameFile;
+    a.click();
+  } catch (error) {
+    errBackup.value = true;
+    detailsError.value = error;
+    console.log(error);
+  }
+}
 
 // HOOK
 onMounted(() => {
-  window.addEventListener("keydown", shortcut, {passive: true});
+  window.addEventListener("keydown", shortcut, { passive: true });
 });
 
 onBeforeUnmount(() => {
@@ -697,22 +846,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style>
-
 #base {
   margin-top: 70px;
   padding: 0;
@@ -743,7 +877,7 @@ onBeforeUnmount(() => {
 }
 
 .ic_search .v-icon {
-  color: #78909C;
+  color: #78909c;
   font-size: 40px;
 }
 
@@ -758,7 +892,7 @@ onBeforeUnmount(() => {
 .btn_showImg {
   font-size: 20px;
 }
-.btn_displayGrid .v-icon{
+.btn_displayGrid .v-icon {
   color: rgb(230, 81, 0); /* #E65100 orange-foncé-4 */
   font-size: 30px;
 }
@@ -856,7 +990,9 @@ onBeforeUnmount(() => {
 }
 
 @media screen and (max-width: 800px) {
-  .grid-components {grid-template-columns: repeat(4, 1fr);}
+  .grid-components {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -867,8 +1003,51 @@ onBeforeUnmount(() => {
     font-size: 20px;
   }
 
-  .grid-components {grid-template-columns: repeat(3, 1fr);}
+  .grid-components {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-  #txt-selected{font-size: 12px;}
+  #txt-selected {
+    font-size: 12px;
+  }
+}
+
+.cndFlex {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 3px;
+  margin-bottom: 5px;
+  border: solid 3px rgb(10, 103, 0);
+  border-radius: 5px;
+}
+.cndImg {
+  width: 50px;
+  height: auto;
+}
+.cndH3 {
+  margin: 0;
+}
+@keyframes subLight {
+  0% {
+    border: solid 3px rgba(136, 86, 0, 0);
+  }
+  50% {
+    border: solid 3px rgb(10, 103, 0);
+  }
+  100% {
+    border: solid 3px rgba(136, 86, 0, 0);
+  }
+}
+@keyframes warnLight {
+  0% {
+    border: solid 3px rgba(136, 86, 0, 0);
+  }
+  50% {
+    border: solid 3px red;
+  }
+  100% {
+    border: solid 3px rgba(136, 86, 0, 0);
+  }
 }
 </style>
