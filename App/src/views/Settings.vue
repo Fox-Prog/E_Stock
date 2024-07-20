@@ -195,6 +195,7 @@ function sendMail() {
     "service_knj3pa6",
     "template_opfkckr",
     {
+      app: "E-stock",
       object: translateObject,
       name: name.value,
       content: content.value,
